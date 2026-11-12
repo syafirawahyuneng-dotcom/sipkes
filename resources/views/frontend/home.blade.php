@@ -242,19 +242,27 @@
 
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             @forelse($featuredFeatures as $feat)
-            <div class="bg-white rounded-2xl p-5 border border-slate-100 shadow-sm hover:border-primary-300 hover:shadow-md transition group">
-                <div class="flex items-center justify-between mb-4">
-                    <div class="w-11 h-11 rounded-xl bg-slate-50 text-primary-700 group-hover:bg-primary-600 group-hover:text-white flex items-center justify-center text-lg transition duration-300">
-                        <i class="fa-solid {{ $feat->icon ?? 'fa-circle-dot' }}"></i>
+            <div class="bg-white rounded-2xl p-5 border border-slate-200 shadow-sm hover:border-primary-400 hover:shadow-md transition group flex flex-col justify-between">
+                <div>
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="w-11 h-11 rounded-xl bg-slate-50 text-primary-700 group-hover:bg-primary-600 group-hover:text-white flex items-center justify-center text-lg transition duration-300">
+                            <i class="fa-solid {{ $feat->icon ?? 'fa-circle-dot' }}"></i>
+                        </div>
+                        <span class="inline-flex items-center gap-1 text-[10px] uppercase font-bold tracking-wider px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200">
+                            <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
+                            <span>Live</span>
+                        </span>
                     </div>
-                    @if($feat->category)
-                    <span class="text-[10px] uppercase font-bold tracking-wider px-2 py-0.5 rounded-full bg-slate-100 text-slate-600">
-                        {{ $feat->category }}
-                    </span>
-                    @endif
+                    <h3 class="font-bold text-slate-800 text-sm mb-2 group-hover:text-primary-700 transition">{{ $feat->name }}</h3>
+                    <p class="text-xs text-slate-500 leading-relaxed">{{ Str::limit($feat->description, 100) }}</p>
                 </div>
-                <h3 class="font-bold text-slate-800 text-sm mb-2 group-hover:text-primary-700 transition">{{ $feat->name }}</h3>
-                <p class="text-xs text-slate-500 leading-relaxed">{{ Str::limit($feat->description, 100) }}</p>
+
+                <div class="mt-4 pt-3 border-t border-slate-100">
+                    <a href="{{ $feat->route_url }}" class="inline-flex items-center justify-between w-full text-xs font-bold text-primary-600 group-hover:text-primary-700">
+                        <span>Gunakan Modul</span>
+                        <i class="fa-solid fa-arrow-right text-[10px] transition-transform group-hover:translate-x-1"></i>
+                    </a>
+                </div>
             </div>
             @empty
             <div class="col-span-4 text-center py-8 text-slate-400">Daftar fitur sedang disiapkan.</div>

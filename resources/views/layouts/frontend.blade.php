@@ -91,14 +91,28 @@
                             <span>Fitur & Layanan</span>
                             <i class="fa-solid fa-chevron-down text-[10px] transition-transform duration-200 group-hover:rotate-180"></i>
                         </button>
-                        <div class="absolute left-0 mt-1 w-60 rounded-2xl bg-white shadow-xl border border-slate-100 py-2 hidden group-hover:block transition duration-200 z-50">
+                        <div class="absolute left-0 mt-1 w-64 rounded-2xl bg-white shadow-xl border border-slate-100 py-2 hidden group-hover:block transition duration-200 z-50">
+                            <!-- Direct RME Application Entry -->
+                            <a href="{{ route('rme.dashboard') }}" class="flex items-center gap-3 px-3.5 py-2.5 text-xs font-semibold text-emerald-800 bg-emerald-50/80 hover:bg-emerald-100 transition rounded-xl mx-2 mb-1.5 border border-emerald-200">
+                                <div class="w-7 h-7 rounded-lg bg-emerald-600 text-white flex items-center justify-center shrink-0">
+                                    <i class="fa-solid fa-hospital text-xs"></i>
+                                </div>
+                                <div>
+                                    <p class="font-bold flex items-center gap-1.5 text-emerald-950">
+                                        <span>Buka Aplikasi RME</span>
+                                        <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
+                                    </p>
+                                    <p class="text-[10px] text-emerald-700 font-normal">20 modul beroperasi live</p>
+                                </div>
+                            </a>
+
                             <a href="{{ route('features') }}" class="flex items-center gap-3 px-4 py-2.5 text-xs font-semibold {{ request()->routeIs('features') ? 'text-primary-700 bg-primary-50' : 'text-slate-700 hover:text-primary-600 hover:bg-slate-50' }} transition">
                                 <div class="w-7 h-7 rounded-lg bg-primary-50 text-primary-600 flex items-center justify-center shrink-0">
                                     <i class="fa-solid fa-list-check text-xs"></i>
                                 </div>
                                 <div>
-                                    <p class="font-bold">Fitur & Modul RME</p>
-                                    <p class="text-[10px] text-slate-400 font-normal">20 modul rekam medis</p>
+                                    <p class="font-bold">Katalog 20 Fitur RME</p>
+                                    <p class="text-[10px] text-slate-400 font-normal">Daftar modul & operasional</p>
                                 </div>
                             </a>
                             <a href="{{ route('advantages') }}" class="flex items-center gap-3 px-4 py-2.5 text-xs font-semibold {{ request()->routeIs('advantages') ? 'text-primary-700 bg-primary-50' : 'text-slate-700 hover:text-primary-600 hover:bg-slate-50' }} transition">
@@ -134,9 +148,13 @@
                 </nav>
 
                 <!-- Action Button -->
-                <div class="hidden sm:flex items-center gap-3">
-                    <a href="{{ route('contact') }}" class="inline-flex items-center justify-center px-4 py-2.5 text-sm font-semibold text-white bg-primary-600 hover:bg-primary-700 rounded-xl shadow-sm shadow-primary-600/30 hover:shadow-md transition">
-                        <i class="fa-brands fa-whatsapp mr-2 text-base"></i> Demo & Konsultasi
+                <div class="hidden sm:flex items-center gap-2.5">
+                    <a href="{{ route('rme.dashboard') }}" class="inline-flex items-center gap-2 px-3.5 py-2 text-xs font-bold text-white bg-emerald-600 hover:bg-emerald-700 rounded-xl shadow-sm transition hover:shadow-md">
+                        <span class="w-2 h-2 rounded-full bg-emerald-300 animate-pulse"></span>
+                        <span>Aplikasi RME Live</span>
+                    </a>
+                    <a href="{{ route('contact') }}" class="inline-flex items-center justify-center px-3.5 py-2 text-xs font-semibold text-slate-700 bg-slate-100 hover:bg-slate-200 rounded-xl transition border border-slate-200">
+                        <i class="fa-brands fa-whatsapp mr-1.5 text-sm text-emerald-600"></i> Demo
                     </a>
                 </div>
 
@@ -151,6 +169,9 @@
 
         <!-- Mobile Navigation Menu -->
         <div id="mobile-menu" class="hidden lg:hidden border-t border-slate-100 bg-white px-4 pt-3 pb-6 space-y-1 shadow-lg">
+            <a href="{{ route('rme.dashboard') }}" class="block px-3 py-2.5 text-base font-bold rounded-xl text-emerald-800 bg-emerald-50 border border-emerald-200 mb-2">
+                <i class="fa-solid fa-hospital mr-2 text-emerald-600"></i> Buka Aplikasi RME (Live)
+            </a>
             <a href="{{ route('home') }}" class="block px-3 py-2 text-base font-medium rounded-md {{ request()->routeIs('home') ? 'text-primary-700 bg-primary-50' : 'text-slate-700 hover:bg-slate-50' }}">Beranda</a>
             <a href="{{ route('profile') }}" class="block px-3 py-2 text-base font-medium rounded-md {{ request()->routeIs('profile') ? 'text-primary-700 bg-primary-50' : 'text-slate-700 hover:bg-slate-50' }}">Profil</a>
             <a href="{{ route('features') }}" class="block px-3 py-2 text-base font-medium rounded-md {{ request()->routeIs('features') ? 'text-primary-700 bg-primary-50' : 'text-slate-700 hover:bg-slate-50' }}">Fitur RME</a>

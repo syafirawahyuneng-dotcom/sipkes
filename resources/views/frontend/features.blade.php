@@ -34,7 +34,7 @@
         <!-- Features Grid -->
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             @forelse($features as $feat)
-            <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm hover:border-primary-400 hover:shadow-md transition flex flex-col justify-between">
+            <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm hover:border-primary-400 hover:shadow-md transition flex flex-col justify-between group">
                 <div>
                     <div class="flex items-center justify-between mb-4">
                         <div class="w-12 h-12 rounded-xl bg-primary-50 text-primary-700 flex items-center justify-center text-xl">
@@ -46,15 +46,23 @@
                         </span>
                         @endif
                     </div>
-                    <h3 class="text-base font-bold text-slate-900 mb-2">{{ $feat->name }}</h3>
+                    <h3 class="text-base font-bold text-slate-900 mb-2 group-hover:text-primary-700 transition">{{ $feat->name }}</h3>
                     <p class="text-xs sm:text-sm text-slate-600 leading-relaxed text-justify">{{ $feat->description }}</p>
                 </div>
 
-                @if($feat->is_featured)
-                <div class="mt-4 pt-3 border-t border-slate-100 flex items-center gap-1.5 text-[11px] font-semibold text-sky-600">
-                    <i class="fa-solid fa-star text-amber-400"></i> Modul Unggulan SIP-Kes
+                <div class="mt-5 pt-3 border-t border-slate-100 space-y-2">
+                    <a href="{{ $feat->route_url }}" 
+                       class="w-full py-2.5 px-4 rounded-xl bg-primary-600 hover:bg-primary-700 text-white font-bold text-xs flex items-center justify-center gap-2 shadow-sm transition">
+                        <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i>
+                        <span>{{ $feat->action_label }}</span>
+                    </a>
+
+                    @if($feat->is_featured)
+                    <div class="flex items-center justify-center gap-1.5 text-[11px] font-semibold text-sky-600 pt-1">
+                        <i class="fa-solid fa-star text-amber-400"></i> Modul Unggulan SIP-Kes
+                    </div>
+                    @endif
                 </div>
-                @endif
             </div>
             @empty
             <div class="col-span-3 text-center py-12 text-slate-400">
@@ -67,4 +75,3 @@
 </section>
 
 @endsection
-
