@@ -63,33 +63,6 @@
             @endforelse
         </div>
 
-        <!-- Proposal Specific List Callout -->
-        <div class="mt-16 bg-slate-50 border border-slate-200 rounded-3xl p-8 sm:p-10">
-            <h3 class="text-xl font-bold text-slate-800 mb-4 text-center">Daftar Modul Utama Berdasarkan Proposal Resmi TeFa V-Kes:</h3>
-            <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 text-xs text-slate-700">
-                <div class="p-2.5 bg-white rounded-lg border border-slate-200 flex items-center gap-2"><i class="fa-solid fa-check text-primary-600"></i> Pendaftaran Pasien</div>
-                <div class="p-2.5 bg-white rounded-lg border border-slate-200 flex items-center gap-2"><i class="fa-solid fa-check text-primary-600"></i> Antrian Suara (Text-to-Speech)</div>
-                <div class="p-2.5 bg-white rounded-lg border border-slate-200 flex items-center gap-2"><i class="fa-solid fa-check text-primary-600"></i> Pemeriksaan SOAP (SO)</div>
-                <div class="p-2.5 bg-white rounded-lg border border-slate-200 flex items-center gap-2"><i class="fa-solid fa-check text-primary-600"></i> Diagnosa & Tindakan (AP)</div>
-                <div class="p-2.5 bg-white rounded-lg border border-slate-200 flex items-center gap-2"><i class="fa-solid fa-check text-primary-600"></i> Farmasi & E-Resep</div>
-                <div class="p-2.5 bg-white rounded-lg border border-slate-200 flex items-center gap-2"><i class="fa-solid fa-check text-primary-600"></i> Kasir & Billing</div>
-                <div class="p-2.5 bg-white rounded-lg border border-slate-200 flex items-center gap-2"><i class="fa-solid fa-check text-primary-600"></i> Rawat Inap & Bed Monitor</div>
-                <div class="p-2.5 bg-white rounded-lg border border-slate-200 flex items-center gap-2"><i class="fa-solid fa-check text-primary-600"></i> Laporan & Morbiditas</div>
-                <div class="p-2.5 bg-white rounded-lg border border-slate-200 flex items-center gap-2"><i class="fa-solid fa-check text-primary-600"></i> Dashboard Eksekutif</div>
-                <div class="p-2.5 bg-white rounded-lg border border-slate-200 flex items-center gap-2"><i class="fa-solid fa-check text-primary-600"></i> Cetak Kartu Berobat QR</div>
-                <div class="p-2.5 bg-white rounded-lg border border-slate-200 flex items-center gap-2"><i class="fa-solid fa-check text-primary-600"></i> Verifikasi SATUSEHAT Mobile</div>
-                <div class="p-2.5 bg-white rounded-lg border border-slate-200 flex items-center gap-2"><i class="fa-solid fa-check text-primary-600"></i> Asuhan Keperawatan (SDKI)</div>
-                <div class="p-2.5 bg-white rounded-lg border border-slate-200 flex items-center gap-2"><i class="fa-solid fa-check text-primary-600"></i> Integrasi SATUSEHAT & BPJS</div>
-                <div class="p-2.5 bg-white rounded-lg border border-slate-200 flex items-center gap-2"><i class="fa-solid fa-check text-primary-600"></i> Odontogram Klinik Gigi</div>
-                <div class="p-2.5 bg-white rounded-lg border border-slate-200 flex items-center gap-2"><i class="fa-solid fa-check text-primary-600"></i> General Consent Digital</div>
-                <div class="p-2.5 bg-white rounded-lg border border-slate-200 flex items-center gap-2"><i class="fa-solid fa-check text-primary-600"></i> Informed Consent Digital</div>
-                <div class="p-2.5 bg-white rounded-lg border border-slate-200 flex items-center gap-2"><i class="fa-solid fa-check text-primary-600"></i> Surat Sehat & Sakit</div>
-                <div class="p-2.5 bg-white rounded-lg border border-slate-200 flex items-center gap-2"><i class="fa-solid fa-check text-primary-600"></i> Laboratorium Penunjang</div>
-                <div class="p-2.5 bg-white rounded-lg border border-slate-200 flex items-center gap-2"><i class="fa-solid fa-check text-primary-600"></i> Sedasi & Bedah Minor</div>
-                <div class="p-2.5 bg-white rounded-lg border border-slate-200 flex items-center gap-2"><i class="fa-solid fa-check text-primary-600"></i> Free Custom Template RME</div>
-            </div>
-        </div>
-
     </div>
 </section>
 

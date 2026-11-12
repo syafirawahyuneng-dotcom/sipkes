@@ -303,9 +303,9 @@
 
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
             @forelse($pricingPlans as $plan)
-            <div class="relative bg-white rounded-3xl p-8 border {{ $plan->slug == 'klinik-pratama' ? 'border-primary-500 shadow-xl ring-2 ring-primary-500/20' : 'border-slate-200 shadow-sm' }} flex flex-col justify-between">
+            <div class="relative bg-white rounded-3xl p-8 border {{ str_contains($plan->slug, 'klinik-pratama') ? 'border-primary-500 shadow-xl ring-2 ring-primary-500/20' : 'border-slate-200 shadow-sm' }} flex flex-col justify-between">
                 @if($plan->badge)
-                <div class="absolute -top-3.5 left-1/2 -translate-x-1/2 px-4 py-1 rounded-full text-xs font-black uppercase tracking-wider {{ $plan->slug == 'klinik-pratama' ? 'bg-primary-600 text-white' : 'bg-slate-800 text-white' }} shadow-md">
+                <div class="absolute -top-3.5 left-1/2 -translate-x-1/2 px-4 py-1 rounded-full text-xs font-black uppercase tracking-wider {{ str_contains($plan->slug, 'klinik-pratama') ? 'bg-primary-600 text-white' : 'bg-slate-800 text-white' }} shadow-md">
                     {{ $plan->badge }}
                 </div>
                 @endif
@@ -333,7 +333,7 @@
                 </div>
 
                 <div>
-                    <a href="https://wa.me/6281335512803?text=Halo%20TeFa%20V-Kes,%20saya%20tertarik%20dengan%20Paket%20{{ urlencode($plan->name) }}" target="_blank" class="w-full block text-center py-3 px-4 rounded-xl font-bold text-xs sm:text-sm {{ $plan->slug == 'klinik-pratama' ? 'bg-primary-600 hover:bg-primary-700 text-white shadow-md shadow-primary-600/30' : 'bg-slate-100 hover:bg-slate-200 text-slate-800' }} transition">
+                    <a href="https://wa.me/6281335512803?text=Halo%20TeFa%20V-Kes,%20saya%20tertarik%20dengan%20Paket%20{{ urlencode($plan->name) }}" target="_blank" class="w-full block text-center py-3 px-4 rounded-xl font-bold text-xs sm:text-sm {{ str_contains($plan->slug, 'klinik-pratama') ? 'bg-primary-600 hover:bg-primary-700 text-white shadow-md shadow-primary-600/30' : 'bg-slate-100 hover:bg-slate-200 text-slate-800' }} transition">
                         Pilih Paket Ini
                     </a>
                 </div>
@@ -414,9 +414,15 @@
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             @forelse($galleries as $g)
             <div class="group relative rounded-2xl overflow-hidden border border-slate-100 bg-slate-50 shadow-sm hover:shadow-md transition">
-                <div class="h-44 bg-gradient-to-tr from-primary-800 to-sky-600 flex items-center justify-center text-white relative">
-                    <i class="fa-solid fa-camera text-4xl text-white/40 group-hover:scale-110 transition duration-300"></i>
-                    <span class="absolute top-3 left-3 px-2 py-0.5 rounded text-[10px] font-bold uppercase bg-black/40 text-white backdrop-blur-xs">
+                <div class="h-44 bg-slate-100 overflow-hidden relative flex items-center justify-center">
+                    @if($g->hasValidImage())
+                        <img src="{{ $g->image_url }}" alt="{{ $g->title }}" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
+                    @else
+                        <div class="w-full h-full bg-gradient-to-tr from-primary-800 to-sky-600 flex items-center justify-center text-white">
+                            <i class="fa-solid fa-camera text-4xl text-white/40 group-hover:scale-110 transition duration-300"></i>
+                        </div>
+                    @endif
+                    <span class="absolute top-3 left-3 px-2 py-0.5 rounded text-[10px] font-bold uppercase bg-black/60 text-white backdrop-blur-xs">
                         {{ $g->category->name ?? 'Kegiatan' }}
                     </span>
                 </div>

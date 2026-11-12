@@ -68,34 +68,69 @@
     <header class="sticky top-0 z-50 bg-white/95 backdrop-blur-md shadow-sm border-b border-slate-100">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center h-20">
-                <!-- Brand / Logo -->
-                <a href="{{ route('home') }}" class="flex items-center gap-3 group">
-                    @if($siteLogo)
-                        <img src="{{ $siteLogo }}" alt="Logo Resmi SIP-Kes" class="h-12 w-auto object-contain group-hover:scale-105 transition duration-300">
-                    @else
-                        <div class="w-12 h-12 rounded-xl bg-gradient-to-tr from-primary-700 to-sky-500 flex items-center justify-center text-white shadow-md shadow-primary-500/20 group-hover:scale-105 transition duration-300">
-                            <i class="fa-solid fa-heart-pulse text-2xl"></i>
-                        </div>
-                        <div>
-                            <div class="flex items-center gap-1.5">
-                                <span class="text-2xl font-black tracking-tight text-primary-800">SIP<span class="text-sky-500">-Kes</span></span>
-                                <span class="px-2 py-0.5 text-[10px] uppercase font-bold tracking-wider bg-sky-100 text-sky-700 rounded-full">RME Cloud</span>
-                            </div>
-                            <p class="text-[11px] font-semibold text-slate-500 tracking-wide">TeFa V-Kes • Polije</p>
-                        </div>
-                    @endif
+                <!-- Brand / Logo (Memakai Foto / Gambar) -->
+                <a href="{{ route('home') }}" class="flex items-center group py-2">
+                    <img src="{{ $siteLogo ?: asset('images/logo.png') }}" 
+                         alt="Logo Resmi SIP-Kes" 
+                         class="h-12 max-h-12 w-auto object-contain group-hover:scale-105 transition duration-300"
+                         onerror="this.src='{{ asset('images/logo.png') }}'">
                 </a>
 
-                <!-- Desktop Menu -->
+                <!-- Desktop Menu (Dipersingkat & Rapi) -->
                 <nav class="hidden lg:flex items-center gap-1 xl:gap-2">
-                    <a href="{{ route('home') }}" class="px-3.5 py-2 text-sm font-semibold rounded-lg transition {{ request()->routeIs('home') ? 'text-primary-700 bg-primary-50' : 'text-slate-600 hover:text-primary-600 hover:bg-slate-50' }}">Beranda</a>
-                    <a href="{{ route('profile') }}" class="px-3.5 py-2 text-sm font-semibold rounded-lg transition {{ request()->routeIs('profile') ? 'text-primary-700 bg-primary-50' : 'text-slate-600 hover:text-primary-600 hover:bg-slate-50' }}">Profil</a>
-                    <a href="{{ route('features') }}" class="px-3.5 py-2 text-sm font-semibold rounded-lg transition {{ request()->routeIs('features') ? 'text-primary-700 bg-primary-50' : 'text-slate-600 hover:text-primary-600 hover:bg-slate-50' }}">Fitur RME</a>
-                    <a href="{{ route('advantages') }}" class="px-3.5 py-2 text-sm font-semibold rounded-lg transition {{ request()->routeIs('advantages') ? 'text-primary-700 bg-primary-50' : 'text-slate-600 hover:text-primary-600 hover:bg-slate-50' }}">Keunggulan</a>
-                    <a href="{{ route('pricing') }}" class="px-3.5 py-2 text-sm font-semibold rounded-lg transition {{ request()->routeIs('pricing') ? 'text-primary-700 bg-primary-50' : 'text-slate-600 hover:text-primary-600 hover:bg-slate-50' }}">Paket Harga</a>
-                    <a href="{{ route('support.services') }}" class="px-3.5 py-2 text-sm font-semibold rounded-lg transition {{ request()->routeIs('support.services') ? 'text-primary-700 bg-primary-50' : 'text-slate-600 hover:text-primary-600 hover:bg-slate-50' }}">Layanan Pendukung</a>
-                    <a href="{{ route('gallery') }}" class="px-3.5 py-2 text-sm font-semibold rounded-lg transition {{ request()->routeIs('gallery') ? 'text-primary-700 bg-primary-50' : 'text-slate-600 hover:text-primary-600 hover:bg-slate-50' }}">Galeri</a>
-                    <a href="{{ route('contact') }}" class="px-3.5 py-2 text-sm font-semibold rounded-lg transition {{ request()->routeIs('contact') ? 'text-primary-700 bg-primary-50' : 'text-slate-600 hover:text-primary-600 hover:bg-slate-50' }}">Kontak</a>
+                    <a href="{{ route('home') }}" class="px-3.5 py-2 text-sm font-semibold rounded-lg transition {{ request()->routeIs('home') ? 'text-primary-700 bg-primary-50' : 'text-slate-600 hover:text-primary-600 hover:bg-slate-50' }}">
+                        Beranda
+                    </a>
+                    <a href="{{ route('profile') }}" class="px-3.5 py-2 text-sm font-semibold rounded-lg transition {{ request()->routeIs('profile') ? 'text-primary-700 bg-primary-50' : 'text-slate-600 hover:text-primary-600 hover:bg-slate-50' }}">
+                        Profil
+                    </a>
+
+                    <!-- Dropdown Fitur & Layanan -->
+                    <div class="relative group">
+                        <button type="button" class="flex items-center gap-1.5 px-3.5 py-2 text-sm font-semibold rounded-lg transition {{ request()->routeIs('features', 'advantages', 'support.services') ? 'text-primary-700 bg-primary-50' : 'text-slate-600 hover:text-primary-600 hover:bg-slate-50' }}">
+                            <span>Fitur & Layanan</span>
+                            <i class="fa-solid fa-chevron-down text-[10px] transition-transform duration-200 group-hover:rotate-180"></i>
+                        </button>
+                        <div class="absolute left-0 mt-1 w-60 rounded-2xl bg-white shadow-xl border border-slate-100 py-2 hidden group-hover:block transition duration-200 z-50">
+                            <a href="{{ route('features') }}" class="flex items-center gap-3 px-4 py-2.5 text-xs font-semibold {{ request()->routeIs('features') ? 'text-primary-700 bg-primary-50' : 'text-slate-700 hover:text-primary-600 hover:bg-slate-50' }} transition">
+                                <div class="w-7 h-7 rounded-lg bg-primary-50 text-primary-600 flex items-center justify-center shrink-0">
+                                    <i class="fa-solid fa-list-check text-xs"></i>
+                                </div>
+                                <div>
+                                    <p class="font-bold">Fitur & Modul RME</p>
+                                    <p class="text-[10px] text-slate-400 font-normal">20 modul rekam medis</p>
+                                </div>
+                            </a>
+                            <a href="{{ route('advantages') }}" class="flex items-center gap-3 px-4 py-2.5 text-xs font-semibold {{ request()->routeIs('advantages') ? 'text-primary-700 bg-primary-50' : 'text-slate-700 hover:text-primary-600 hover:bg-slate-50' }} transition">
+                                <div class="w-7 h-7 rounded-lg bg-amber-50 text-amber-600 flex items-center justify-center shrink-0">
+                                    <i class="fa-solid fa-star text-xs"></i>
+                                </div>
+                                <div>
+                                    <p class="font-bold">Keunggulan Sistem</p>
+                                    <p class="text-[10px] text-slate-400 font-normal">Nilai tambah faskes</p>
+                                </div>
+                            </a>
+                            <a href="{{ route('support.services') }}" class="flex items-center gap-3 px-4 py-2.5 text-xs font-semibold {{ request()->routeIs('support.services') ? 'text-primary-700 bg-primary-50' : 'text-slate-700 hover:text-primary-600 hover:bg-slate-50' }} transition">
+                                <div class="w-7 h-7 rounded-lg bg-teal-50 text-teal-600 flex items-center justify-center shrink-0">
+                                    <i class="fa-solid fa-handshake-angle text-xs"></i>
+                                </div>
+                                <div>
+                                    <p class="font-bold">Layanan Pendukung</p>
+                                    <p class="text-[10px] text-slate-400 font-normal">Klaim BPJS & Akreditasi</p>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+
+                    <a href="{{ route('pricing') }}" class="px-3.5 py-2 text-sm font-semibold rounded-lg transition {{ request()->routeIs('pricing') ? 'text-primary-700 bg-primary-50' : 'text-slate-600 hover:text-primary-600 hover:bg-slate-50' }}">
+                        Paket Harga
+                    </a>
+                    <a href="{{ route('gallery') }}" class="px-3.5 py-2 text-sm font-semibold rounded-lg transition {{ request()->routeIs('gallery') ? 'text-primary-700 bg-primary-50' : 'text-slate-600 hover:text-primary-600 hover:bg-slate-50' }}">
+                        Galeri
+                    </a>
+                    <a href="{{ route('contact') }}" class="px-3.5 py-2 text-sm font-semibold rounded-lg transition {{ request()->routeIs('contact') ? 'text-primary-700 bg-primary-50' : 'text-slate-600 hover:text-primary-600 hover:bg-slate-50' }}">
+                        Kontak
+                    </a>
                 </nav>
 
                 <!-- Action Button -->
@@ -159,19 +194,13 @@
     <footer class="bg-slate-900 text-slate-400 text-sm">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14">
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
-                <!-- Col 1: About -->
+                <!-- Col 1: About & Logo (Memakai Foto / Gambar) -->
                 <div class="space-y-4">
-                    <div class="flex items-center gap-3">
-                        @if($siteLogo)
-                            <div class="bg-white p-2 rounded-xl inline-block">
-                                <img src="{{ $siteLogo }}" alt="SIP-Kes Logo" class="h-8 w-auto object-contain">
-                            </div>
-                        @else
-                            <div class="w-10 h-10 rounded-lg bg-primary-600 flex items-center justify-center text-white">
-                                <i class="fa-solid fa-heart-pulse text-xl"></i>
-                            </div>
-                            <span class="text-xl font-bold text-white">SIP-Kes</span>
-                        @endif
+                    <div class="flex items-center">
+                        <img src="{{ $siteLogo ?: asset('images/logo.png') }}" 
+                             alt="Logo Resmi SIP-Kes" 
+                             class="h-12 max-h-12 w-auto object-contain brightness-100"
+                             onerror="this.src='{{ asset('images/logo.png') }}'">
                     </div>
                     <p class="text-xs leading-relaxed text-slate-400">
                         Platform Sistem Informasi Pelayanan Kesehatan (SIP-Kes) milik Teaching Factory Inovasi Kesehatan (TeFa V-Kes), Jurusan Kesehatan Politeknik Negeri Jember. Solusi RME terintegrasi SATUSEHAT & BPJS.

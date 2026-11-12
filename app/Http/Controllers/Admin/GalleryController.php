@@ -30,11 +30,11 @@ class GalleryController extends Controller
             'category_id' => 'nullable|exists:gallery_categories,id',
             'description' => 'nullable|string',
             'date' => 'nullable|date',
-            'image' => 'nullable|image|max:2048',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg,webp|max:5120',
             'order' => 'nullable|integer',
         ]);
 
-        $imagePath = 'gallery/default.jpg';
+        $imagePath = null;
         if ($request->hasFile('image')) {
             $imagePath = $request->file('image')->store('gallery', 'public');
         }
@@ -64,11 +64,14 @@ class GalleryController extends Controller
             'category_id' => 'nullable|exists:gallery_categories,id',
             'description' => 'nullable|string',
             'date' => 'nullable|date',
-            'image' => 'nullable|image|max:2048',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg,webp|max:5120',
             'order' => 'nullable|integer',
         ]);
 
         if ($request->hasFile('image')) {
+            if ($gallery->image && \Illuminate\Support\Facades\Storage::disk('public')->exists($gallery->image)) {
+                \Illuminate\Support\Facades\Storage::disk('public')->delete($gallery->image);
+            }
             $gallery->image = $request->file('image')->store('gallery', 'public');
         }
 
@@ -84,6 +87,9 @@ class GalleryController extends Controller
 
     public function destroy(Gallery $gallery)
     {
+        if ($gallery->image && \Illuminate\Support\Facades\Storage::disk('public')->exists($gallery->image)) {
+            \Illuminate\Support\Facades\Storage::disk('public')->delete($gallery->image);
+        }
         $gallery->delete();
         return redirect()->route('admin.galleries.index')->with('success', 'Foto galeri berhasil dihapus!');
     }

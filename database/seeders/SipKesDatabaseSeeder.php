@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Schema;
 use App\Models\Admin;
 use App\Models\Profile;
 use App\Models\Banner;
@@ -21,7 +22,9 @@ class SipKesDatabaseSeeder extends Seeder
 {
     public function run(): void
     {
-        // 1. Admin Account
+        Schema::disableForeignKeyConstraints();
+
+        // 1. Akun Administrator
         Admin::updateOrCreate(
             ['email' => 'admin@sipkes.id'],
             [
@@ -30,215 +33,380 @@ class SipKesDatabaseSeeder extends Seeder
             ]
         );
 
-        // 2. Profile TeFa V-Kes & SIP-Kes
+        // 2. Profil Lembaga (TeFa V-Kes) & SIP-Kes (Sesuai Proposal Hal 1-4)
         Profile::updateOrCreate(
             ['id' => 1],
             [
                 'name' => 'Teaching Factory Inovasi Kesehatan (TeFa V-Kes)',
                 'institution' => 'Politeknik Negeri Jember',
-                'tagline' => 'Transformasi Digital Rekam Medis Elektronik Terintegrasi Standar Kemenkes RI',
-                'about_tefa' => 'Teaching Factory Inovasi Kesehatan (TeFa V-Kes) merupakan unit usaha dan inovasi akademik di bawah Jurusan Kesehatan Politeknik Negeri Jember. TeFa V-Kes berfokus pada pengembangan teknologi rekam medis elektronik (RME), riset terapan manajemen informasi kesehatan, serta pendampingan digitalisasi fasilitas pelayanan kesehatan di seluruh Indonesia.',
-                'about_sipkes' => 'SIP-Kes (Sistem Informasi Pelayanan Kesehatan) adalah platform Rekam Medis Elektronik (RME) modern berbasis cloud website yang dirancang khusus untuk memfasilitasi tata kelola data rekam medis, operasional faskes, serta integrasi wajib platform SATUSEHAT Kementerian Kesehatan RI dan BPJS Kesehatan (PCare & VClaim).',
-                'vision' => 'Menjadi pusat inovasi dan rujukan nasional dalam pengembangan teknologi informasi kesehatan vokasional yang adaptif, terintegrasi, dan berdampak nyata bagi faskes di Indonesia.',
-                'mission' => "1. Mengembangkan sistem informasi pelayanan kesehatan yang patuh regulasi Kemenkes dan BPJS.\n2. Memberikan layanan pendampingan transisi digital, bridging SATUSEHAT, dan akreditasi klinik.\n3. Mewadahi kolaborasi riset terapan antara dosen, mahasiswa terampil vokasi, dan fasyankes mitra.",
-                'goals' => 'Mewujudkan tata kelola faskes yang paperless, efisien, akuntabel, serta mempermudah dokter, perawat, apoteker, dan staf manajemen dalam memberikan pelayanan terbaik kepada masyarakat.',
-                'background' => 'Latar belakang pengembangan SIP-Kes berakar dari Peraturan Menteri Kesehatan (PMK) No. 24 Tahun 2022 tentang kewajiban Rekam Medis Elektronik bagi seluruh fasilitas pelayanan kesehatan. Banyak klinik mandiri dan pratama menghadapi hambatan tingginya biaya investasi IT dan rumitnya proses bridging SATUSEHAT. TeFa V-Kes Polije hadir memberikan solusi sistem yang terjangkau, legal, handal, dan disertai pendampingan langsung.',
+                'tagline' => 'Sistem Informasi Pelayanan Kesehatan (SIP-Kes) - Rekam Medis Elektronik Terintegrasi SATUSEHAT & Bridging BPJS Kesehatan',
+                'about_tefa' => "Teaching Factory Inovasi Kesehatan (TeFa V-Kes) merupakan unit usaha di bawah Politeknik Negeri Jember yang berfokus pada pengembangan produk kesehatan, pelatihan bidang kesehatan dan layanan kesehatan berbasis teknologi dan inovasi.\n\nDengan fokus utama pada transformasi digital pada sektor kesehatan, TeFa V-Kes menghadirkan solusi inovatif yang membantu fasilitas layanan kesehatan, tenaga medis, dan pasien untuk terhubung secara efektif melalui teknologi yang aman, andal, dan efisien.\n\nSebagai pelopor dalam pengelolaan data medis berbasis teknologi, TeFa V-Kes telah mengembangkan sistem pengelolaan rekam medis elektronik (RME) bernama SIP-Kes (Sistem Informasi Pelayanan Kesehatan) yang menerapkan interoperabilitas data kesehatan dengan SatuSehat dan dirancang dengan standar keamanan tinggi dan selaras dengan regulasi nasional maupun internasional terkait kerahasiaan data.",
+                'about_sipkes' => "SIP-Kes (Sistem Informasi Pelayanan Kesehatan) adalah sebuah sistem Rekam Medis Elektronik (RME) untuk manajemen data kesehatan di Fasilitas Kesehatan Tingkat Pertama (FKTP) yang telah terintegrasi dengan platform SATUSEHAT dan bridging BPJS Kesehatan.\n\nSistem ini dibangun dengan desain modern, nyaman, dan menerapkan standar keamanan yang telah teruji, serta tentunya dapat memudahkan manajemen FKTP. Sistem ini cocok digunakan untuk puskesmas, klinik, praktik mandiri dokter, praktik perawat, dan praktik bidan.",
+                'vision' => 'Menjadi pusat inovasi dan rujukan nasional dalam transformasi digital layanan kesehatan berbasis pendidikan vokasi yang aman, andal, efisien, serta terintegrasi penuh dengan standar Kementerian Kesehatan Republik Indonesia.',
+                'mission' => "1. Mengembangkan produk dan sistem informasi pelayanan kesehatan (RME SIP-Kes) yang patuh regulasi Kemenkes RI, berstandar format HL7-FHIR, dan terintegrasi SATUSEHAT serta BPJS Kesehatan.\n2. Memberikan pelatihan profesional bidang kesehatan dan pendampingan implementasi RME secara gratis bagi fasilitas pelayanan kesehatan mitra.\n3. Menyediakan layanan pendampingan e-klaim BPJS dan akreditasi klinik faskes yang didampingi langsung oleh dosen ahli, praktisi kesehatan, dan tenaga terlatih.",
+                'goals' => 'Membantu fasilitas pelayanan kesehatan tingkat pertama (FKTP), tenaga medis, dan pasien untuk terhubung secara efektif melalui teknologi digital yang aman, andal, dan efisien, serta mempermudah manajemen faskes menuju pelayanan paperless.',
+                'background' => "Berdasarkan Peraturan Menteri Kesehatan No. 24 Tahun 2022, Fasilitas Pelayanan Kesehatan (Fasyankes) wajib menerapkan Rekam Medis Elektronik (RME) yang memenuhi standar Kementerian Kesehatan. RME harus terintegrasi dengan platform SATUSEHAT dan dapat diakses oleh Kementerian Kesehatan untuk keperluan pemantauan dan kebijakan. Hak pasien untuk mengetahui informasi kesehatannya tetap dilindungi, dengan tetap menjaga kerahasiaan dan keamanan data.\n\nOleh karena itu, TeFa V-Kes Politeknik Negeri Jember menawarkan solusi implementasi Rekam Medis Elektronik (RME) yang sesuai standar Kementerian Kesehatan Republik Indonesia. Sistem RME SIP-Kes ini telah mendukung integrasi penuh dengan platform SATUSEHAT, dapat melakukan pertukaran data kesehatan secara real-time dan aman serta memenuhi regulasi nasional yang berlaku. Selain itu, SIP-Kes ini juga dapat digunakan untuk bridging dengan BPJS Kesehatan.",
             ]
         );
 
-        // 3. Hero Banners
+        // 3. Hero Banner (Sesuai Proposal Hal 1 & 4)
         Banner::updateOrCreate(
             ['id' => 1],
             [
-                'badge' => '🏥 Portal Resmi SIP-Kes • TeFa V-Kes Polije',
-                'title' => 'Solusi Rekam Medis Elektronik & Bridging SATUSEHAT untuk Faskes Anda',
-                'subtitle' => 'SIP-Kes menghadirkan integrasi SATUSEHAT Kemenkes & BPJS Kesehatan secara cepat, aman, dan mudah digunakan untuk Praktik Mandiri, Klinik, hingga Puskesmas.',
-                'primary_btn_text' => 'Eksplorasi Fitur Lengkap',
+                'badge' => '🏥 Proposal SIP-Kes • TeFa V-Kes Politeknik Negeri Jember',
+                'title' => 'Sistem Informasi Pelayanan Kesehatan (SIP-Kes)',
+                'subtitle' => 'Sebuah sistem rekam medis elektronik untuk manajemen data kesehatan di fasilitas pelayanan kesehatan tingkat pertama yang telah terintegrasi dengan SATUSEHAT dan bridging BPJS Kesehatan.',
+                'primary_btn_text' => 'Lihat 20 Fitur Lengkap',
                 'primary_btn_url' => '#fitur',
-                'secondary_btn_text' => 'Konsultasi & Penawaran',
+                'secondary_btn_text' => 'Hubungi Call Center',
                 'secondary_btn_url' => '#kontak',
                 'is_active' => true,
                 'order' => 1,
             ]
         );
 
-        // 4. Advantages
+        // 4. Keunggulan: Mengapa Memilih SIP-Kes? (Sesuai Proposal Hal 11)
+        Advantage::truncate();
         $advantages = [
             [
-                'title' => 'Terintegrasi SATUSEHAT Kemenkes',
-                'icon' => 'fa-shield-halved',
-                'description' => 'Sesuai regulasi PMK 24 Tahun 2022. Kirim data Encounter, Condition, Observation, Procedure, Medication ke SATUSEHAT secara otomatis.',
+                'title' => 'Terintegrasi BPJS Kesehatan',
+                'icon' => 'fa-hospital-user',
+                'description' => 'SIP-Kes dapat digunakan untuk bridging dengan BPJS Kesehatan guna mempermudah verifikasi keaktifan kartu kepesertaan, proses pendaftaran antrian, hingga administrasi klaim pelayanan faskes.',
                 'order' => 1,
             ],
             [
-                'title' => 'Bridging BPJS Kesehatan (PCare)',
-                'icon' => 'fa-hospital-user',
-                'description' => 'Mendukung integrasi PCare BPJS Kesehatan untuk validasi kepesertaan, pendaftaran kunjungan, hingga pengiriman diagnosa dan obat.',
+                'title' => 'Terintegrasi SATUSEHAT',
+                'icon' => 'fa-shield-halved',
+                'description' => 'Mendukung integrasi penuh dengan platform SATUSEHAT Kemenkes RI, dapat melakukan pertukaran data kesehatan secara real-time dan aman serta memenuhi regulasi PMK No. 24 Tahun 2022.',
                 'order' => 2,
             ],
             [
-                'title' => 'Berbasis Web (Cloud Based)',
-                'icon' => 'fa-cloud',
-                'description' => 'Akses dari perangkat apa pun (Laptop, Tablet, PC) tanpa perlu instalasi server fisik di klinik Anda. Aman dengan enkripsi standar industri.',
+                'title' => 'Berbasis Website',
+                'icon' => 'fa-globe',
+                'description' => 'Dapat diakses dari manapun dan kapanpun secara fleksibel melalui peramban web modern tanpa memerlukan investasi server fisik lokal yang rumit dan mahal.',
                 'order' => 3,
             ],
             [
-                'title' => 'Free Training & Pendampingan',
+                'title' => 'Free Training',
                 'icon' => 'fa-chalkboard-user',
-                'description' => 'Pelatihan intensif bagi dokter, bidan, perawat, apoteker, dan kasir hingga seluruh SDM faskes mahir mengoperasikan sistem.',
+                'description' => 'Gratis pelatihan penggunaan untuk fasyankes yang berlangganan hingga seluruh tenaga medis (dokter, perawat, bidan) dan staf (loket, farmasi, kasir) mahir mengoperasikannya.',
                 'order' => 4,
             ],
             [
-                'title' => 'Free Custom RME Faskes',
-                'icon' => 'fa-sliders',
-                'description' => 'Formulir rekam medis, template asesmen dokter/perawat, dan format kartu resep dapat disesuaikan dengan alur spesifik klinik Anda.',
+                'title' => 'Free Custom RME',
+                'icon' => 'fa-screwdriver-wrench',
+                'description' => 'Bebas biaya custom RME untuk menyesuaikan kebutuhan spesifik fasyankes, mulai dari formulir asesmen, lembar tindakan, hingga tata kelola resep.',
                 'order' => 5,
             ],
             [
-                'title' => 'Data Tersentralisasi & Real-time',
+                'title' => 'Data Tersentralisasi',
                 'icon' => 'fa-database',
-                'description' => 'Manajemen riwayat medis pasien, stok obat multi-depo, dan laporan keuangan klinik terkontrol secara transparan dalam satu dashboard.',
+                'description' => 'Server terpusat, sehingga fasyankes tidak perlu memikirkan pemeliharaan sistem, manajemen backup mandiri, maupun risiko kerusakan server fisik.',
                 'order' => 6,
             ],
         ];
         foreach ($advantages as $adv) {
-            Advantage::updateOrCreate(['title' => $adv['title']], $adv);
+            Advantage::create($adv);
         }
 
-        // 5. Target Facilities
+        // 5. Fasilitas Kesehatan yang Cocok (Sesuai Proposal Hal 4)
+        TargetFacility::truncate();
         $facilities = [
-            ['name' => 'Praktik Dokter Mandiri', 'icon' => 'fa-user-doctor', 'description' => 'Praktik Dokter Umum & Spesialis yang membutuhkan pencatatan RME simpel dan koneksi SATUSEHAT.', 'order' => 1],
-            ['name' => 'Klinik Pratama (Rawat Jalan)', 'icon' => 'fa-clinic-medical', 'description' => 'Klinik Pratama dengan alur registrasi, poli umum, poli gigi, farmasi, dan kasir terintegrasi.', 'order' => 2],
-            ['name' => 'Klinik Rawat Inap & Bersalin', 'icon' => 'fa-bed-pulse', 'description' => 'Mendukung pengelolaan bangsal rawat inap, asuhan keperawatan, visite, serta gizi medis.', 'order' => 3],
-            ['name' => 'Puskesmas', 'icon' => 'fa-building-columns', 'description' => 'Fasilitas kesehatan tingkat pertama pemerintah dengan pelaporan berstandar kementerian.', 'order' => 4],
-            ['name' => 'Klinik Gigi & Estetika', 'icon' => 'fa-tooth', 'description' => 'Dilengkapi diagram Odontogram interaktif untuk riwayat kondisi gigi geligi dan tindakan.', 'order' => 5],
-            ['name' => 'Laboratorium Medis Mandiri', 'icon' => 'fa-flask-vial', 'description' => 'Manajemen order spesimen, hasil uji laboratorium, dan pencetakan lembar hasil resmi.', 'order' => 6],
+            [
+                'name' => 'Puskesmas',
+                'icon' => 'fa-hospital',
+                'description' => 'Puskesmas dengan layanan rawat jalan maupun rawat inap yang membutuhkan pencatatan RME terintegrasi SATUSEHAT dan pelaporan morbiditas 20 besar penyakit.',
+                'order' => 1,
+            ],
+            [
+                'name' => 'Klinik',
+                'icon' => 'fa-clinic-medical',
+                'description' => 'Klinik Pratama maupun Rawat Inap dengan alur loket pendaftaran, antrian suara, berbagai poli tujuan (KIA, Gigi, UGD), farmasi, kasir, dan bridging BPJS.',
+                'order' => 2,
+            ],
+            [
+                'name' => 'Praktik Mandiri Dokter',
+                'icon' => 'fa-user-doctor',
+                'description' => 'Praktik mandiri dokter umum dan spesialis untuk pencatatan rekam medis SOAP, riwayat alergi, kode diagnosa ICD-10, tindakan, dan e-resep praktis.',
+                'order' => 3,
+            ],
+            [
+                'name' => 'Praktik Perawat',
+                'icon' => 'fa-user-nurse',
+                'description' => 'Praktik mandiri perawat yang memerlukan dokumentasi asuhan keperawatan terstandar, catatan tindakan medis harian, dan pemantauan kondisi pasien.',
+                'order' => 4,
+            ],
+            [
+                'name' => 'Praktik Bidan',
+                'icon' => 'fa-person-breastfeeding',
+                'description' => 'Praktik mandiri bidan untuk pelayanan kesehatan ibu dan anak (KIA), program KB, imunisasi balita, serta dokumentasi asuhan kebidanan lengkap.',
+                'order' => 5,
+            ],
         ];
         foreach ($facilities as $fac) {
-            TargetFacility::updateOrCreate(['name' => $fac['name']], $fac);
+            TargetFacility::create($fac);
         }
 
-        // 6. Features (Sesuai Proposal)
+        // 6. 20 Fitur Lengkap SIP-Kes (Sesuai Proposal Hal 6-10)
+        Feature::truncate();
         $features = [
-            ['name' => 'Pendaftaran Pasien & Cetak Kartu', 'category' => 'Pelayanan', 'icon' => 'fa-id-card', 'description' => 'Registrasi pasien baru & lama, auto-generate No. Rekam Medis, pencarian data NIK/BPJS, serta pencetakan kartu berobat fisik & barcode.', 'is_featured' => true, 'order' => 1],
-            ['name' => 'Antrian & Panggilan Suara (Audio Queuing)', 'category' => 'Pelayanan', 'icon' => 'fa-bullhorn', 'description' => 'Sistem antrian loket dan poli otomatis dengan teknologi Text-to-Speech pemanggil nama dan nomor loket ke layar display pasien.', 'is_featured' => true, 'order' => 2],
-            ['name' => 'Pemeriksaan Klinis (SO)', 'category' => 'Rekam Medis', 'icon' => 'fa-stethoscope', 'description' => 'Pencatatan data Subjektif (keluhan, riwayat penyakit, alergi) dan Objektif (tanda-tanda vital, tinggi/berat badan, status lokalis).', 'is_featured' => true, 'order' => 3],
-            ['name' => 'Diagnosa ICD-10 & Tindakan ICD-9-CM (AP)', 'category' => 'Rekam Medis', 'icon' => 'fa-notes-medical', 'description' => 'Pencarian cerdas kode diagnosis ICD-10 resmi dan kode prosedur tindakan ICD-9-CM untuk standarisasi asesmen dokter (A) dan rencana terapi (P).', 'is_featured' => true, 'order' => 4],
-            ['name' => 'Farmasi & E-Resep', 'category' => 'Farmasi', 'icon' => 'fa-pills', 'description' => 'Resep elektronik langsung dari poli ke apotek faskes, peracikan obat racikan/non-racikan, otomatis potong stok obat, dan cetak etiket aturan minum.', 'is_featured' => true, 'order' => 5],
-            ['name' => 'Kasir & Billing Terpadu', 'category' => 'Keuangan', 'icon' => 'fa-cash-register', 'description' => 'Integrasi tagihan otomatis dari tindakan dokter, obat apotek, kamar rawat inap, dan laboratorium dengan invoice resmi serta multi-metode pembayaran.', 'is_featured' => true, 'order' => 6],
-            ['name' => 'Rawat Inap & Manajemen Bed', 'category' => 'Pelayanan', 'icon' => 'fa-bed', 'description' => 'Monitoring ketersediaan kamar dan ranjang (bed status), catatan perkembangan pasien terintegrasi (CPPT), visite dokter harian, dan billing harian.', 'is_featured' => true, 'order' => 7],
-            ['name' => 'Verifikasi SATUSEHAT Mobile', 'category' => 'Integrasi', 'icon' => 'fa-mobile-screen-button', 'description' => 'Validasi profil pasien dan scan QR SATUSEHAT Mobile langsung di loket faskes untuk mengonfirmasi identitas terverifikasi Kemenkes.', 'is_featured' => true, 'order' => 8],
-            ['name' => 'Pengaturan Integrasi SATUSEHAT & BPJS', 'category' => 'Integrasi', 'icon' => 'fa-network-wired', 'description' => 'Konfigurasi Organization ID, Client ID, Secret Key SATUSEHAT, serta ConsID dan SecretKey BPJS Kesehatan dengan status koneksi live monitoring.', 'is_featured' => true, 'order' => 9],
-            ['name' => 'Odontogram Klinik Gigi', 'category' => 'Rekam Medis', 'icon' => 'fa-tooth', 'description' => 'Diagram visual gigi interaktif untuk dokter gigi menandai kondisi karies, tambalan, pencabutan, dan riwayat tindakan restorasi gigi.', 'is_featured' => false, 'order' => 10],
-            ['name' => 'General Consent & Informed Consent Digital', 'category' => 'Legalitas', 'icon' => 'fa-file-signature', 'description' => 'Formulir persetujuan umum dan persetujuan tindakan medis digital dengan tanda tangan elektronik dokter, pasien, atau wali sah.', 'is_featured' => false, 'order' => 11],
-            ['name' => 'Surat Sehat & Surat Keterangan Sakit', 'category' => 'Administrasi', 'icon' => 'fa-file-medical', 'description' => 'Pembuatan dan pencetakan surat keterangan sakit istirahat, surat sehat bebas narkoba/buta warna, dengan format barcode verifikasi resmi.', 'is_featured' => false, 'order' => 12],
-            ['name' => 'Asuhan Keperawatan (Askep)', 'category' => 'Rekam Medis', 'icon' => 'fa-user-nurse', 'description' => 'Dokumentasi asuhan keperawatan dan kebidanan mencakup diagnosa keperawatan (SDKI), intervensi (SIKI), dan evaluasi (SLKI).', 'is_featured' => false, 'order' => 13],
-            ['name' => 'Laboratorium & Pemeriksaan Penunjang', 'category' => 'Penunjang', 'icon' => 'fa-vials', 'description' => 'Pencatatan rujukan internal spesimen laboratorium, input parameter uji (Darah Rutin, Gula, Kolesterol, dll.), dan pencetakan hasil uji.', 'is_featured' => false, 'order' => 14],
-            ['name' => 'Sedasi & Catatan Bedah Minor', 'category' => 'Rekam Medis', 'icon' => 'fa-syringe', 'description' => 'Dokumentasi tindakan bedah minor, monitoring premedikasi, sedasi, evaluasi pra dan pasca tindakan klinis.', 'is_featured' => false, 'order' => 15],
-            ['name' => 'Laporan Eksekutif & Statistik', 'category' => 'Laporan', 'icon' => 'fa-chart-pie', 'description' => 'Laporan kunjungan 10 besar penyakit (Morbiditas), tren pendapatan harian/bulanan, rasio rujukan, dan ekspor spreadsheet otomatis.', 'is_featured' => false, 'order' => 16],
-            ['name' => 'Dashboard Manajemen Faskes', 'category' => 'Laporan', 'icon' => 'fa-gauge-high', 'description' => 'Tampilan statistik performa realtime: jumlah antrian aktif, tingkat hunian tempat tidur (BOR), stok obat kritis, dan status sinkronisasi SATUSEHAT.', 'is_featured' => false, 'order' => 17],
-            ['name' => 'Multi-User & Hak Akses Berjenjang', 'category' => 'Keamanan', 'icon' => 'fa-users-gear', 'description' => 'Pembatasan hak akses berbasis peran (Role-Based Access Control) untuk Dokter, Bidan, Perawat, Petugas Loket, Apoteker, Kasir, dan Manajer.', 'is_featured' => false, 'order' => 18],
+            [
+                'name' => 'Pendaftaran',
+                'category' => 'Pelayanan',
+                'icon' => 'fa-id-card',
+                'description' => 'Fitur ini berfungsi untuk melakukan proses pencatatan pasien baru maupun pasien lama. Petugas pendaftaran dapat menginput data identitas pasien, menentukan pilihan poli tujuan, serta dapat mengidentifikasi keaktifan kartu BPJS Kesehatan pasien.',
+                'is_featured' => true,
+                'order' => 1,
+            ],
+            [
+                'name' => 'Antrian dan Panggilan Suara',
+                'category' => 'Pelayanan',
+                'icon' => 'fa-bullhorn',
+                'description' => 'Fitur Antrian ini dapat digunakan untuk ditampilkan pada layar monitor. Fitur antrian ini memungkinkan melakukan panggilan otomatis melalui audio panggilan sesuai dengan nomor antrian dan tujuan kliniknya.',
+                'is_featured' => true,
+                'order' => 2,
+            ],
+            [
+                'name' => 'Pemeriksaan (SO)',
+                'category' => 'Rekam Medis',
+                'icon' => 'fa-stethoscope',
+                'description' => "Fitur ini untuk pengisian data pemeriksaan pada area:\n• S (Subject): untuk mengisi keluhan, anamnesis, riwayat penyakit keluarga, riwayat alergi, dan lain-lain.\n• O (Object): untuk mengisi pemeriksaan fisik seperti tinggi badan, berat badan, tensi darah, dan lain-lain.",
+                'is_featured' => true,
+                'order' => 3,
+            ],
+            [
+                'name' => 'Diagnosa dan Tindakan (AP)',
+                'category' => 'Rekam Medis',
+                'icon' => 'fa-notes-medical',
+                'description' => "Fitur ini untuk pengisian hasil diagnosis dan tindakan untuk pasien, yang disebut sebagai:\n• A (Assessment): untuk mengisi prognosis & diagnosis yang sudah terintegrasi dengan kode ICD-10.\n• P (Plan): untuk mengisi tindakan berupa obat yang terintegrasi dengan bagian farmasi, injeksi, atau berupa alat kesehatan.",
+                'is_featured' => true,
+                'order' => 4,
+            ],
+            [
+                'name' => 'Farmasi',
+                'category' => 'Farmasi',
+                'icon' => 'fa-pills',
+                'description' => 'Fitur ini untuk pencatatan data obat dari penerimaan obat, ketersediaan stok obat, stock opname obat, data obat yang kadaluarsa, pengeluaran obat, mutasi obat, hingga pengaturan harga obat. Fitur farmasi ini terintegrasi dengan proses tindakan pemberian obat yang dilakukan pada fitur AP.',
+                'is_featured' => true,
+                'order' => 5,
+            ],
+            [
+                'name' => 'Kasir',
+                'category' => 'Keuangan',
+                'icon' => 'fa-cash-register',
+                'description' => 'Fitur ini merupakan titik akhir dari pelayanan kesehatan, yaitu pembayaran. Fitur ini terintegrasi dengan isian diagnosis, tindakan, dan obat yang diberikan kepada pasien. Petugas kasir dapat menambahkan item-item biaya lain yang belum terakomodir pada proses pemeriksaan sampai tindakan.',
+                'is_featured' => true,
+                'order' => 6,
+            ],
+            [
+                'name' => 'Rawat Inap',
+                'category' => 'Pelayanan',
+                'icon' => 'fa-bed-pulse',
+                'description' => 'Fitur Rawat Inap membantu fasilitas kesehatan dalam mengelola pasien yang menjalani perawatan inap secara efisien. Sistem ini mencatat detail pasien masuk, penempatan kamar atau tempat tidur, SOAP, asuhan keperawatan, serta pemantauan tindakan medis harian selama pasien dirawat.',
+                'is_featured' => true,
+                'order' => 7,
+            ],
+            [
+                'name' => 'Laporan',
+                'category' => 'Laporan',
+                'icon' => 'fa-chart-pie',
+                'description' => 'Fitur Laporan menyajikan data pelayanan kesehatan dalam bentuk yang mudah dibaca dan diakses secara real-time. Laporan mencakup berbagai aspek operasional, mulai dari jumlah kunjungan pasien, layanan yang diberikan, pemakaian obat, 20 besar penyakit, hingga pendapatan dalam periode waktu yang dapat disesuaikan.',
+                'is_featured' => true,
+                'order' => 8,
+            ],
+            [
+                'name' => 'Dashboard',
+                'category' => 'Laporan',
+                'icon' => 'fa-gauge-high',
+                'description' => 'Menyajikan dashboard visual interaktif yang menampilkan grafik perbandingan kunjungan pasien harian/bulanan, tren pendapatan klinik, serta monitoring data antrian dan layanan faskes secara real-time.',
+                'is_featured' => false,
+                'order' => 9,
+            ],
+            [
+                'name' => 'Cetak Kartu Berobat',
+                'category' => 'Pelayanan',
+                'icon' => 'fa-address-card',
+                'description' => 'Fasilitas pencetakan kartu berobat fisik maupun digital bagi pasien baru dan lama yang memuat identitas lengkap dan barcode nomor rekam medis untuk mempercepat pendaftaran berulang.',
+                'is_featured' => false,
+                'order' => 10,
+            ],
+            [
+                'name' => 'Verifikasi dengan SatuSehat Mobile',
+                'category' => 'Integrasi',
+                'icon' => 'fa-mobile-screen-button',
+                'description' => 'Fitur verifikasi identitas dan keaktifan profil kesehatan pasien secara langsung yang terkoneksi dengan aplikasi SATUSEHAT Mobile Kementerian Kesehatan RI.',
+                'is_featured' => false,
+                'order' => 11,
+            ],
+            [
+                'name' => 'Asuhan Keperawatan',
+                'category' => 'Rekam Medis',
+                'icon' => 'fa-user-nurse',
+                'description' => 'Dokumentasi asuhan keperawatan lengkap mulai dari asesmen dan pengkajian awal, perumusan diagnosa keperawatan terstandar, perencanaan intervensi, tindakan klinis keperawatan, hingga lembar evaluasi harian.',
+                'is_featured' => false,
+                'order' => 12,
+            ],
+            [
+                'name' => 'Pengaturan Integrasi SatuSehat dan BPJS Kesehatan',
+                'category' => 'Integrasi',
+                'icon' => 'fa-network-wired',
+                'description' => 'Pusat konfigurasi mandiri untuk menghubungkan API bridging SATUSEHAT Kemenkes RI (Organization ID, Client ID, Secret Key) serta integrasi BPJS Kesehatan dengan pemantauan status koneksi secara langsung.',
+                'is_featured' => false,
+                'order' => 13,
+            ],
+            [
+                'name' => 'Odontogram pada Klinik Gigi',
+                'category' => 'Rekam Medis',
+                'icon' => 'fa-tooth',
+                'description' => 'Diagram odontogram gigi visual interaktif untuk dokter gigi dan perawat gigi dalam mencatat kondisi klinis gigi geligi, karies, restorasi/tambalan, pencabutan, dan rencana perawatan gigi.',
+                'is_featured' => false,
+                'order' => 14,
+            ],
+            [
+                'name' => 'General Consent',
+                'category' => 'Legalitas',
+                'icon' => 'fa-file-signature',
+                'description' => 'Persetujuan umum (General Consent) dari pasien atau penanggung jawab keluarga yang terdokumentasi dan diarsipkan secara elektronik sesuai standar rekam medis dan hukum kesehatan.',
+                'is_featured' => false,
+                'order' => 15,
+            ],
+            [
+                'name' => 'Informed Consent',
+                'category' => 'Legalitas',
+                'icon' => 'fa-file-contract',
+                'description' => 'Formulir persetujuan tindakan medis kedokteran khusus setelah penjelasan risiko dan indikasi, dilengkapi dokumentasi persetujuan digital pasien atau wali serta tanda tangan dokter penanggung jawab.',
+                'is_featured' => false,
+                'order' => 16,
+            ],
+            [
+                'name' => 'Surat Sehat & Surat Sakit',
+                'category' => 'Administrasi',
+                'icon' => 'fa-file-medical',
+                'description' => 'Modul penerbitan dan pencetakan surat keterangan sehat, surat keterangan sakit istirahat dokter, dan surat rujukan resmi dengan format terstandar dan barcode verifikasi.',
+                'is_featured' => false,
+                'order' => 17,
+            ],
+            [
+                'name' => 'Laboratorium',
+                'category' => 'Penunjang',
+                'icon' => 'fa-flask-vial',
+                'description' => 'Pencatatan permintaan pemeriksaan laboratorium klinik penunjang, input hasil pengujian parameter darah/urine dan spesimen medis lainnya, hingga pencetakan lembar hasil laboratorium.',
+                'is_featured' => false,
+                'order' => 18,
+            ],
+            [
+                'name' => 'Sedasi',
+                'category' => 'Rekam Medis',
+                'icon' => 'fa-syringe',
+                'description' => 'Pencatatan pemantauan status sedasi dan anestesi pra, intra, dan pasca tindakan prosedur bedah minor atau tindakan klinis sesuai pedoman keselamatan pasien.',
+                'is_featured' => false,
+                'order' => 19,
+            ],
+            [
+                'name' => 'Dan lain-lain',
+                'category' => 'Pelayanan',
+                'icon' => 'fa-ellipsis',
+                'description' => 'Berbagai fitur dan modul penunjang operasional fasilitas pelayanan kesehatan lainnya yang senantiasa diperbarui mengikuti kebutuhan operasional mitra faskes dan regulasi terkini.',
+                'is_featured' => false,
+                'order' => 20,
+            ],
         ];
         foreach ($features as $feat) {
-            Feature::updateOrCreate(['name' => $feat['name']], $feat);
+            Feature::create($feat);
         }
 
-        // 7. Pricing Plans (Sesuai Proposal)
+        // 7. Daftar Harga SIP-Kes: 3 Pilihan Paket (Sesuai Proposal Hal 12)
+        PricingPlan::truncate();
         $plans = [
             [
-                'name' => 'Praktik Dokter Mandiri',
-                'slug' => 'praktik-mandiri',
+                'name' => 'PRAKTIK DOKTER MANDIRI',
+                'slug' => 'praktik-dokter-mandiri',
                 'price' => 150000,
                 'period' => 'bulan',
-                'badge' => 'Pilihan Dokter',
-                'description' => 'Ideal untuk Dokter Umum, Dokter Gigi, Dokter Spesialis, dan Bidan yang membuka praktik mandiri perorangan.',
+                'badge' => 'Praktik Dokter Mandiri',
+                'description' => 'Ideal untuk praktik dokter perorangan (umum maupun spesialis), praktik perawat, dan praktik mandiri bidan.',
                 'features_list' => [
-                    'Akses Sistem Rekam Medis Elektronik (RME)',
-                    'Bridging SATUSEHAT Kemenkes RI Lengkap',
-                    'Modul Rekam Medis SOAP & ICD-10 / ICD-9-CM',
-                    'E-Resep & Cetak Surat Sakit / Sehat',
-                    '1 Akun Dokter & 1 Akun Asisten/Perawat',
-                    'Pencetakan Kartu Berobat & Antrian Standar',
-                    'Free Backup Data Cloud Mingguan',
-                    'Pendampingan Setup & Video Tutorial',
+                    'Minimal kontrak 1 tahun.',
+                    'Full support untuk integrasi BPJS Kesehatan dan SatuSehat.',
+                    'Akses ke fitur-fitur praktik dokter mandiri: pendaftaran pasien lama & pasien baru, antrian, pemeriksaan, farmasi, kasir.',
+                    'Free biaya custom RME',
                 ],
                 'terms' => [
-                    'Biaya berlangganan per bulan',
-                    'Termasuk pembaruan regulasi SATUSEHAT',
-                    'Koneksi internet disediakan oleh faskes',
+                    'Minimal kontrak 1 tahun',
+                    'Full support untuk integrasi BPJS Kesehatan dan SatuSehat',
+                    'Free biaya custom RME',
                 ],
                 'is_active' => true,
                 'order' => 1,
             ],
             [
-                'name' => 'Klinik Pratama (Non Rawat Inap)',
-                'slug' => 'klinik-pratama',
+                'name' => 'KLINIK PRATAMA (Non Rawat Inap)',
+                'slug' => 'klinik-pratama-non-rawat-inap',
                 'price' => 350000,
                 'period' => 'bulan',
-                'badge' => 'Paling Populer',
-                'description' => 'Dirancang untuk Klinik Pratama Rawat Jalan yang membutuhkan sistem operasional terpadu multi-ruang poli dan farmasi.',
+                'badge' => 'Klinik Pratama',
+                'description' => 'Dirancang khusus untuk Klinik Pratama Rawat Jalan yang membutuhkan sistem operasional multi-poli, APM, dan antrian suara terpadu.',
                 'features_list' => [
-                    'Seluruh Fitur Paket Praktik Dokter Mandiri',
-                    'Bridging BPJS Kesehatan PCare & SATUSEHAT',
-                    'Multi-Poli (Poli Umum, Poli Gigi, KIA/KB)',
-                    'Modul Odontogram Gigi & Kartu Pasien',
-                    'Manajemen Antrian dengan Panggilan Suara',
-                    'Modul Apotek & Multi-Depo Stok Obat Terpadu',
-                    'Modul Kasir & Billing Pembayaran Otomatis',
-                    'Unlimited Akun Dokter, Perawat, dan Staf Loket',
-                    'Pendampingan Teknis Langsung oleh Tim TeFa V-Kes',
+                    'Minimal kontrak 1 tahun.',
+                    'Full support untuk integrasi BPJS Kesehatan dan SatuSehat.',
+                    'Akses ke fitur-fitur klinik pratama, seperti: pendaftaran pasien lama & pasien baru, antrian, APM, pemeriksaan, manajemen poli (KIA, Gigi, Laboratorium, UGD, dan lain-lain kecuali rawat inap), farmasi, kasir, manajemen pegawai.',
+                    'Free biaya custom RME',
+                    'Free biaya update fitur',
                 ],
                 'terms' => [
-                    'Biaya berlangganan bulanan terjangkau',
-                    'Free training onsite/daring untuk staf klinik',
-                    'Termasuk pemeliharaan sistem rutin',
+                    'Minimal kontrak 1 tahun',
+                    'Full support untuk integrasi BPJS Kesehatan dan SatuSehat',
+                    'Free biaya custom RME',
+                    'Free biaya update fitur',
                 ],
                 'is_active' => true,
                 'order' => 2,
             ],
             [
-                'name' => 'Klinik Rawat Inap & Puskesmas',
+                'name' => 'KLINIK RAWAT INAP & PUSKESMAS',
                 'slug' => 'klinik-rawat-inap-puskesmas',
                 'price' => 500000,
                 'period' => 'bulan',
-                'badge' => 'Solusi Terlengkap',
-                'description' => 'Solusi enterprise lengkap untuk Klinik Rawat Inap, Klinik Utama, dan Fasilitas Puskesmas.',
+                'badge' => 'Klinik Rawat Inap & Puskesmas',
+                'description' => 'Paket terlengkap untuk Klinik Rawat Inap dan Puskesmas dengan jumlah pasien dan kunjungan tanpa batas (unlimited).',
                 'features_list' => [
-                    'Seluruh Fitur Paket Klinik Pratama',
-                    'Manajemen Rawat Inap & Monitoring Kamar Bed',
-                    'Catatan Perkembangan Pasien Terintegrasi (CPPT)',
-                    'Asuhan Keperawatan (SDKI, SIKI, SLKI)',
-                    'Modul Laboratorium & Pemeriksaan Penunjang Medis',
-                    'General Consent & Informed Consent Digital TTD',
-                    'Dokumentasi Tindakan Sedasi & Bedah Minor',
-                    'Laporan Eksekutif, BOR, dan Morbiditas 10 Besar',
-                    'Prioritas Bantuan Teknis Khusus 24/7',
+                    'Minimal kontrak 1 tahun.',
+                    'Full support untuk integrasi BPJS Kesehatan dan SatuSehat.',
+                    'Akses ke fitur-fitur klinik rawat inap, seperti: pendaftaran pasien lama & pasien baru, antrian, APM, pemeriksaan, manajemen poli (KIA, Gigi, Laboratorium, UGD, rawat inap, dan lain-lain), farmasi, kasir, manajemen pegawai, kartu berobat, dan lain-lain.',
+                    'Unlimited jumlah pasien dan kunjungan.',
+                    'Free biaya custom RME',
+                    'Free biaya update fitur',
                 ],
                 'terms' => [
-                    'SLA support prioritas tinggi',
-                    'Free Custom format formulir rekam medis faskes',
-                    'Pendampingan akreditasi klinik dan audit data RME',
+                    'Minimal kontrak 1 tahun',
+                    'Full support untuk integrasi BPJS Kesehatan dan SatuSehat',
+                    'Unlimited jumlah pasien dan kunjungan',
+                    'Free biaya custom RME',
+                    'Free biaya update fitur',
                 ],
                 'is_active' => true,
                 'order' => 3,
             ],
         ];
         foreach ($plans as $plan) {
-            PricingPlan::updateOrCreate(['slug' => $plan['slug']], $plan);
+            PricingPlan::create($plan);
         }
 
-        // 8. Support Services (Sesuai Proposal)
+        // 8. Layanan Pendukung Lainnya (Sesuai Proposal Hal 13)
+        SupportService::truncate();
         $services = [
             [
-                'title' => 'Pendampingan Klaim BPJS Kesehatan',
+                'title' => 'Pendampingan Klaim BPJS',
                 'icon' => 'fa-file-invoice-dollar',
-                'summary' => 'Solusi mengatasi kendala verifikasi data dan percepatan proses klaim BPJS Kesehatan faskes Anda.',
-                'description' => 'Layanan pendampingan komprehensif bagi fasilitas kesehatan untuk menata alur pencatatan medis, kodifikasi diagnosa ICD-10 dan tindakan ICD-9-CM yang tepat, serta rekonsiliasi data pada aplikasi PCare BPJS. Didampingi langsung oleh pakar Manajemen Informasi Kesehatan dari TeFa V-Kes Polije agar angka pending klaim terminimalisasi.',
+                'summary' => 'Pendampingan berupa bimbingan input data sesuai kebutuhan e-klaim BPJS, penyesuaian data SEP & INA-CBG, serta konsultasi kendala teknis selama proses klaim.',
+                'description' => "Pendampingan ini berupa bimbingan input data sesuai kebutuhan e-klaim BPJS, penyesuaian data SEP & INA-CBG, konsultasi kendala teknis selama proses klaim.\n\nKeunggulan Layanan Pendukung SIP-Kes:\n• Didampingi oleh tim profesional dari TEFA V-Kes POLIJE.\n• Melibatkan dosen ahli, praktisi kesehatan, dan mahasiswa terlatih.\n• Berbasis problem-solving dan continuous improvement.",
                 'benefits' => [
-                    'Audit kelengkapan resume medis dan berkas pendukung klaim',
-                    'Pelatihan kodifikasi klinis sesuai standar tarif BPJS Kesehatan',
-                    'Simulasi pencegahan fraud dan ketidaklengkapan berkas verifikasi',
-                    'Konsultasi intensif dengan pakar rekam medis Polije',
+                    'Bimbingan input data sesuai kebutuhan e-klaim BPJS',
+                    'Penyesuaian data SEP & INA-CBG',
+                    'Konsultasi kendala teknis selama proses klaim',
+                    'Didampingi oleh tim profesional dari TEFA V-Kes POLIJE',
+                    'Melibatkan dosen ahli, praktisi kesehatan, dan mahasiswa terlatih',
+                    'Berbasis problem-solving dan continuous improvement',
                 ],
                 'is_active' => true,
                 'order' => 1,
@@ -246,93 +414,102 @@ class SipKesDatabaseSeeder extends Seeder
             [
                 'title' => 'Pendampingan Akreditasi Klinik',
                 'icon' => 'fa-award',
-                'summary' => 'Persiapan instrumen Rekam Medis Elektronik dan tata kelola informasi untuk meraih akreditasi Paripurna.',
-                'description' => 'TeFa V-Kes Polije membantu klinik dalam pemenuhan standar akreditasi klinik pada bab Tata Kelola Pelayanan Klinis (TKPK), Peningkatan Mutu dan Keselamatan Pasien (PMKP), serta Penyelenggaraan Rekam Medis Elektronik. Kami memfasilitasi pembuatan SOP rekam medis, tata kelola informed consent digital, keamanan data, dan pemenuhan indikator nasional mutu.',
+                'summary' => 'Pendampingan berupa penyusunan dokumen elektronik sesuai standar akreditasi Kemenkes, penyediaan data rekam medis, laporan kegiatan, dan log pelayanan, simulasi audit digital dan pendampingan tim surveyor.',
+                'description' => "Pendampingan ini berupa penyusunan dokumen elektronik sesuai standar akreditasi Kemenkes, penyediaan data rekam medis, laporan kegiatan, dan log pelayanan, simulasi audit digital dan pendampingan tim surveyor.\n\nKeunggulan Layanan Pendukung SIP-Kes:\n• Didampingi oleh tim profesional dari TEFA V-Kes POLIJE.\n• Melibatkan dosen ahli, praktisi kesehatan, dan mahasiswa terlatih.\n• Berbasis problem-solving dan continuous improvement.",
                 'benefits' => [
-                    'Review dokumen regulasi internal dan SOP rekam medis faskes',
-                    'Pemenuhan instrumen elemen penilaian akreditasi berbasis digital',
-                    'Penerapan standar hak akses, kerahasiaan, dan keamanan data pasien',
-                    'Pendampingan pra-survei dan gladi bersih akreditasi klinik',
+                    'Penyusunan dokumen elektronik sesuai standar akreditasi Kemenkes',
+                    'Penyediaan data rekam medis, laporan kegiatan, dan log pelayanan',
+                    'Simulasi audit digital dan gladi akreditasi',
+                    'Pendampingan langsung saat tim surveyor melakukan visitasi',
+                    'Didampingi oleh tim profesional dari TEFA V-Kes POLIJE',
+                    'Melibatkan dosen ahli, praktisi kesehatan, dan mahasiswa terlatih',
+                    'Berbasis problem-solving dan continuous improvement',
                 ],
                 'is_active' => true,
                 'order' => 2,
             ],
         ];
         foreach ($services as $srv) {
-            SupportService::updateOrCreate(['title' => $srv['title']], $srv);
+            SupportService::create($srv);
         }
 
-        // 9. Gallery Categories & Dummy Items
-        $catKegiatan = GalleryCategory::updateOrCreate(['slug' => 'dokumentasi-kegiatan'], ['name' => 'Dokumentasi Kegiatan']);
-        $catFasilitas = GalleryCategory::updateOrCreate(['slug' => 'fasilitas-ruangan'], ['name' => 'Fasilitas & Ruangan']);
-        $catPelatihan = GalleryCategory::updateOrCreate(['slug' => 'pelatihan-faskes'], ['name' => 'Pelatihan Faskes']);
-        $catAktivitas = GalleryCategory::updateOrCreate(['slug' => 'aktivitas-tefa'], ['name' => 'Aktivitas TeFa V-Kes']);
+        // 9. Galeri Kegiatan & Fasilitas TeFa V-Kes (Sesuai Proposal Hal 2, 3, 10, 14)
+        GalleryCategory::truncate();
+        Gallery::truncate();
+
+        $catKegiatan = GalleryCategory::create(['name' => 'Dokumentasi Pelayanan & Implementasi', 'slug' => 'pelayanan-implementasi']);
+        $catFasilitas = GalleryCategory::create(['name' => 'Gedung & Fasilitas TeFa V-Kes', 'slug' => 'gedung-fasilitas']);
+        $catPelatihan = GalleryCategory::create(['name' => 'Pelatihan & Pendampingan Faskes', 'slug' => 'pelatihan-pendampingan']);
 
         $galleries = [
             [
                 'category_id' => $catKegiatan->id,
-                'title' => 'Sosialisasi Integrasi SATUSEHAT Kemenkes',
-                'description' => 'Kegiatan sosialisasi dan bimbingan teknis koneksi RME klinik ke platform SATUSEHAT.',
-                'image' => 'gallery/sosialisasi-satusehat.jpg',
-                'date' => '2026-08-15',
+                'title' => 'Implementasi RME SIP-Kes di Loket Pendaftaran Fasyankes',
+                'description' => 'Pelayanan pendaftaran pasien dan identifikasi keaktifan BPJS menggunakan SIP-Kes di fasilitas kesehatan mitra.',
+                'image' => 'gallery/pendaftaran-pasien-rme.jpg',
+                'date' => '2026-08-10',
                 'order' => 1,
             ],
             [
-                'category_id' => $catPelatihan->id,
-                'title' => 'Workshop Implementasi Rekam Medis Elektronik',
-                'description' => 'Pelatihan langsung operasional RME SIP-Kes bersama dokter dan tenaga kesehatan mitra faskes.',
-                'image' => 'gallery/workshop-rme.jpg',
-                'date' => '2026-09-10',
+                'category_id' => $catFasilitas->id,
+                'title' => 'Gedung Teaching Factory Inovasi Kesehatan (TeFa V-Kes)',
+                'description' => 'Gedung unit usaha dan pusat riset rekam medis terpadu Politeknik Negeri Jember, Jalan Mastrip 164 Jember.',
+                'image' => 'gallery/gedung-tefa-vkes.jpg',
+                'date' => '2026-07-15',
                 'order' => 2,
             ],
             [
-                'category_id' => $catFasilitas->id,
-                'title' => 'Laboratorium Smart Health TeFa V-Kes Polije',
-                'description' => 'Ruang riset dan pusat data simulasi pelayanan kesehatan digital Politeknik Negeri Jember.',
-                'image' => 'gallery/lab-tefa-polije.jpg',
-                'date' => '2026-07-20',
+                'category_id' => $catKegiatan->id,
+                'title' => 'Pelayanan Pemeriksaan Medis Terintegrasi RME',
+                'description' => 'Tenaga medis mengisi pemeriksaan klinis SOAP dan asesmen diagnosis ICD-10 secara langsung melalui SIP-Kes.',
+                'image' => 'gallery/pelayanan-medis-pasien.jpg',
+                'date' => '2026-09-02',
                 'order' => 3,
             ],
             [
-                'category_id' => $catAktivitas->id,
-                'title' => 'Pengujian Bridging API PCare BPJS & SATUSEHAT',
-                'description' => 'Tim teknis TeFa V-Kes melakukan validasi pengiriman data encounter faskes secara realtime.',
-                'image' => 'gallery/testing-api.jpg',
-                'date' => '2026-10-05',
+                'category_id' => $catPelatihan->id,
+                'title' => 'Bimbingan Teknis & Pelatihan Penggunaan RME SIP-Kes',
+                'description' => 'Pelatihan gratis pengoperasian sistem bagi dokter, perawat, apoteker, dan petugas fasyankes.',
+                'image' => 'gallery/pelatihan-fasyankes.jpg',
+                'date' => '2026-10-18',
                 'order' => 4,
             ],
         ];
         foreach ($galleries as $g) {
-            Gallery::updateOrCreate(['title' => $g['title']], $g);
+            Gallery::create($g);
         }
 
-        // 10. Contact Info (Sesuai Proposal)
-        ContactInfo::updateOrCreate(
-            ['id' => 1],
-            [
-                'phone' => '0813-3551-2803',
-                'whatsapp' => '6281335512803',
-                'email' => 'vkes@polije.ac.id',
-                'instagram' => '@sipkes.co.id',
-                'instagram_url' => 'https://instagram.com/sipkes.co.id',
-                'address' => 'Jurusan Kesehatan, Program Studi Manajemen Informasi Kesehatan, Politeknik Negeri Jember, Jalan Mastrip 164, Jember, Jawa Timur.',
-                'maps_embed' => 'https://maps.google.com/maps?q=Politeknik+Negeri+Jember&t=&z=15&ie=UTF8&iwloc=&output=embed',
-            ]
-        );
+        // 10. Informasi Kontak Sekretariat (Sesuai Proposal Hal 1, 2, 14)
+        ContactInfo::truncate();
+        ContactInfo::create([
+            'phone' => '0813-3551-2803',
+            'whatsapp' => '6281335512803',
+            'email' => 'vkes@polije.ac.id',
+            'instagram' => '@sipkes.co.id',
+            'instagram_url' => 'https://instagram.com/sipkes.co.id',
+            'address' => 'Jurusan Kesehatan, Program Studi Manajemen Informasi Kesehatan, Politeknik Negeri Jember, Jalan Mastrip 164 Jember',
+            'maps_embed' => 'https://maps.google.com/maps?q=Politeknik+Negeri+Jember&t=&z=15&ie=UTF8&iwloc=&output=embed',
+        ]);
 
-        // 11. Site Settings
+        // 11. Pengaturan Situs (Site Settings)
         $settings = [
-            'site_name' => 'SIP-Kes Portal',
-            'site_tagline' => 'Sistem Informasi Pelayanan Kesehatan TeFa V-Kes Polije',
-            'meta_description' => 'Website portal resmi SIP-Kes (Sistem Informasi Pelayanan Kesehatan), platform rekam medis elektronik (RME) terintegrasi SATUSEHAT & BPJS Kesehatan milik TeFa V-Kes Politeknik Negeri Jember.',
-            'cta_title' => 'Siap Mentransformasi Tata Kelola Rekam Medis Faskes Anda?',
-            'cta_subtitle' => 'Bergabunglah bersama puluhan fasilitas kesehatan yang telah terintegrasi resmi SATUSEHAT Kemenkes RI dengan pendampingan langsung dari TeFa V-Kes Polije.',
-            'cta_btn_text' => 'Jadwalkan Demo & Konsultasi Gratis',
+            'site_name' => 'SIP-Kes',
+            'site_tagline' => 'Sistem Informasi Pelayanan Kesehatan - TeFa V-Kes Politeknik Negeri Jember',
+            'meta_description' => 'Sebuah sistem rekam medis elektronik untuk manajemen data kesehatan di fasilitas pelayanan kesehatan tingkat pertama yang telah terintegrasi dengan SATUSEHAT dan bridging BPJS Kesehatan.',
+            'phone' => '0813-3551-2803',
+            'email' => 'vkes@polije.ac.id',
+            'website' => 'www.sipkes.co.id',
+            'instagram' => '@sipkes.co.id',
+            'address' => 'Jurusan Kesehatan, Program Studi Manajemen Informasi Kesehatan, Politeknik Negeri Jember, Jalan Mastrip 164 Jember',
+            'cta_title' => 'Siap Menerapkan Rekam Medis Elektronik Terintegrasi SATUSEHAT & BPJS?',
+            'cta_subtitle' => 'Demikian penawaran ini kami buat, kami sangat terbuka untuk mendiskusikan terkait penawaran ini. Silakan menghubungi kami melalui call center kami.',
+            'cta_btn_text' => 'Hubungi Call Center Kami',
             'cta_btn_url' => '#kontak',
         ];
         foreach ($settings as $key => $val) {
             SiteSetting::set($key, $val);
         }
+
+        Schema::enableForeignKeyConstraints();
     }
 }
-

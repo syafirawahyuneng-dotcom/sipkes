@@ -31,51 +31,68 @@
             @endforeach
         </div>
 
-        <!-- 6 Pillars Based on Proposal -->
+        <!-- Kepatuhan SIP-Kes Terhadap Standar Kemenkes RI (Sesuai Proposal Hal 5) -->
         <div class="bg-slate-50 border border-slate-200 rounded-3xl p-8 sm:p-12">
-            <h2 class="text-2xl font-black text-slate-900 text-center mb-8">6 Pilar Keunggulan Berdasarkan Proposal Resmi:</h2>
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div class="text-center max-w-3xl mx-auto mb-10">
+                <span class="inline-block px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider bg-sky-100 text-sky-800 mb-2">Regulasi Resmi</span>
+                <h2 class="text-2xl sm:text-3xl font-black text-slate-900">Kepatuhan SIP-Kes Terhadap Standar Kemenkes RI</h2>
+                <p class="text-xs sm:text-sm text-slate-500 mt-2">Dukungan penuh terhadap kepatuhan regulasi Kementerian Kesehatan Republik Indonesia dan interoperabilitas data nasional.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                 
-                <div class="p-5 bg-white rounded-2xl border border-slate-200">
-                    <div class="flex items-center gap-3 font-bold text-slate-800 text-sm mb-2">
-                        <i class="fa-solid fa-check-circle text-sky-500"></i> Terintegrasi BPJS Kesehatan
+                <div class="p-6 bg-white rounded-2xl border border-slate-200 shadow-sm flex items-start gap-4">
+                    <div class="w-12 h-12 rounded-xl bg-sky-50 text-sky-600 flex items-center justify-center text-xl shrink-0">
+                        <i class="fa-solid fa-database"></i>
                     </div>
-                    <p class="text-xs text-slate-500">Koneksi data klaim, validasi status kepesertaan aktif pasien, dan bridging PCare otomatis tanpa kendala.</p>
+                    <div>
+                        <h3 class="font-bold text-slate-800 text-base mb-1.5">Standar Data</h3>
+                        <p class="text-xs text-slate-600 leading-relaxed mb-2">
+                            SIP-Kes menerapkan kesesuaian data berdasarkan <strong>Kepmenkes No. HK.01.07/MENKES/1423/2022</strong> Tentang Pedoman Variabel dan Meta Data Pada Penyelenggaraan Rekam Medis Elektronik.
+                        </p>
+                        <p class="text-xs text-slate-500 flex items-center gap-1.5 font-medium">
+                            <i class="fa-solid fa-check text-green-500"></i> Penggunaan format dan kode yang sesuai dengan HL7-FHIR.
+                        </p>
+                    </div>
                 </div>
 
-                <div class="p-5 bg-white rounded-2xl border border-slate-200">
-                    <div class="flex items-center gap-3 font-bold text-slate-800 text-sm mb-2">
-                        <i class="fa-solid fa-check-circle text-sky-500"></i> Terintegrasi SATUSEHAT
+                <div class="p-6 bg-white rounded-2xl border border-slate-200 shadow-sm flex items-start gap-4">
+                    <div class="w-12 h-12 rounded-xl bg-indigo-50 text-indigo-600 flex items-center justify-center text-xl shrink-0">
+                        <i class="fa-solid fa-network-wired"></i>
                     </div>
-                    <p class="text-xs text-slate-500">Interoperabilitas penuh standar HL7 FHIR Kemenkes RI mencakup Encounter, Diagnosis, Observation & Medication.</p>
+                    <div>
+                        <h3 class="font-bold text-slate-800 text-base mb-1.5">Standar Interoperabilitas</h3>
+                        <p class="text-xs text-slate-600 leading-relaxed">
+                            SIP-Kes sebagai RME yang mampu berkomunikasi dan bertukar data dengan sistem lain, termasuk platform <strong>SATUSEHAT</strong> dan <strong>BPJS Kesehatan</strong>.
+                        </p>
+                    </div>
                 </div>
 
-                <div class="p-5 bg-white rounded-2xl border border-slate-200">
-                    <div class="flex items-center gap-3 font-bold text-slate-800 text-sm mb-2">
-                        <i class="fa-solid fa-check-circle text-sky-500"></i> Berbasis Website (Cloud)
+                <div class="p-6 bg-white rounded-2xl border border-slate-200 shadow-sm flex items-start gap-4">
+                    <div class="w-12 h-12 rounded-xl bg-teal-50 text-teal-600 flex items-center justify-center text-xl shrink-0">
+                        <i class="fa-solid fa-shield-halved"></i>
                     </div>
-                    <p class="text-xs text-slate-500">Dapat dibuka dari browser mana pun tanpa investasi server mahal. Bebas perawatan hardware mandiri.</p>
+                    <div>
+                        <h3 class="font-bold text-slate-800 text-base mb-1.5">Standar Keamanan Data</h3>
+                        <p class="text-xs text-slate-600 leading-relaxed mb-2">
+                            Perlindungan data pasien dari akses yang tidak sah dan kebocoran informasi.
+                        </p>
+                        <p class="text-xs text-slate-500 flex items-center gap-1.5 font-medium">
+                            <i class="fa-solid fa-check text-green-500"></i> Server yang digunakan juga sudah teruji keamanannya dari kebocoran data.
+                        </p>
+                    </div>
                 </div>
 
-                <div class="p-5 bg-white rounded-2xl border border-slate-200">
-                    <div class="flex items-center gap-3 font-bold text-slate-800 text-sm mb-2">
-                        <i class="fa-solid fa-check-circle text-sky-500"></i> Free Training
+                <div class="p-6 bg-white rounded-2xl border border-slate-200 shadow-sm flex items-start gap-4">
+                    <div class="w-12 h-12 rounded-xl bg-purple-50 text-purple-600 flex items-center justify-center text-xl shrink-0">
+                        <i class="fa-solid fa-user-lock"></i>
                     </div>
-                    <p class="text-xs text-slate-500">Bimbingan teknis gratis bagi dokter, perawat, loket, apotek, kasir hingga mahir mengoperasikan sistem.</p>
-                </div>
-
-                <div class="p-5 bg-white rounded-2xl border border-slate-200">
-                    <div class="flex items-center gap-3 font-bold text-slate-800 text-sm mb-2">
-                        <i class="fa-solid fa-check-circle text-sky-500"></i> Free Custom RME
+                    <div>
+                        <h3 class="font-bold text-slate-800 text-base mb-1.5">Standar Otentikasi dan Otorisasi</h3>
+                        <p class="text-xs text-slate-600 leading-relaxed">
+                            Pengguna harus memiliki akses yang sesuai dengan peran dan tanggung jawab mereka (Role-Based Access Control) untuk menjamin kerahasiaan dan privasi data medis pasien.
+                        </p>
                     </div>
-                    <p class="text-xs text-slate-500">Kustomisasi form anamnesis, template resep, odontogram, dan lembar asesmen sesuai SOP spesifik klinik Anda.</p>
-                </div>
-
-                <div class="p-5 bg-white rounded-2xl border border-slate-200">
-                    <div class="flex items-center gap-3 font-bold text-slate-800 text-sm mb-2">
-                        <i class="fa-solid fa-check-circle text-sky-500"></i> Data Tersentralisasi
-                    </div>
-                    <p class="text-xs text-slate-500">Seluruh data riwayat pasien, mutasi stok obat, dan laporan keuangan terkonsolidasi dalam satu sistem aman.</p>
                 </div>
 
             </div>

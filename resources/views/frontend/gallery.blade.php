@@ -35,17 +35,23 @@
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
             @forelse($galleries as $g)
             <div class="bg-white rounded-3xl overflow-hidden border border-slate-200 shadow-sm hover:shadow-lg transition group">
-                <div class="h-56 bg-gradient-to-tr from-primary-800 to-sky-600 flex items-center justify-center text-white relative">
-                    <i class="fa-solid fa-camera text-5xl text-white/40 group-hover:scale-110 transition duration-300"></i>
+                <div class="h-56 bg-slate-100 overflow-hidden relative flex items-center justify-center">
+                    @if($g->hasValidImage())
+                        <img src="{{ $g->image_url }}" alt="{{ $g->title }}" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
+                    @else
+                        <div class="w-full h-full bg-gradient-to-tr from-primary-800 to-sky-600 flex items-center justify-center text-white">
+                            <i class="fa-solid fa-camera text-5xl text-white/40 group-hover:scale-110 transition duration-300"></i>
+                        </div>
+                    @endif
                     
                     @if($g->category)
-                    <span class="absolute top-4 left-4 px-3 py-1 rounded-full text-[10px] font-bold uppercase bg-black/50 text-white backdrop-blur-xs">
+                    <span class="absolute top-4 left-4 px-3 py-1 rounded-full text-[10px] font-bold uppercase bg-black/60 text-white backdrop-blur-xs">
                         {{ $g->category->name }}
                     </span>
                     @endif
 
                     @if($g->date)
-                    <span class="absolute bottom-4 right-4 px-3 py-1 rounded-full text-[10px] font-semibold bg-white/20 text-white backdrop-blur-xs">
+                    <span class="absolute bottom-4 right-4 px-3 py-1 rounded-full text-[10px] font-semibold bg-black/60 text-white backdrop-blur-xs">
                         <i class="fa-regular fa-calendar mr-1"></i> {{ \Carbon\Carbon::parse($g->date)->isoFormat('D MMMM Y') }}
                     </span>
                     @endif

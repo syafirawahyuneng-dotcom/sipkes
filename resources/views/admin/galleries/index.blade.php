@@ -47,10 +47,16 @@
     @forelse($galleries as $g)
     <div class="bg-white rounded-3xl overflow-hidden border border-slate-200 shadow-sm flex flex-col justify-between">
         <div>
-            <div class="h-44 bg-gradient-to-tr from-primary-800 to-sky-600 flex items-center justify-center text-white relative">
-                <i class="fa-solid fa-camera text-4xl text-white/40"></i>
+            <div class="h-44 bg-slate-100 overflow-hidden relative flex items-center justify-center">
+                @if($g->hasValidImage())
+                    <img src="{{ $g->image_url }}" alt="{{ $g->title }}" class="w-full h-full object-cover">
+                @else
+                    <div class="w-full h-full bg-gradient-to-tr from-primary-800 to-sky-600 flex items-center justify-center text-white">
+                        <i class="fa-solid fa-camera text-4xl text-white/40"></i>
+                    </div>
+                @endif
                 @if($g->category)
-                <span class="absolute top-3 left-3 px-2 py-0.5 rounded-full text-[10px] font-bold uppercase bg-black/50 text-white">
+                <span class="absolute top-3 left-3 px-2.5 py-1 rounded-full text-[10px] font-bold uppercase bg-black/60 text-white backdrop-blur-xs">
                     {{ $g->category->name }}
                 </span>
                 @endif

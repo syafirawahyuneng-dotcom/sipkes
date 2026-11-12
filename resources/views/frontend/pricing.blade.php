@@ -21,10 +21,10 @@
         
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 items-stretch">
             @foreach($plans as $plan)
-            <div class="relative bg-white rounded-3xl p-8 border {{ $plan->slug == 'klinik-pratama' ? 'border-primary-500 shadow-2xl ring-2 ring-primary-500/20' : 'border-slate-200 shadow-sm' }} flex flex-col justify-between">
+            <div class="relative bg-white rounded-3xl p-8 border {{ str_contains($plan->slug, 'klinik-pratama') ? 'border-primary-500 shadow-2xl ring-2 ring-primary-500/20' : 'border-slate-200 shadow-sm' }} flex flex-col justify-between">
                 
                 @if($plan->badge)
-                <div class="absolute -top-3.5 left-1/2 -translate-x-1/2 px-4 py-1 rounded-full text-xs font-black uppercase tracking-wider {{ $plan->slug == 'klinik-pratama' ? 'bg-primary-600 text-white' : 'bg-slate-800 text-white' }} shadow-md">
+                <div class="absolute -top-3.5 left-1/2 -translate-x-1/2 px-4 py-1 rounded-full text-xs font-black uppercase tracking-wider {{ str_contains($plan->slug, 'klinik-pratama') ? 'bg-primary-600 text-white' : 'bg-slate-800 text-white' }} shadow-md">
                     {{ $plan->badge }}
                 </div>
                 @endif
@@ -61,7 +61,7 @@
                 </div>
 
                 <div>
-                    <a href="https://wa.me/6281335512803?text=Halo%20TeFa%20V-Kes%20Polije,%20saya%20ingin%20berlangganan%20Paket%20{{ urlencode($plan->name) }}" target="_blank" class="w-full block text-center py-3.5 px-4 rounded-xl font-bold text-sm {{ $plan->slug == 'klinik-pratama' ? 'bg-primary-600 hover:bg-primary-700 text-white shadow-lg shadow-primary-600/30' : 'bg-slate-100 hover:bg-slate-200 text-slate-800' }} transition">
+                    <a href="https://wa.me/6281335512803?text=Halo%20TeFa%20V-Kes%20Polije,%20saya%20ingin%20berlangganan%20Paket%20{{ urlencode($plan->name) }}" target="_blank" class="w-full block text-center py-3.5 px-4 rounded-xl font-bold text-sm {{ str_contains($plan->slug, 'klinik-pratama') ? 'bg-primary-600 hover:bg-primary-700 text-white shadow-lg shadow-primary-600/30' : 'bg-slate-100 hover:bg-slate-200 text-slate-800' }} transition">
                         Daftar Paket {{ $plan->name }}
                     </a>
                 </div>
