@@ -87,32 +87,18 @@
 
                     <!-- Dropdown Fitur & Layanan -->
                     <div class="relative group">
-                        <button type="button" class="flex items-center gap-1.5 px-3.5 py-2 text-sm font-semibold rounded-lg transition {{ request()->routeIs('features', 'advantages', 'support.services') ? 'text-primary-700 bg-primary-50' : 'text-slate-600 hover:text-primary-600 hover:bg-slate-50' }}">
+                        <button type="button" class="flex items-center gap-1.5 px-3.5 py-2 text-sm font-semibold rounded-lg transition {{ request()->routeIs('features', 'features.show', 'advantages', 'support.services') ? 'text-primary-700 bg-primary-50' : 'text-slate-600 hover:text-primary-600 hover:bg-slate-50' }}">
                             <span>Fitur & Layanan</span>
                             <i class="fa-solid fa-chevron-down text-[10px] transition-transform duration-200 group-hover:rotate-180"></i>
                         </button>
                         <div class="absolute left-0 mt-1 w-64 rounded-2xl bg-white shadow-xl border border-slate-100 py-2 hidden group-hover:block transition duration-200 z-50">
-                            <!-- Direct RME Application Entry -->
-                            <a href="{{ route('rme.dashboard') }}" class="flex items-center gap-3 px-3.5 py-2.5 text-xs font-semibold text-emerald-800 bg-emerald-50/80 hover:bg-emerald-100 transition rounded-xl mx-2 mb-1.5 border border-emerald-200">
-                                <div class="w-7 h-7 rounded-lg bg-emerald-600 text-white flex items-center justify-center shrink-0">
-                                    <i class="fa-solid fa-hospital text-xs"></i>
-                                </div>
-                                <div>
-                                    <p class="font-bold flex items-center gap-1.5 text-emerald-950">
-                                        <span>Buka Aplikasi RME</span>
-                                        <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
-                                    </p>
-                                    <p class="text-[10px] text-emerald-700 font-normal">20 modul beroperasi live</p>
-                                </div>
-                            </a>
-
-                            <a href="{{ route('features') }}" class="flex items-center gap-3 px-4 py-2.5 text-xs font-semibold {{ request()->routeIs('features') ? 'text-primary-700 bg-primary-50' : 'text-slate-700 hover:text-primary-600 hover:bg-slate-50' }} transition">
+                            <a href="{{ route('features') }}" class="flex items-center gap-3 px-4 py-2.5 text-xs font-semibold {{ request()->routeIs('features', 'features.show') ? 'text-primary-700 bg-primary-50' : 'text-slate-700 hover:text-primary-600 hover:bg-slate-50' }} transition">
                                 <div class="w-7 h-7 rounded-lg bg-primary-50 text-primary-600 flex items-center justify-center shrink-0">
                                     <i class="fa-solid fa-list-check text-xs"></i>
                                 </div>
                                 <div>
-                                    <p class="font-bold">Katalog 20 Fitur RME</p>
-                                    <p class="text-[10px] text-slate-400 font-normal">Daftar modul & operasional</p>
+                                    <p class="font-bold">Fitur & Modul SIP-Kes</p>
+                                    <p class="text-[10px] text-slate-400 font-normal">Detail fungsi setiap modul</p>
                                 </div>
                             </a>
                             <a href="{{ route('advantages') }}" class="flex items-center gap-3 px-4 py-2.5 text-xs font-semibold {{ request()->routeIs('advantages') ? 'text-primary-700 bg-primary-50' : 'text-slate-700 hover:text-primary-600 hover:bg-slate-50' }} transition">
@@ -139,8 +125,8 @@
                     <a href="{{ route('pricing') }}" class="px-3.5 py-2 text-sm font-semibold rounded-lg transition {{ request()->routeIs('pricing') ? 'text-primary-700 bg-primary-50' : 'text-slate-600 hover:text-primary-600 hover:bg-slate-50' }}">
                         Paket Harga
                     </a>
-                    <a href="{{ route('gallery') }}" class="px-3.5 py-2 text-sm font-semibold rounded-lg transition {{ request()->routeIs('gallery') ? 'text-primary-700 bg-primary-50' : 'text-slate-600 hover:text-primary-600 hover:bg-slate-50' }}">
-                        Galeri
+                    <a href="{{ route('news') }}" class="px-3.5 py-2 text-sm font-semibold rounded-lg transition {{ request()->routeIs('news', 'news.show') ? 'text-primary-700 bg-primary-50' : 'text-slate-600 hover:text-primary-600 hover:bg-slate-50' }}">
+                        Berita
                     </a>
                     <a href="{{ route('contact') }}" class="px-3.5 py-2 text-sm font-semibold rounded-lg transition {{ request()->routeIs('contact') ? 'text-primary-700 bg-primary-50' : 'text-slate-600 hover:text-primary-600 hover:bg-slate-50' }}">
                         Kontak
@@ -149,10 +135,6 @@
 
                 <!-- Action Button -->
                 <div class="hidden sm:flex items-center gap-2.5">
-                    <a href="{{ route('rme.dashboard') }}" class="inline-flex items-center gap-2 px-3.5 py-2 text-xs font-bold text-white bg-emerald-600 hover:bg-emerald-700 rounded-xl shadow-sm transition hover:shadow-md">
-                        <span class="w-2 h-2 rounded-full bg-emerald-300 animate-pulse"></span>
-                        <span>Aplikasi RME Live</span>
-                    </a>
                     <a href="{{ route('contact') }}" class="inline-flex items-center justify-center px-3.5 py-2 text-xs font-semibold text-slate-700 bg-slate-100 hover:bg-slate-200 rounded-xl transition border border-slate-200">
                         <i class="fa-brands fa-whatsapp mr-1.5 text-sm text-emerald-600"></i> Demo
                     </a>
@@ -169,16 +151,13 @@
 
         <!-- Mobile Navigation Menu -->
         <div id="mobile-menu" class="hidden lg:hidden border-t border-slate-100 bg-white px-4 pt-3 pb-6 space-y-1 shadow-lg">
-            <a href="{{ route('rme.dashboard') }}" class="block px-3 py-2.5 text-base font-bold rounded-xl text-emerald-800 bg-emerald-50 border border-emerald-200 mb-2">
-                <i class="fa-solid fa-hospital mr-2 text-emerald-600"></i> Buka Aplikasi RME (Live)
-            </a>
             <a href="{{ route('home') }}" class="block px-3 py-2 text-base font-medium rounded-md {{ request()->routeIs('home') ? 'text-primary-700 bg-primary-50' : 'text-slate-700 hover:bg-slate-50' }}">Beranda</a>
             <a href="{{ route('profile') }}" class="block px-3 py-2 text-base font-medium rounded-md {{ request()->routeIs('profile') ? 'text-primary-700 bg-primary-50' : 'text-slate-700 hover:bg-slate-50' }}">Profil</a>
-            <a href="{{ route('features') }}" class="block px-3 py-2 text-base font-medium rounded-md {{ request()->routeIs('features') ? 'text-primary-700 bg-primary-50' : 'text-slate-700 hover:bg-slate-50' }}">Fitur RME</a>
+            <a href="{{ route('features') }}" class="block px-3 py-2 text-base font-medium rounded-md {{ request()->routeIs('features', 'features.show') ? 'text-primary-700 bg-primary-50' : 'text-slate-700 hover:bg-slate-50' }}">Fitur & Modul</a>
             <a href="{{ route('advantages') }}" class="block px-3 py-2 text-base font-medium rounded-md {{ request()->routeIs('advantages') ? 'text-primary-700 bg-primary-50' : 'text-slate-700 hover:bg-slate-50' }}">Keunggulan</a>
             <a href="{{ route('pricing') }}" class="block px-3 py-2 text-base font-medium rounded-md {{ request()->routeIs('pricing') ? 'text-primary-700 bg-primary-50' : 'text-slate-700 hover:bg-slate-50' }}">Paket Harga</a>
             <a href="{{ route('support.services') }}" class="block px-3 py-2 text-base font-medium rounded-md {{ request()->routeIs('support.services') ? 'text-primary-700 bg-primary-50' : 'text-slate-700 hover:bg-slate-50' }}">Layanan Pendukung</a>
-            <a href="{{ route('gallery') }}" class="block px-3 py-2 text-base font-medium rounded-md {{ request()->routeIs('gallery') ? 'text-primary-700 bg-primary-50' : 'text-slate-700 hover:bg-slate-50' }}">Galeri</a>
+            <a href="{{ route('news') }}" class="block px-3 py-2 text-base font-medium rounded-md {{ request()->routeIs('news', 'news.show') ? 'text-primary-700 bg-primary-50' : 'text-slate-700 hover:bg-slate-50' }}">Berita</a>
             <a href="{{ route('contact') }}" class="block px-3 py-2 text-base font-medium rounded-md {{ request()->routeIs('contact') ? 'text-primary-700 bg-primary-50' : 'text-slate-700 hover:bg-slate-50' }}">Kontak</a>
             <div class="pt-4 border-t border-slate-100 flex flex-col gap-2">
                 <a href="{{ route('contact') }}" class="w-full text-center py-2.5 px-4 text-sm font-semibold text-white bg-primary-600 rounded-lg">Konsultasi Gratis</a>
@@ -245,10 +224,10 @@
                     <ul class="space-y-2.5 text-xs">
                         <li><a href="{{ route('home') }}" class="hover:text-white transition"><i class="fa-solid fa-chevron-right text-[9px] mr-1.5 text-primary-500"></i> Beranda</a></li>
                         <li><a href="{{ route('profile') }}" class="hover:text-white transition"><i class="fa-solid fa-chevron-right text-[9px] mr-1.5 text-primary-500"></i> Profil TeFa & SIP-Kes</a></li>
-                        <li><a href="{{ route('features') }}" class="hover:text-white transition"><i class="fa-solid fa-chevron-right text-[9px] mr-1.5 text-primary-500"></i> Modul & Fitur RME</a></li>
+                        <li><a href="{{ route('features') }}" class="hover:text-white transition"><i class="fa-solid fa-chevron-right text-[9px] mr-1.5 text-primary-500"></i> Fitur & Modul SIP-Kes</a></li>
                         <li><a href="{{ route('advantages') }}" class="hover:text-white transition"><i class="fa-solid fa-chevron-right text-[9px] mr-1.5 text-primary-500"></i> Keunggulan Sistem</a></li>
                         <li><a href="{{ route('pricing') }}" class="hover:text-white transition"><i class="fa-solid fa-chevron-right text-[9px] mr-1.5 text-primary-500"></i> Pilihan Paket Harga</a></li>
-                        <li><a href="{{ route('gallery') }}" class="hover:text-white transition"><i class="fa-solid fa-chevron-right text-[9px] mr-1.5 text-primary-500"></i> Galeri Kegiatan</a></li>
+                        <li><a href="{{ route('news') }}" class="hover:text-white transition"><i class="fa-solid fa-chevron-right text-[9px] mr-1.5 text-primary-500"></i> Berita & Kegiatan</a></li>
                     </ul>
                 </div>
 

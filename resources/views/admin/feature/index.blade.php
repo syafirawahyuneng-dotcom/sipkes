@@ -1,7 +1,7 @@
 @extends('admin.layout')
 
-@section('title', 'Kelola Fitur RME')
-@section('page_title', 'Kelola Fitur & Modul Rekam Medis Elektronik')
+@section('title', 'Kelola Fitur & Modul')
+@section('page_title', 'Kelola Fitur & Modul SIP-Kes')
 
 @section('content')
 
@@ -54,6 +54,7 @@
                         @endif
                     </td>
                     <td class="p-4 text-center space-x-2">
+                        <a href="{{ $feat->detail_url }}" target="_blank" class="text-slate-500 hover:text-slate-800 font-bold">Lihat</a>
                         <a href="{{ route('admin.features.edit', $feat) }}" class="text-primary-600 hover:text-primary-800 font-bold">Edit</a>
                         <form action="{{ route('admin.features.destroy', $feat) }}" method="POST" class="inline" onsubmit="return confirm('Hapus fitur ini?');">
                             @csrf
@@ -64,7 +65,7 @@
                 </tr>
                 @empty
                 <tr>
-                    <td colspan="6" class="p-8 text-center text-slate-400">Belum ada fitur RME.</td>
+                    <td colspan="6" class="p-8 text-center text-slate-400">Belum ada fitur.</td>
                 </tr>
                 @endforelse
             </tbody>

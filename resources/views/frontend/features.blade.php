@@ -1,6 +1,6 @@
 @extends('layouts.frontend')
 
-@section('title', 'Fitur & Modul Rekam Medis Elektronik SIP-Kes')
+@section('title', 'Fitur & Modul Lengkap SIP-Kes')
 
 @section('content')
 
@@ -10,7 +10,7 @@
         <span class="inline-block px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider bg-primary-800 text-sky-300 mb-3">Katalog Fitur</span>
         <h1 class="text-3xl sm:text-4xl font-black tracking-tight">Fitur & Modul Lengkap SIP-Kes</h1>
         <p class="text-primary-200 text-sm sm:text-base max-w-2xl mx-auto mt-2">
-            Seluruh fitur dirancang spesifik berdasarkan kebutuhan operasional dokter, perawat, apoteker, dan tata kelola faskes sesuai PMK 24/2022.
+            Seluruh fitur dirancang spesifik berdasarkan kebutuhan operasional dokter, perawat, apoteker, dan tata kelola faskes sesuai PMK 24/2022. Klik salah satu fitur untuk melihat penjelasan lengkapnya.
         </p>
     </div>
 </section>
@@ -34,10 +34,10 @@
         <!-- Features Grid -->
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             @forelse($features as $feat)
-            <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm hover:border-primary-400 hover:shadow-md transition flex flex-col justify-between group">
+            <a href="{{ $feat->detail_url }}" class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm hover:border-primary-400 hover:shadow-md hover:-translate-y-0.5 transition flex flex-col justify-between group focus:outline-none focus:ring-2 focus:ring-primary-500">
                 <div>
                     <div class="flex items-center justify-between mb-4">
-                        <div class="w-12 h-12 rounded-xl bg-primary-50 text-primary-700 flex items-center justify-center text-xl">
+                        <div class="w-12 h-12 rounded-xl bg-primary-50 text-primary-700 group-hover:bg-primary-600 group-hover:text-white flex items-center justify-center text-xl transition duration-300">
                             <i class="fa-solid {{ $feat->icon ?? 'fa-circle-check' }}"></i>
                         </div>
                         @if($feat->category)
@@ -47,23 +47,22 @@
                         @endif
                     </div>
                     <h3 class="text-base font-bold text-slate-900 mb-2 group-hover:text-primary-700 transition">{{ $feat->name }}</h3>
-                    <p class="text-xs sm:text-sm text-slate-600 leading-relaxed text-justify">{{ $feat->description }}</p>
+                    <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">{{ Str::limit(preg_replace('/\s+/', ' ', $feat->description), 150) }}</p>
                 </div>
 
-                <div class="mt-5 pt-3 border-t border-slate-100 space-y-2">
-                    <a href="{{ $feat->route_url }}" 
-                       class="w-full py-2.5 px-4 rounded-xl bg-primary-600 hover:bg-primary-700 text-white font-bold text-xs flex items-center justify-center gap-2 shadow-sm transition">
-                        <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i>
-                        <span>{{ $feat->action_label }}</span>
-                    </a>
-
+                <div class="mt-5 pt-3 border-t border-slate-100 flex items-center justify-between gap-2">
                     @if($feat->is_featured)
-                    <div class="flex items-center justify-center gap-1.5 text-[11px] font-semibold text-sky-600 pt-1">
-                        <i class="fa-solid fa-star text-amber-400"></i> Modul Unggulan SIP-Kes
-                    </div>
+                    <span class="inline-flex items-center gap-1.5 text-[11px] font-semibold text-sky-600">
+                        <i class="fa-solid fa-star text-amber-400"></i> Modul Unggulan
+                    </span>
+                    @else
+                    <span></span>
                     @endif
+                    <span class="inline-flex items-center gap-1.5 text-xs font-bold text-primary-600 group-hover:text-primary-700">
+                        Lihat Detail <i class="fa-solid fa-arrow-right text-[10px] transition-transform group-hover:translate-x-1"></i>
+                    </span>
                 </div>
-            </div>
+            </a>
             @empty
             <div class="col-span-3 text-center py-12 text-slate-400">
                 Belum ada fitur untuk kategori yang dipilih.

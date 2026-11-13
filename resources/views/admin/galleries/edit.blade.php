@@ -1,73 +1,34 @@
 @extends('admin.layout')
 
-@section('title', 'Edit Foto Galeri')
-@section('page_title', 'Edit Data Foto Dokumentasi')
+@section('title', 'Edit Berita')
+@section('page_title', 'Edit Berita')
 
 @section('content')
 
-<div class="max-w-2xl bg-white rounded-3xl p-8 border border-slate-200 shadow-sm">
-    <div class="mb-6">
-        <h3 class="text-xl font-bold text-slate-800">Edit Data Foto</h3>
-        <p class="text-xs text-slate-500">Perbarui judul, tanggal, atau kategori foto galeri.</p>
+<div class="max-w-3xl bg-white rounded-3xl p-8 border border-slate-200 shadow-sm">
+    <div class="mb-6 flex flex-col sm:flex-row sm:items-start justify-between gap-3">
+        <div>
+            <h3 class="text-xl font-bold text-slate-800">Edit Berita</h3>
+            <p class="text-xs text-slate-500">Perbarui judul, gambar, ringkasan, atau isi berita.</p>
+        </div>
+        <a href="{{ $gallery->detail_url }}" target="_blank" class="text-xs font-bold text-primary-600 hover:underline shrink-0">
+            <i class="fa-solid fa-arrow-up-right-from-square mr-1"></i> Lihat di Portal
+        </a>
     </div>
 
     <form action="{{ route('admin.galleries.update', $gallery) }}" method="POST" enctype="multipart/form-data" class="space-y-4">
         @csrf
         @method('PUT')
 
-        <div>
-            <label class="block text-xs font-bold text-slate-700 mb-1">Judul Kegiatan / Foto *</label>
-            <input type="text" name="title" required value="{{ old('title', $gallery->title) }}" class="w-full text-xs sm:text-sm px-4 py-2.5 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-primary-500">
-        </div>
-
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <div>
-                <label class="block text-xs font-bold text-slate-700 mb-1">Kategori Galeri</label>
-                <select name="category_id" class="w-full text-xs sm:text-sm px-4 py-2.5 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-primary-500">
-                    <option value="">-- Pilih Kategori --</option>
-                    @foreach($categories as $cat)
-                    <option value="{{ $cat->id }}" {{ $gallery->category_id == $cat->id ? 'selected' : '' }}>{{ $cat->name }}</option>
-                    @endforeach
-                </select>
-            </div>
-            <div>
-                <label class="block text-xs font-bold text-slate-700 mb-1">Tanggal Kegiatan</label>
-                <input type="date" name="date" value="{{ old('date', $gallery->date ? $gallery->date->format('Y-m-d') : '') }}" class="w-full text-xs sm:text-sm px-4 py-2.5 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-primary-500">
-            </div>
-        </div>
-
-        <div>
-            <label class="block text-xs font-bold text-slate-700 mb-1">Foto Galeri</label>
-            @if($gallery->hasValidImage())
-            <div class="mb-3">
-                <p class="text-[11px] text-slate-500 mb-1">Foto saat ini:</p>
-                <div class="w-48 h-32 rounded-2xl overflow-hidden border border-slate-200 shadow-sm bg-slate-100">
-                    <img src="{{ $gallery->image_url }}" alt="{{ $gallery->title }}" class="w-full h-full object-cover">
-                </div>
-            </div>
-            @endif
-            <label class="block text-[11px] text-slate-600 mb-1">Upload / Ganti Foto (Format JPG, PNG, WEBP, Maks. 5MB)</label>
-            <input type="file" name="image" accept="image/*" class="w-full text-xs px-4 py-2 rounded-xl border border-slate-200 focus:outline-none file:mr-4 file:py-1 file:px-3 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-primary-50 file:text-primary-700 hover:file:bg-primary-100">
-        </div>
-
-        <div>
-            <label class="block text-xs font-bold text-slate-700 mb-1">Deskripsi Singkat</label>
-            <textarea name="description" rows="3" class="w-full text-xs sm:text-sm px-4 py-2.5 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-primary-500">{{ old('description', $gallery->description) }}</textarea>
-        </div>
-
-        <div>
-            <label class="block text-xs font-bold text-slate-700 mb-1">Urutan</label>
-            <input type="number" name="order" value="{{ old('order', $gallery->order) }}" class="w-full text-xs sm:text-sm px-4 py-2.5 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-primary-500">
-        </div>
+        @include('admin.galleries._form', ['gallery' => $gallery])
 
         <div class="pt-4 border-t border-slate-100 flex items-center justify-between">
             <a href="{{ route('admin.galleries.index') }}" class="text-xs font-bold text-slate-500 hover:underline">Batal</a>
             <button type="submit" class="px-6 py-2.5 rounded-xl bg-primary-600 hover:bg-primary-700 text-white font-bold text-xs shadow transition">
-                Perbarui Foto
+                Perbarui Berita
             </button>
         </div>
     </form>
 </div>
 
 @endsection
-

@@ -1,7 +1,7 @@
 @extends('admin.layout')
 
-@section('title', 'Tambah Fitur RME')
-@section('page_title', 'Tambah Fitur / Modul RME Baru')
+@section('title', 'Tambah Fitur')
+@section('page_title', 'Tambah Fitur / Modul Baru')
 
 @section('content')
 
@@ -43,6 +43,30 @@
         <div>
             <label class="block text-xs font-bold text-slate-700 mb-1">Deskripsi Fitur *</label>
             <textarea name="description" rows="4" required class="w-full text-xs sm:text-sm px-4 py-2.5 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-primary-500" placeholder="Jelaskan kapabilitas dan manfaat fitur ini bagi dokter atau staf faskes...">{{ old('description') }}</textarea>
+        </div>
+
+        <!-- Konten Halaman Detail Fitur -->
+        <div class="pt-4 border-t border-slate-100">
+            <p class="text-xs font-bold text-slate-800 mb-1">Konten Halaman Detail Fitur</p>
+            <p class="text-[11px] text-slate-500 mb-3">Tulis satu poin per baris. Bagian yang dikosongkan tidak ditampilkan di halaman detail.</p>
+            <div class="space-y-4">
+                <div>
+                    <label class="block text-xs font-bold text-slate-700 mb-1">Pengguna Modul</label>
+                    <textarea name="users" rows="3" class="w-full text-xs sm:text-sm px-4 py-2.5 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-primary-500" placeholder="Dokter&#10;Perawat&#10;Petugas pendaftaran">{{ old('users') }}</textarea>
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-slate-700 mb-1">Fungsi Utama</label>
+                    <textarea name="functions" rows="5" class="w-full text-xs sm:text-sm px-4 py-2.5 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-primary-500" placeholder="Mencatat identitas pasien baru&#10;Memeriksa keaktifan kartu BPJS">{{ old('functions') }}</textarea>
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-slate-700 mb-1">Manfaat bagi Faskes</label>
+                    <textarea name="benefits" rows="4" class="w-full text-xs sm:text-sm px-4 py-2.5 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-primary-500" placeholder="Pendaftaran lebih cepat&#10;Mencegah duplikasi rekam medis">{{ old('benefits') }}</textarea>
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-slate-700 mb-1">Alur Penggunaan (urut)</label>
+                    <textarea name="workflow" rows="4" class="w-full text-xs sm:text-sm px-4 py-2.5 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-primary-500" placeholder="Petugas mencari data pasien&#10;Petugas memilih poli tujuan">{{ old('workflow') }}</textarea>
+                </div>
+            </div>
         </div>
 
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 items-center">

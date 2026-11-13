@@ -26,6 +26,10 @@ class FeatureController extends Controller
             'category' => 'nullable|string|max:100',
             'icon' => 'nullable|string|max:100',
             'description' => 'required|string',
+            'users' => 'nullable|string',
+            'functions' => 'nullable|string',
+            'benefits' => 'nullable|string',
+            'workflow' => 'nullable|string',
             'order' => 'nullable|integer',
         ]);
 
@@ -34,7 +38,7 @@ class FeatureController extends Controller
 
         Feature::create($validated);
 
-        return redirect()->route('admin.features.index')->with('success', 'Fitur RME berhasil ditambahkan!');
+        return redirect()->route('admin.features.index')->with('success', 'Fitur berhasil ditambahkan!');
     }
 
     public function edit(Feature $feature)
@@ -49,6 +53,10 @@ class FeatureController extends Controller
             'category' => 'nullable|string|max:100',
             'icon' => 'nullable|string|max:100',
             'description' => 'required|string',
+            'users' => 'nullable|string',
+            'functions' => 'nullable|string',
+            'benefits' => 'nullable|string',
+            'workflow' => 'nullable|string',
             'order' => 'nullable|integer',
         ]);
 
@@ -57,13 +65,13 @@ class FeatureController extends Controller
 
         $feature->update($validated);
 
-        return redirect()->route('admin.features.index')->with('success', 'Fitur RME berhasil diperbarui!');
+        return redirect()->route('admin.features.index')->with('success', 'Fitur berhasil diperbarui!');
     }
 
     public function destroy(Feature $feature)
     {
         $feature->delete();
-        return redirect()->route('admin.features.index')->with('success', 'Fitur RME berhasil dihapus!');
+        return redirect()->route('admin.features.index')->with('success', 'Fitur berhasil dihapus!');
     }
 }
 

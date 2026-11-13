@@ -72,13 +72,10 @@
                                     <p class="text-[11px] text-slate-500">Teaching Factory Inovasi Kesehatan</p>
                                 </div>
                             </div>
-                            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold bg-green-100 text-green-800">
-                                <span class="w-1.5 h-1.5 bg-green-500 rounded-full mr-1.5 animate-ping"></span> Live Active
-                            </span>
                         </div>
 
                         <!-- Micro Feature List in Hero -->
-                        <div class="space-y-3.5">
+                        <div class="space-y-3">
                             <div class="flex items-start gap-3 p-3 rounded-xl bg-slate-50 border border-slate-100">
                                 <div class="w-8 h-8 rounded-lg bg-sky-500 text-white flex items-center justify-center text-sm shrink-0 mt-0.5">
                                     <i class="fa-solid fa-cloud-arrow-up"></i>
@@ -106,6 +103,16 @@
                                 <div>
                                     <p class="text-xs font-bold text-slate-800">Modul Odontogram Gigi</p>
                                     <p class="text-[11px] text-slate-500">Diagram odontogram visual standar rekam medis klinik gigi.</p>
+                                </div>
+                            </div>
+
+                            <div class="flex items-start gap-3 p-3 rounded-xl bg-slate-50 border border-slate-100">
+                                <div class="w-8 h-8 rounded-lg bg-emerald-500 text-white flex items-center justify-center text-sm shrink-0 mt-0.5">
+                                    <i class="fa-solid fa-hospital-user"></i>
+                                </div>
+                                <div>
+                                    <p class="text-xs font-bold text-slate-800">Integrasi BPJS Kesehatan</p>
+                                    <p class="text-[11px] text-slate-500">Integrasi layanan dengan BPJS Kesehatan untuk mendukung pelayanan pasien.</p>
                                 </div>
                             </div>
                         </div>
@@ -242,28 +249,27 @@
 
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             @forelse($featuredFeatures as $feat)
-            <div class="bg-white rounded-2xl p-5 border border-slate-200 shadow-sm hover:border-primary-400 hover:shadow-md transition group flex flex-col justify-between">
+            <a href="{{ $feat->detail_url }}" class="bg-white rounded-2xl p-5 border border-slate-200 shadow-sm hover:border-primary-400 hover:shadow-md transition group flex flex-col justify-between focus:outline-none focus:ring-2 focus:ring-primary-500">
                 <div>
                     <div class="flex items-center justify-between mb-4">
                         <div class="w-11 h-11 rounded-xl bg-slate-50 text-primary-700 group-hover:bg-primary-600 group-hover:text-white flex items-center justify-center text-lg transition duration-300">
                             <i class="fa-solid {{ $feat->icon ?? 'fa-circle-dot' }}"></i>
                         </div>
-                        <span class="inline-flex items-center gap-1 text-[10px] uppercase font-bold tracking-wider px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200">
-                            <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
-                            <span>Live</span>
-                        </span>
+                        @if($feat->category)
+                        <span class="text-[10px] uppercase font-bold tracking-wider px-2 py-0.5 rounded-full bg-slate-100 text-slate-600">{{ $feat->category }}</span>
+                        @endif
                     </div>
                     <h3 class="font-bold text-slate-800 text-sm mb-2 group-hover:text-primary-700 transition">{{ $feat->name }}</h3>
-                    <p class="text-xs text-slate-500 leading-relaxed">{{ Str::limit($feat->description, 100) }}</p>
+                    <p class="text-xs text-slate-500 leading-relaxed">{{ Str::limit(preg_replace('/\s+/', ' ', $feat->description), 100) }}</p>
                 </div>
 
                 <div class="mt-4 pt-3 border-t border-slate-100">
-                    <a href="{{ $feat->route_url }}" class="inline-flex items-center justify-between w-full text-xs font-bold text-primary-600 group-hover:text-primary-700">
-                        <span>Gunakan Modul</span>
+                    <span class="inline-flex items-center justify-between w-full text-xs font-bold text-primary-600 group-hover:text-primary-700">
+                        <span>Lihat Detail Fitur</span>
                         <i class="fa-solid fa-arrow-right text-[10px] transition-transform group-hover:translate-x-1"></i>
-                    </a>
+                    </span>
                 </div>
-            </div>
+            </a>
             @empty
             <div class="col-span-4 text-center py-8 text-slate-400">Daftar fitur sedang disiapkan.</div>
             @endforelse
@@ -403,44 +409,50 @@
     </div>
 </section>
 
-<!-- Section: Cuplikan Galeri & Dokumentasi -->
-<section class="py-16 bg-white">
+<!-- Section: Berita Terbaru -->
+<section id="berita" class="py-16 bg-white">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex flex-col md:flex-row md:items-end justify-between mb-12">
             <div>
-                <span class="inline-block px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider bg-primary-100 text-primary-800 mb-3">Dokumentasi & Aktivitas</span>
-                <h2 class="text-3xl font-extrabold text-slate-900 tracking-tight">Galeri Kegiatan TeFa V-Kes</h2>
-                <p class="text-slate-600 text-sm sm:text-base mt-2">Dokumentasi sosialisasi, pelatihan faskes, serta fasilitas laboratorium rekam medis di Polije.</p>
+                <span class="inline-block px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider bg-primary-100 text-primary-800 mb-3">Berita Terkini</span>
+                <h2 class="text-3xl font-extrabold text-slate-900 tracking-tight">Berita SIP-Kes & TeFa V-Kes</h2>
+                <p class="text-slate-600 text-sm sm:text-base mt-2">Kabar terbaru implementasi SIP-Kes, pelatihan faskes mitra, dan kegiatan TeFa V-Kes Polije.</p>
             </div>
             <div class="mt-4 md:mt-0">
-                <a href="{{ route('gallery') }}" class="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-800 text-sm font-bold transition">
-                    Lihat Seluruh Foto <i class="fa-solid fa-images"></i>
+                <a href="{{ route('news') }}" class="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-800 text-sm font-bold transition">
+                    Lihat Semua Berita <i class="fa-regular fa-newspaper"></i>
                 </a>
             </div>
         </div>
 
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             @forelse($galleries as $g)
-            <div class="group relative rounded-2xl overflow-hidden border border-slate-100 bg-slate-50 shadow-sm hover:shadow-md transition">
-                <div class="h-44 bg-slate-100 overflow-hidden relative flex items-center justify-center">
+            <a href="{{ $g->detail_url }}" class="group rounded-2xl overflow-hidden border border-slate-200 bg-white shadow-sm hover:shadow-md transition flex flex-col focus:outline-none focus:ring-2 focus:ring-primary-500">
+                <div class="h-44 bg-slate-100 overflow-hidden relative flex items-center justify-center shrink-0">
                     @if($g->hasValidImage())
-                        <img src="{{ $g->image_url }}" alt="{{ $g->title }}" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
+                        <img src="{{ $g->image_url }}" alt="{{ $g->title }}" loading="lazy" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
                     @else
                         <div class="w-full h-full bg-gradient-to-tr from-primary-800 to-sky-600 flex items-center justify-center text-white">
-                            <i class="fa-solid fa-camera text-4xl text-white/40 group-hover:scale-110 transition duration-300"></i>
+                            <i class="fa-solid fa-newspaper text-4xl text-white/40 group-hover:scale-110 transition duration-300"></i>
                         </div>
                     @endif
-                    <span class="absolute top-3 left-3 px-2 py-0.5 rounded text-[10px] font-bold uppercase bg-black/60 text-white backdrop-blur-xs">
-                        {{ $g->category->name ?? 'Kegiatan' }}
+                    @if($g->category)
+                    <span class="absolute top-3 left-3 px-2 py-0.5 rounded text-[10px] font-bold uppercase bg-black/60 text-white">
+                        {{ $g->category->name }}
                     </span>
+                    @endif
                 </div>
-                <div class="p-4">
-                    <h4 class="font-bold text-slate-800 text-sm mb-1 line-clamp-1">{{ $g->title }}</h4>
-                    <p class="text-xs text-slate-500 line-clamp-2">{{ $g->description }}</p>
+                <div class="p-4 flex flex-col flex-grow">
+                    @if($g->date)
+                    <p class="text-[10px] font-semibold text-primary-600 mb-1.5"><i class="fa-regular fa-calendar mr-1"></i> {{ $g->date->locale('id')->isoFormat('D MMMM Y') }}</p>
+                    @endif
+                    <h4 class="font-bold text-slate-800 text-sm mb-1 line-clamp-2 group-hover:text-primary-700 transition">{{ $g->title }}</h4>
+                    <p class="text-xs text-slate-500 line-clamp-2 mb-3">{{ $g->description }}</p>
+                    <span class="mt-auto text-xs font-bold text-primary-600">Baca Selengkapnya <i class="fa-solid fa-arrow-right text-[10px] ml-0.5"></i></span>
                 </div>
-            </div>
+            </a>
             @empty
-            <div class="col-span-4 text-center py-8 text-slate-400">Foto dokumentasi sedang diperbarui.</div>
+            <div class="col-span-4 text-center py-8 text-slate-400">Berita sedang diperbarui.</div>
             @endforelse
         </div>
     </div>

@@ -9,7 +9,7 @@
 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
     <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm flex items-center justify-between">
         <div>
-            <p class="text-xs font-semibold text-slate-500 uppercase tracking-wider">Total Fitur RME</p>
+            <p class="text-xs font-semibold text-slate-500 uppercase tracking-wider">Total Fitur & Modul</p>
             <h3 class="text-2xl font-black text-slate-800 mt-1">{{ $stats['features'] }}</h3>
             <a href="{{ route('admin.features.index') }}" class="text-xs text-primary-600 font-bold hover:underline mt-2 inline-block">Kelola Fitur &rarr;</a>
         </div>
@@ -63,11 +63,11 @@
         <span class="px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider bg-white/20 text-white mb-3 inline-block">Pusat Kendali Portal</span>
         <h3 class="text-2xl font-black tracking-tight mb-2">Kelola Seluruh Informasi Portal SIP-Kes TeFa V-Kes</h3>
         <p class="text-primary-100 text-xs sm:text-sm mb-6 leading-relaxed">
-            Semua perubahan teks beranda, deskripsi modul RME, tarif paket langganan, dan galeri foto yang Anda simpan di sini akan otomatis tampil secara dinamis pada halaman pengunjung publik.
+            Semua perubahan teks beranda, deskripsi modul RME, tarif paket langganan, dan berita yang Anda simpan di sini akan otomatis tampil secara dinamis pada halaman pengunjung publik.
         </p>
         <div class="flex flex-wrap gap-3">
             <a href="{{ route('admin.features.create') }}" class="px-4 py-2.5 rounded-xl bg-white text-primary-800 font-bold text-xs shadow hover:bg-primary-50 transition">
-                <i class="fa-solid fa-plus mr-1"></i> Tambah Fitur RME
+                <i class="fa-solid fa-plus mr-1"></i> Tambah Fitur
             </a>
             <a href="{{ route('admin.home.index') }}" class="px-4 py-2.5 rounded-xl bg-primary-900/60 hover:bg-primary-900 text-white font-bold text-xs border border-white/20 transition">
                 <i class="fa-solid fa-pen-to-square mr-1"></i> Edit Banner Beranda

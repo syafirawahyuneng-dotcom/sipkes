@@ -31,7 +31,7 @@ class PortalController extends Controller
         $facilities = TargetFacility::orderBy('order')->get();
         $pricingPlans = PricingPlan::where('is_active', true)->orderBy('order')->get();
         $supportServices = SupportService::where('is_active', true)->orderBy('order')->get();
-        $galleries = Gallery::with('category')->orderBy('order')->take(6)->get();
+        $galleries = Gallery::with('category')->orderByDesc('date')->orderBy('order')->take(4)->get();
         $contact = ContactInfo::first();
 
         return view('frontend.home', compact(
@@ -62,6 +62,25 @@ class PortalController extends Controller
         return view('frontend.features', compact('features', 'categories', 'contact'));
     }
 
+    // Halaman Detail Fitur & Modul
+    public function featureShow(Feature $feature)
+    {
+        $ordered = Feature::orderBy('order')->orderBy('id')->get(['id', 'name', 'slug', 'icon', 'category', 'order']);
+        $index = $ordered->search(fn ($f) => $f->id === $feature->id);
+        $prev = $index > 0 ? $ordered[$index - 1] : null;
+        $next = $index !== false && $index < $ordered->count() - 1 ? $ordered[$index + 1] : null;
+
+        $related = $feature->category
+            ? Feature::where('category', $feature->category)->whereKeyNot($feature->id)->orderBy('order')->take(4)->get()
+            : collect();
+        if ($related->isEmpty()) {
+            $related = Feature::whereKeyNot($feature->id)->orderBy('order')->take(4)->get();
+        }
+        $contact = ContactInfo::first();
+
+        return view('frontend.feature_show', compact('feature', 'prev', 'next', 'related', 'contact'));
+    }
+
     // Halaman Keunggulan
     public function advantages()
     {
@@ -86,20 +105,46 @@ class PortalController extends Controller
         return view('frontend.support_services', compact('services', 'contact'));
     }
 
-    // Halaman Galeri
-    public function gallery(Request $request)
+    // Halaman Berita (sebelumnya Galeri)
+    public function news(Request $request)
     {
-        $categories = GalleryCategory::all();
-        $query = Gallery::with('category')->orderBy('order');
+        $categories = GalleryCategory::orderBy('name')->get();
+        $query = Gallery::with('category')->orderByDesc('date')->orderBy('order')->orderByDesc('id');
         if ($request->filled('category')) {
             $query->whereHas('category', function ($q) use ($request) {
                 $q->where('slug', $request->category);
             });
         }
-        $galleries = $query->paginate(12);
+        $news = $query->paginate(9)->withQueryString();
         $contact = ContactInfo::first();
 
-        return view('frontend.gallery', compact('galleries', 'categories', 'contact'));
+        return view('frontend.news', compact('news', 'categories', 'contact'));
+    }
+
+    // Halaman Detail Berita
+    public function newsShow(Gallery $news)
+    {
+        $news->load('category');
+
+        $related = Gallery::with('category')
+            ->whereKeyNot($news->id)
+            ->when($news->category_id, fn ($q) => $q->orderByRaw('category_id = ? DESC', [$news->category_id]))
+            ->orderByDesc('date')
+            ->take(3)
+            ->get();
+        $contact = ContactInfo::first();
+
+        return view('frontend.news_show', compact('news', 'related', 'contact'));
+    }
+
+    // Sajikan gambar unggahan dari disk public (cadangan bila storage:link belum dibuat)
+    public function media(string $path)
+    {
+        abort_if(str_contains($path, '..'), 404);
+        $disk = \Illuminate\Support\Facades\Storage::disk('public');
+        abort_unless($disk->exists($path), 404);
+
+        return response()->file($disk->path($path), ['Cache-Control' => 'public, max-age=604800']);
     }
 
     // Halaman Kontak

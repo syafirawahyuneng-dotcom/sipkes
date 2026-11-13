@@ -311,7 +311,11 @@ class SipKesDatabaseSeeder extends Seeder
                 'order' => 20,
             ],
         ];
+        $featureDetails = require database_path('data/feature_details.php');
         foreach ($features as $feat) {
+            foreach (($featureDetails[$feat['name']] ?? []) as $key => $lines) {
+                $feat[$key] = implode("\n", $lines);
+            }
             Feature::create($feat);
         }
 
@@ -433,7 +437,7 @@ class SipKesDatabaseSeeder extends Seeder
             SupportService::create($srv);
         }
 
-        // 9. Galeri Kegiatan & Fasilitas TeFa V-Kes (Sesuai Proposal Hal 2, 3, 10, 14)
+        // 9. Berita Kegiatan & Fasilitas TeFa V-Kes (tabel galleries) (Sesuai Proposal Hal 2, 3, 10, 14)
         GalleryCategory::truncate();
         Gallery::truncate();
 
@@ -475,8 +479,9 @@ class SipKesDatabaseSeeder extends Seeder
                 'order' => 4,
             ],
         ];
+        $newsContents = require database_path('data/news_contents.php');
         foreach ($galleries as $g) {
-            Gallery::create($g);
+            Gallery::create(array_merge($g, $newsContents[$g['title']] ?? []));
         }
 
         // 10. Informasi Kontak Sekretariat (Sesuai Proposal Hal 1, 2, 14)

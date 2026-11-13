@@ -1,25 +1,25 @@
 @extends('admin.layout')
 
-@section('title', 'Kelola Galeri')
-@section('page_title', 'Kelola Galeri Foto & Kategori Dokumentasi')
+@section('title', 'Kelola Berita')
+@section('page_title', 'Kelola Berita & Kategori Berita')
 
 @section('content')
 
 <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
     <div>
-        <h3 class="text-xl font-bold text-slate-800">Galeri Foto TeFa V-Kes</h3>
-        <p class="text-xs text-slate-500">Unggah dan kelola foto kegiatan sosialisasi, pelatihan, dan fasilitas rekam medis.</p>
+        <h3 class="text-xl font-bold text-slate-800">Berita SIP-Kes & TeFa V-Kes</h3>
+        <p class="text-xs text-slate-500">Tulis dan kelola berita kegiatan implementasi, pelatihan, dan informasi TeFa V-Kes.</p>
     </div>
     <div class="flex items-center gap-3">
         <a href="{{ route('admin.galleries.create') }}" class="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-primary-600 hover:bg-primary-700 text-white font-bold text-xs shadow transition">
-            <i class="fa-solid fa-cloud-arrow-up"></i> Upload Foto Baru
+            <i class="fa-solid fa-pen-to-square"></i> Tulis Berita Baru
         </a>
     </div>
 </div>
 
 <!-- Kategori Quick Management -->
 <div class="bg-white rounded-3xl p-6 border border-slate-200 shadow-sm mb-8">
-    <h4 class="text-xs font-bold text-slate-700 uppercase tracking-wider mb-3">Kategori Galeri:</h4>
+    <h4 class="text-xs font-bold text-slate-700 uppercase tracking-wider mb-3">Kategori Berita:</h4>
     <div class="flex flex-wrap items-center gap-2 mb-4">
         @foreach($categories as $cat)
         <div class="flex items-center gap-1.5 px-3 py-1 rounded-xl bg-slate-100 text-xs font-semibold text-slate-700 border border-slate-200">
@@ -42,7 +42,7 @@
     </form>
 </div>
 
-<!-- Gallery Grid -->
+<!-- Daftar Berita -->
 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
     @forelse($galleries as $g)
     <div class="bg-white rounded-3xl overflow-hidden border border-slate-200 shadow-sm flex flex-col justify-between">
@@ -52,7 +52,7 @@
                     <img src="{{ $g->image_url }}" alt="{{ $g->title }}" class="w-full h-full object-cover">
                 @else
                     <div class="w-full h-full bg-gradient-to-tr from-primary-800 to-sky-600 flex items-center justify-center text-white">
-                        <i class="fa-solid fa-camera text-4xl text-white/40"></i>
+                        <i class="fa-solid fa-newspaper text-4xl text-white/40"></i>
                     </div>
                 @endif
                 @if($g->category)
@@ -71,8 +71,9 @@
         </div>
 
         <div class="p-4 pt-0 flex items-center justify-end gap-3 text-xs border-t border-slate-100">
+            <a href="{{ $g->detail_url }}" target="_blank" class="text-slate-500 hover:text-slate-800 font-bold">Lihat</a>
             <a href="{{ route('admin.galleries.edit', $g) }}" class="text-primary-600 hover:text-primary-800 font-bold">Edit</a>
-            <form action="{{ route('admin.galleries.destroy', $g) }}" method="POST" class="inline" onsubmit="return confirm('Hapus foto ini?');">
+            <form action="{{ route('admin.galleries.destroy', $g) }}" method="POST" class="inline" onsubmit="return confirm('Hapus berita ini?');">
                 @csrf
                 @method('DELETE')
                 <button type="submit" class="text-red-500 hover:text-red-700 font-bold">Hapus</button>
@@ -81,7 +82,7 @@
     </div>
     @empty
     <div class="col-span-3 text-center py-12 text-slate-400 bg-white rounded-3xl border border-slate-200">
-        Belum ada foto dalam galeri.
+        Belum ada berita.
     </div>
     @endforelse
 </div>

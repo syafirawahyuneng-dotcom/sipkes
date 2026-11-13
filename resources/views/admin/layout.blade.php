@@ -80,7 +80,7 @@
                 </a>
 
                 <a href="{{ route('admin.features.index') }}" class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl transition {{ request()->routeIs('admin.features.*') ? 'bg-primary-600 text-white' : 'hover:bg-slate-800 hover:text-white' }}">
-                    <i class="fa-solid fa-list-check w-4 text-center"></i> Fitur & Modul RME
+                    <i class="fa-solid fa-list-check w-4 text-center"></i> Fitur & Modul
                 </a>
 
                 <a href="{{ route('admin.advantages.index') }}" class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl transition {{ request()->routeIs('admin.advantages.*') ? 'bg-primary-600 text-white' : 'hover:bg-slate-800 hover:text-white' }}">
@@ -96,7 +96,7 @@
                 </a>
 
                 <a href="{{ route('admin.galleries.index') }}" class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl transition {{ request()->routeIs('admin.galleries.*') ? 'bg-primary-600 text-white' : 'hover:bg-slate-800 hover:text-white' }}">
-                    <i class="fa-solid fa-images w-4 text-center"></i> Galeri & Foto
+                    <i class="fa-solid fa-newspaper w-4 text-center"></i> Berita
                 </a>
 
                 <a href="{{ route('admin.contact.index') }}" class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl transition {{ request()->routeIs('admin.contact.*') ? 'bg-primary-600 text-white' : 'hover:bg-slate-800 hover:text-white' }}">

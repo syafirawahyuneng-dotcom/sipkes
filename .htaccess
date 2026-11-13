@@ -1,0 +1,58 @@
+# ============================================================
+# SIP-Kes - Akses tanpa /public/ (http://localhost/sip-kes2/)
+# ------------------------------------------------------------
+# 1. File yang benar-benar ada di folder public/ (css, js, gambar,
+#    favicon, storage link) dilayani langsung dari public/.
+# 2. Request lainnya diteruskan ke index.php di root, yang hanya
+#    memanggil public/index.php (entry point Laravel).
+# 3. File & folder internal (.env, app, vendor, storage, routes, ...)
+#    tidak pernah dilayani langsung: request ke sana jatuh ke Laravel
+#    dan dijawab 404, atau ditolak 403 untuk file tersembunyi.
+# ============================================================
+
+Options -Indexes
+<IfModule mod_negotiation.c>
+    Options -MultiViews
+</IfModule>
+
+# Tolak semua file tersembunyi (.env, .git, .htaccess, .editorconfig, ...)
+<FilesMatch "^\.">
+    Require all denied
+</FilesMatch>
+
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+
+    # Handle Authorization Header
+    RewriteCond %{HTTP:Authorization} .
+    RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
+
+    # Handle X-XSRF-Token Header
+    RewriteCond %{HTTP:x-xsrf-token} .
+    RewriteRule .* - [E=HTTP_X_XSRF_TOKEN:%{HTTP:X-XSRF-Token}]
+
+    # Front controller root jangan ditulis ulang lagi (mencegah loop)
+    RewriteRule ^index\.php$ - [L]
+
+    # Tolak akses langsung ke folder .git dan folder tersembunyi lain
+    RewriteRule (^|/)\. - [F]
+
+    # Aset yang ada di public/ -> layani dari public/
+    # (%1 = prefix URL proyek, mis. /sip-kes2/ ; %2 = path aset yang diminta)
+    RewriteCond %{REQUEST_URI}::$1 ^(.*?)(.*)::\2$
+    RewriteCond %{DOCUMENT_ROOT}%1public/%2 -f
+    RewriteRule ^(.*)$ public/$1 [L]
+
+    # Redirect Trailing Slashes If Not A Folder (sama seperti public/.htaccess)
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteCond %{REQUEST_URI} (.+)/$
+    RewriteRule ^ %1 [L,R=301]
+
+    # Semua request lain -> Laravel
+    RewriteRule ^ index.php [L]
+</IfModule>
+
+# Tanpa mod_rewrite, jangan buka isi proyek sama sekali
+<IfModule !mod_rewrite.c>
+    Require all denied
+</IfModule>
