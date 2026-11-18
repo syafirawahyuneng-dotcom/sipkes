@@ -26,7 +26,7 @@
                 <span class="text-xs font-bold text-slate-400">Urutan: #{{ $adv->order }}</span>
             </div>
             <h4 class="font-bold text-slate-900 text-base mb-2">{{ $adv->title }}</h4>
-            <p class="text-xs text-slate-500 leading-relaxed">{{ $adv->description }}</p>
+            <p class="text-xs text-slate-500 leading-relaxed">{{ \App\Support\RichText::plain($adv->description, 160) }}</p>
         </div>
 
         <div class="mt-6 pt-4 border-t border-slate-100 flex items-center justify-end gap-3 text-xs">

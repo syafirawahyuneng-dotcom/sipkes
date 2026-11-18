@@ -32,46 +32,7 @@
     </div>
 </div>
 
-<div>
-    <label class="block text-xs font-bold text-slate-700 mb-1">Gambar Utama Berita</label>
-    <div class="mb-3">
-        <p id="image-preview-label" class="text-[11px] text-slate-500 mb-1 {{ $g && $g->hasValidImage() ? '' : 'hidden' }}">{{ $g && $g->hasValidImage() ? 'Gambar saat ini:' : 'Pratinjau gambar baru:' }}</p>
-        <div id="image-preview-box" class="w-64 aspect-[16/9] rounded-2xl overflow-hidden border border-slate-200 shadow-sm bg-slate-100 {{ $g && $g->hasValidImage() ? '' : 'hidden' }}">
-            <img id="image-preview" src="{{ $g && $g->hasValidImage() ? $g->image_url : '' }}" alt="Pratinjau gambar berita" class="w-full h-full object-cover">
-        </div>
-    </div>
-    <input type="file" name="image" id="image-input" accept="image/jpeg,image/png,image/webp,image/gif" class="w-full text-xs px-4 py-2 rounded-xl border border-slate-200 focus:outline-none file:mr-4 file:py-1 file:px-3 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-primary-50 file:text-primary-700 hover:file:bg-primary-100">
-    <p class="text-[11px] text-slate-400 mt-1">Format JPG, PNG, WEBP, GIF. Maksimal 5MB.{{ $g ? ' Kosongkan bila tidak ingin mengganti gambar.' : '' }}</p>
-    <p id="image-error" class="text-[11px] text-red-600 mt-1 hidden"></p>
-</div>
-
-<script>
-    (function () {
-        const input = document.getElementById('image-input');
-        const img = document.getElementById('image-preview');
-        const box = document.getElementById('image-preview-box');
-        const label = document.getElementById('image-preview-label');
-        const err = document.getElementById('image-error');
-        if (!input) return;
-        input.addEventListener('change', function () {
-            const file = input.files && input.files[0];
-            err.classList.add('hidden');
-            if (!file) return;
-            if (!/^image\/(jpeg|png|webp|gif)$/.test(file.type)) {
-                err.textContent = 'File harus berupa gambar JPG, PNG, WEBP, atau GIF.';
-                err.classList.remove('hidden'); input.value = ''; return;
-            }
-            if (file.size > 5 * 1024 * 1024) {
-                err.textContent = 'Ukuran gambar melebihi 5MB.';
-                err.classList.remove('hidden'); input.value = ''; return;
-            }
-            img.src = URL.createObjectURL(file);
-            label.textContent = 'Pratinjau gambar baru:';
-            label.classList.remove('hidden');
-            box.classList.remove('hidden');
-        });
-    })();
-</script>
+<x-admin.image-input name="image" label="Gambar Utama Berita" :url="$g && $g->hasValidImage() ? $g->image_url : ''" hint="Disarankan rasio 16:9, minimal 1200×675 px" />
 
 <div>
     <label class="block text-xs font-bold text-slate-700 mb-1">Ringkasan Berita</label>
@@ -80,8 +41,8 @@
 
 <div>
     <label class="block text-xs font-bold text-slate-700 mb-1">Isi Berita Lengkap</label>
-    <textarea name="content" rows="12" class="w-full text-xs sm:text-sm px-4 py-2.5 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-primary-500 leading-relaxed" placeholder="Tulis isi berita. Pisahkan paragraf dengan satu baris kosong.">{{ old('content', $g?->content) }}</textarea>
-    <p class="text-[11px] text-slate-400 mt-1">Pisahkan paragraf dengan satu baris kosong. Bila dikosongkan, ringkasan dipakai sebagai isi.</p>
+    <textarea name="content" rows="14" data-editor="full" class="wysiwyg w-full text-xs sm:text-sm px-4 py-2.5 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-primary-500 leading-relaxed">{{ old('content', $g?->content) }}</textarea>
+    <p class="text-[11px] text-slate-400 mt-1">Gunakan toolbar untuk heading, daftar, perataan, dan sisip gambar. Bila dikosongkan, ringkasan dipakai sebagai isi.</p>
 </div>
 
 <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">

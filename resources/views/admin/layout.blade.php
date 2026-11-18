@@ -99,6 +99,10 @@
                     <i class="fa-solid fa-newspaper w-4 text-center"></i> Berita
                 </a>
 
+                <a href="{{ route('admin.articles.index') }}" class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl transition {{ request()->routeIs('admin.articles.*') ? 'bg-primary-600 text-white' : 'hover:bg-slate-800 hover:text-white' }}">
+                    <i class="fa-solid fa-file-pen w-4 text-center"></i> Artikel
+                </a>
+
                 <a href="{{ route('admin.contact.index') }}" class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl transition {{ request()->routeIs('admin.contact.*') ? 'bg-primary-600 text-white' : 'hover:bg-slate-800 hover:text-white' }}">
                     <i class="fa-solid fa-envelope-open-text w-4 text-center"></i> Kontak & Pesan Masuk
                 </a>
@@ -139,7 +143,7 @@
             </div>
             <div class="flex items-center gap-4">
                 <a href="{{ route('home') }}" target="_blank" class="text-xs font-bold text-primary-600 hover:text-primary-700 flex items-center gap-1.5">
-                    <i class="fa-solid fa-globe"></i> Lihat Frontend
+                    <i class="fa-solid fa-globe"></i> Lihat Web
                 </a>
             </div>
         </header>
@@ -165,6 +169,10 @@
         </main>
     </div>
 
+    @auth('admin')
+    @include('admin.partials.editor')
+    @endauth
+    @stack('scripts')
 </body>
 </html>
 

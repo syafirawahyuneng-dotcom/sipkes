@@ -5,6 +5,9 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Feature;
+use App\Rules\RichTextRequired;
+use App\Support\ImageUpload;
+use App\Support\RichText;
 
 class FeatureController extends Controller
 {
@@ -25,16 +28,19 @@ class FeatureController extends Controller
             'name' => 'required|string|max:255',
             'category' => 'nullable|string|max:100',
             'icon' => 'nullable|string|max:100',
-            'description' => 'required|string',
+            'description' => ['required', 'string', new RichTextRequired('Deskripsi fitur')],
+            'image' => ImageUpload::RULE,
             'users' => 'nullable|string',
             'functions' => 'nullable|string',
             'benefits' => 'nullable|string',
             'workflow' => 'nullable|string',
             'order' => 'nullable|integer',
-        ]);
+        ], ImageUpload::messages('image', 'Gambar fitur'));
 
         $validated['order'] = $validated['order'] ?? 0;
         $validated['is_featured'] = $request->has('is_featured');
+        $validated['description'] = RichText::clean($validated['description']);
+        $validated['image'] = ImageUpload::replace($request, null, 'features');
 
         Feature::create($validated);
 
@@ -52,16 +58,19 @@ class FeatureController extends Controller
             'name' => 'required|string|max:255',
             'category' => 'nullable|string|max:100',
             'icon' => 'nullable|string|max:100',
-            'description' => 'required|string',
+            'description' => ['required', 'string', new RichTextRequired('Deskripsi fitur')],
+            'image' => ImageUpload::RULE,
             'users' => 'nullable|string',
             'functions' => 'nullable|string',
             'benefits' => 'nullable|string',
             'workflow' => 'nullable|string',
             'order' => 'nullable|integer',
-        ]);
+        ], ImageUpload::messages('image', 'Gambar fitur'));
 
         $validated['order'] = $validated['order'] ?? 0;
         $validated['is_featured'] = $request->has('is_featured');
+        $validated['description'] = RichText::clean($validated['description']);
+        $validated['image'] = ImageUpload::replace($request, $feature->image, 'features');
 
         $feature->update($validated);
 
@@ -70,6 +79,7 @@ class FeatureController extends Controller
 
     public function destroy(Feature $feature)
     {
+        ImageUpload::delete($feature->image);
         $feature->delete();
         return redirect()->route('admin.features.index')->with('success', 'Fitur berhasil dihapus!');
     }

@@ -27,9 +27,9 @@
                     <i class="fa-solid fa-handshake"></i> Program TeFa V-Kes Polije
                 </div>
                 <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900">{{ $srv->title }}</h2>
-                <p class="text-slate-600 text-sm sm:text-base leading-relaxed text-justify">
-                    {{ $srv->description }}
-                </p>
+                <div class="rich-content text-slate-600 text-sm sm:text-base leading-relaxed text-justify">
+                    {!! \App\Support\RichText::render($srv->description) !!}
+                </div>
 
                 <div class="space-y-3 pt-2">
                     <p class="text-xs font-bold text-slate-700 uppercase tracking-wider">Cakupan Pendampingan Meliputi:</p>
@@ -50,7 +50,12 @@
                 </div>
             </div>
 
-            <div class="lg:col-span-5">
+            <div class="lg:col-span-5 space-y-6">
+                @if($srv->hasValidImage())
+                <div class="rounded-3xl overflow-hidden border border-slate-200 shadow-lg bg-slate-100 aspect-[4/3]">
+                    <img src="{{ $srv->image_url }}" alt="{{ $srv->title }}" loading="lazy" class="w-full h-full object-cover">
+                </div>
+                @endif
                 <div class="bg-gradient-to-tr from-slate-900 to-primary-900 p-8 rounded-3xl text-white shadow-xl space-y-6">
                     <div class="w-16 h-16 rounded-2xl bg-white/10 flex items-center justify-center text-3xl text-sky-400">
                         <i class="fa-solid {{ $srv->icon ?? 'fa-award' }}"></i>

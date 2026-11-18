@@ -60,7 +60,7 @@
                     </p>
                     @endif
                     <h2 class="font-bold text-slate-900 text-base leading-snug mb-2 group-hover:text-primary-700 transition">{{ $item->title }}</h2>
-                    <p class="text-xs text-slate-500 leading-relaxed line-clamp-3 mb-5">{{ $item->description ?: Str::limit($item->content, 160) }}</p>
+                    <p class="text-xs text-slate-500 leading-relaxed line-clamp-3 mb-5">{{ $item->description ?: \App\Support\RichText::plain($item->content, 160) }}</p>
                     <span class="mt-auto inline-flex items-center gap-1.5 text-xs font-bold text-primary-600 group-hover:text-primary-700">
                         Baca Selengkapnya <i class="fa-solid fa-arrow-right text-[10px] transition-transform group-hover:translate-x-1"></i>
                     </span>

@@ -6,7 +6,8 @@
     <title>@yield('title', 'SIP-Kes - Sistem Informasi Pelayanan Kesehatan') | TeFa V-Kes Polije</title>
     
     <!-- Meta & SEO -->
-    <meta name="description" content="Portal Resmi SIP-Kes (Sistem Informasi Pelayanan Kesehatan) - Rekam Medis Elektronik Terintegrasi SATUSEHAT Kemenkes RI & BPJS Kesehatan. Dikembangkan oleh Teaching Factory Inovasi Kesehatan Polije.">
+    <meta name="description" content="@yield('meta_description', 'Portal Resmi SIP-Kes (Sistem Informasi Pelayanan Kesehatan) - Rekam Medis Elektronik Terintegrasi SATUSEHAT Kemenkes RI & BPJS Kesehatan. Dikembangkan oleh Teaching Factory Inovasi Kesehatan Polije.')">
+    @stack('meta')
     
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -46,6 +47,29 @@
     
     <style>
         body { font-family: 'Inter', sans-serif; }
+
+        /* Konten berformat dari WYSIWYG editor (PRD Fase 2 · W-07) */
+        .rich-content > * + * { margin-top: 0.9em; }
+        .rich-content h2 { font-size: 1.45em; line-height: 1.3; font-weight: 800; color: #0f172a; margin-top: 1.5em; }
+        .rich-content h3 { font-size: 1.22em; line-height: 1.35; font-weight: 700; color: #0f172a; margin-top: 1.3em; }
+        .rich-content h4 { font-size: 1.08em; line-height: 1.4; font-weight: 700; color: #1e293b; margin-top: 1.2em; }
+        .rich-content > :first-child { margin-top: 0; }
+        .rich-content ul { list-style: disc; padding-left: 1.4em; }
+        .rich-content ol { list-style: decimal; padding-left: 1.4em; }
+        .rich-content li + li { margin-top: 0.3em; }
+        .rich-content li::marker { color: #2563eb; }
+        .rich-content strong, .rich-content b { font-weight: 700; color: #0f172a; }
+        .rich-content a { color: #1d4ed8; font-weight: 600; text-decoration: underline; text-underline-offset: 2px; }
+        .rich-content a:hover { color: #1e3a8a; }
+        .rich-content blockquote { border-left: 4px solid #3b82f6; background: #eff6ff; color: #1e3a8a; padding: 0.8em 1.1em; border-radius: 0 0.75rem 0.75rem 0; font-style: italic; }
+        .rich-content img { max-width: 100%; height: auto; border-radius: 1rem; }
+        .rich-content table { display: block; max-width: 100%; overflow-x: auto; border-collapse: collapse; font-size: 0.92em; }
+        .rich-content th, .rich-content td { border: 1px solid #e2e8f0; padding: 0.5em 0.75em; text-align: left; vertical-align: top; }
+        .rich-content th { background: #f8fafc; font-weight: 700; color: #0f172a; }
+        .rich-content hr { border: 0; border-top: 1px solid #e2e8f0; margin: 1.5em 0; }
+        .rich-content.drop-cap > p:first-child::first-letter { float: left; font-size: 3.75rem; line-height: 0.85; font-weight: 900; color: #1d4ed8; margin-right: 0.75rem; margin-top: 0.375rem; }
+        .rich-content.spacious > * + * { margin-top: 1.5rem; }
+        .rich-content-light strong, .rich-content-light b, .rich-content-light h2, .rich-content-light h3, .rich-content-light h4 { color: inherit; }
     </style>
 </head>
 <body class="bg-white text-slate-800 antialiased flex flex-col min-h-screen">
@@ -128,6 +152,9 @@
                     <a href="{{ route('news') }}" class="px-3.5 py-2 text-sm font-semibold rounded-lg transition {{ request()->routeIs('news', 'news.show') ? 'text-primary-700 bg-primary-50' : 'text-slate-600 hover:text-primary-600 hover:bg-slate-50' }}">
                         Berita
                     </a>
+                    <a href="{{ route('articles') }}" class="px-3.5 py-2 text-sm font-semibold rounded-lg transition {{ request()->routeIs('articles', 'articles.show') ? 'text-primary-700 bg-primary-50' : 'text-slate-600 hover:text-primary-600 hover:bg-slate-50' }}">
+                        Artikel
+                    </a>
                     <a href="{{ route('contact') }}" class="px-3.5 py-2 text-sm font-semibold rounded-lg transition {{ request()->routeIs('contact') ? 'text-primary-700 bg-primary-50' : 'text-slate-600 hover:text-primary-600 hover:bg-slate-50' }}">
                         Kontak
                     </a>
@@ -158,6 +185,7 @@
             <a href="{{ route('pricing') }}" class="block px-3 py-2 text-base font-medium rounded-md {{ request()->routeIs('pricing') ? 'text-primary-700 bg-primary-50' : 'text-slate-700 hover:bg-slate-50' }}">Paket Harga</a>
             <a href="{{ route('support.services') }}" class="block px-3 py-2 text-base font-medium rounded-md {{ request()->routeIs('support.services') ? 'text-primary-700 bg-primary-50' : 'text-slate-700 hover:bg-slate-50' }}">Layanan Pendukung</a>
             <a href="{{ route('news') }}" class="block px-3 py-2 text-base font-medium rounded-md {{ request()->routeIs('news', 'news.show') ? 'text-primary-700 bg-primary-50' : 'text-slate-700 hover:bg-slate-50' }}">Berita</a>
+            <a href="{{ route('articles') }}" class="block px-3 py-2 text-base font-medium rounded-md {{ request()->routeIs('articles', 'articles.show') ? 'text-primary-700 bg-primary-50' : 'text-slate-700 hover:bg-slate-50' }}">Artikel</a>
             <a href="{{ route('contact') }}" class="block px-3 py-2 text-base font-medium rounded-md {{ request()->routeIs('contact') ? 'text-primary-700 bg-primary-50' : 'text-slate-700 hover:bg-slate-50' }}">Kontak</a>
             <div class="pt-4 border-t border-slate-100 flex flex-col gap-2">
                 <a href="{{ route('contact') }}" class="w-full text-center py-2.5 px-4 text-sm font-semibold text-white bg-primary-600 rounded-lg">Konsultasi Gratis</a>
@@ -228,6 +256,7 @@
                         <li><a href="{{ route('advantages') }}" class="hover:text-white transition"><i class="fa-solid fa-chevron-right text-[9px] mr-1.5 text-primary-500"></i> Keunggulan Sistem</a></li>
                         <li><a href="{{ route('pricing') }}" class="hover:text-white transition"><i class="fa-solid fa-chevron-right text-[9px] mr-1.5 text-primary-500"></i> Pilihan Paket Harga</a></li>
                         <li><a href="{{ route('news') }}" class="hover:text-white transition"><i class="fa-solid fa-chevron-right text-[9px] mr-1.5 text-primary-500"></i> Berita & Kegiatan</a></li>
+                        <li><a href="{{ route('articles') }}" class="hover:text-white transition"><i class="fa-solid fa-chevron-right text-[9px] mr-1.5 text-primary-500"></i> Artikel & Wawasan</a></li>
                     </ul>
                 </div>
 

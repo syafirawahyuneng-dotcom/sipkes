@@ -3,9 +3,8 @@
 @section('title', $news->title . ' - Berita SIP-Kes')
 
 @php
-    $paragraphs  = $news->paragraphs();
-    $wordCount   = str_word_count(strip_tags(implode(' ', $paragraphs) . ' ' . $news->description));
-    $readMinutes = max(1, (int) ceil($wordCount / 200));
+    $contentHtml = $news->content_html;
+    $readMinutes = \App\Support\RichText::readingMinutes($contentHtml . ' ' . $news->description);
     $pubDate     = $news->date?->locale('id');
     $shareUrl    = url()->current();
     $shareText   = $news->title . ' - ' . $shareUrl;
@@ -126,10 +125,8 @@
             @endif
 
             <!-- Content -->
-            <div class="space-y-6 text-[15px] sm:text-[17px] leading-[1.85] text-slate-700">
-                @foreach($paragraphs as $i => $p)
-                <p class="{{ $i === 0 ? 'first-letter:float-left first-letter:text-6xl first-letter:leading-[0.85] first-letter:font-black first-letter:text-primary-700 first-letter:mr-3 first-letter:mt-1.5' : '' }}">{!! nl2br(e($p)) !!}</p>
-                @endforeach
+            <div class="rich-content drop-cap spacious text-[15px] sm:text-[17px] leading-[1.85] text-slate-700">
+                {!! $contentHtml !!}
             </div>
 
             <!-- End ornament -->

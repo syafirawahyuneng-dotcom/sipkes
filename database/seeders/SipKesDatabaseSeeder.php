@@ -515,6 +515,9 @@ class SipKesDatabaseSeeder extends Seeder
             SiteSetting::set($key, $val);
         }
 
+        // 12. Kategori & Artikel contoh (Fase 2)
+        $this->call(ArticleSeeder::class);
+
         Schema::enableForeignKeyConstraints();
     }
 }

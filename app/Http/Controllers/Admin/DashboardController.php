@@ -16,6 +16,9 @@ use App\Models\ContactInfo;
 use App\Models\ContactMessage;
 use App\Models\SiteSetting;
 use App\Models\TargetFacility;
+use App\Models\Article;
+use App\Support\ImageUpload;
+use App\Support\RichText;
 
 class DashboardController extends Controller
 {
@@ -27,6 +30,8 @@ class DashboardController extends Controller
             'pricing_plans' => PricingPlan::count(),
             'support_services' => SupportService::count(),
             'galleries' => Gallery::count(),
+            'articles_published' => Article::published()->count(),
+            'articles_draft' => Article::where('status', Article::STATUS_DRAFT)->count(),
             'messages_unread' => ContactMessage::where('is_read', false)->count(),
             'messages_total' => ContactMessage::count(),
         ];
@@ -42,12 +47,20 @@ class DashboardController extends Controller
     {
         $banner = Banner::first() ?? new Banner();
         $facilities = TargetFacility::orderBy('order')->get();
-        return view('admin.home.index', compact('banner', 'facilities'));
+        $introImage = SiteSetting::get('home_intro_image');
+        $introImageUrl = ImageUpload::exists($introImage) ? ImageUpload::url($introImage) : '';
+        return view('admin.home.index', compact('banner', 'facilities', 'introImageUrl'));
     }
 
     public function homeUpdate(Request $request)
     {
+        $request->validate([
+            'image' => ImageUpload::RULE,
+            'intro_image' => ImageUpload::RULE,
+        ], ImageUpload::messages('image', 'Gambar hero') + ImageUpload::messages('intro_image', 'Gambar pengenalan'));
+
         $banner = Banner::first() ?? new Banner();
+        $banner->image = ImageUpload::replace($request, $banner->image, 'banners');
         $banner->badge = $request->badge;
         $banner->title = $request->title;
         $banner->subtitle = $request->subtitle;
@@ -56,6 +69,12 @@ class DashboardController extends Controller
         $banner->secondary_btn_text = $request->secondary_btn_text;
         $banner->secondary_btn_url = $request->secondary_btn_url;
         $banner->save();
+
+        $introImage = SiteSetting::get('home_intro_image');
+        $newIntro = ImageUpload::replace($request, $introImage, 'home', 'intro_image');
+        if ($newIntro !== $introImage) {
+            SiteSetting::set('home_intro_image', $newIntro, 'home');
+        }
 
         return back()->with('success', 'Konten Hero Beranda berhasil diperbarui!');
     }
@@ -69,16 +88,19 @@ class DashboardController extends Controller
 
     public function profileUpdate(Request $request)
     {
+        $request->validate(['image' => ImageUpload::RULE], ImageUpload::messages('image', 'Gambar profil'));
+
         $profile = Profile::first() ?? new Profile();
+        $profile->image = ImageUpload::replace($request, $profile->image, 'profile');
         $profile->name = $request->name;
         $profile->institution = $request->institution;
         $profile->tagline = $request->tagline;
-        $profile->about_tefa = $request->about_tefa;
-        $profile->about_sipkes = $request->about_sipkes;
-        $profile->vision = $request->vision;
-        $profile->mission = $request->mission;
+        $profile->about_tefa = RichText::clean($request->about_tefa);
+        $profile->about_sipkes = RichText::clean($request->about_sipkes);
+        $profile->vision = RichText::clean($request->vision);
+        $profile->mission = RichText::clean($request->mission);
         $profile->goals = $request->goals;
-        $profile->background = $request->background;
+        $profile->background = RichText::clean($request->background);
         $profile->save();
 
         return back()->with('success', 'Data Profil TeFa & SIP-Kes berhasil diperbarui!');

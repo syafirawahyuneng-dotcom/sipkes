@@ -45,7 +45,7 @@
                             {{ $feat->category ?? '-' }}
                         </span>
                     </td>
-                    <td class="p-4 text-slate-600 max-w-xs">{{ Str::limit($feat->description, 75) }}</td>
+                    <td class="p-4 text-slate-600 max-w-xs">{{ \App\Support\RichText::plain($feat->description, 75) }}</td>
                     <td class="p-4 text-center">
                         @if($feat->is_featured)
                         <span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-green-100 text-green-700">Ya</span>

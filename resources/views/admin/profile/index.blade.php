@@ -11,7 +11,7 @@
         <p class="text-xs text-slate-500">Ubah narasi tentang Teaching Factory, visi, misi, dan latar belakang pengembangan SIP-Kes.</p>
     </div>
 
-    <form action="{{ route('admin.profile.update') }}" method="POST" class="space-y-5">
+    <form action="{{ route('admin.profile.update') }}" method="POST" enctype="multipart/form-data" class="space-y-5">
         @csrf
 
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -32,27 +32,29 @@
 
         <div>
             <label class="block text-xs font-bold text-slate-700 mb-1.5">Tentang Teaching Factory Inovasi Kesehatan (TeFa V-Kes) *</label>
-            <textarea name="about_tefa" rows="4" required class="w-full text-xs sm:text-sm px-4 py-2.5 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-primary-500">{{ old('about_tefa', $profile->about_tefa) }}</textarea>
+            <textarea name="about_tefa" rows="5" required class="wysiwyg w-full text-xs sm:text-sm px-4 py-2.5 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-primary-500">{{ old('about_tefa', $profile->about_tefa) }}</textarea>
         </div>
 
         <div>
             <label class="block text-xs font-bold text-slate-700 mb-1.5">Tentang Aplikasi SIP-Kes *</label>
-            <textarea name="about_sipkes" rows="4" required class="w-full text-xs sm:text-sm px-4 py-2.5 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-primary-500">{{ old('about_sipkes', $profile->about_sipkes) }}</textarea>
+            <textarea name="about_sipkes" rows="5" required class="wysiwyg w-full text-xs sm:text-sm px-4 py-2.5 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-primary-500">{{ old('about_sipkes', $profile->about_sipkes) }}</textarea>
         </div>
 
         <div>
             <label class="block text-xs font-bold text-slate-700 mb-1.5">Latar Belakang Pengembangan SIP-Kes *</label>
-            <textarea name="background" rows="4" required class="w-full text-xs sm:text-sm px-4 py-2.5 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-primary-500">{{ old('background', $profile->background) }}</textarea>
+            <textarea name="background" rows="5" required class="wysiwyg w-full text-xs sm:text-sm px-4 py-2.5 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-primary-500">{{ old('background', $profile->background) }}</textarea>
         </div>
 
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <x-admin.image-input name="image" label="Gambar Profil TeFa V-Kes" :url="$profile->image_url" hint="Tampil di halaman Profil dan sebagai cadangan gambar bagian Pengenalan beranda. Disarankan rasio 4:3" ratio="aspect-[4/3]" />
+
+        <div class="grid grid-cols-1 gap-4">
             <div>
                 <label class="block text-xs font-bold text-slate-700 mb-1.5">Visi TeFa V-Kes *</label>
-                <textarea name="vision" rows="4" required class="w-full text-xs sm:text-sm px-4 py-2.5 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-primary-500">{{ old('vision', $profile->vision) }}</textarea>
+                <textarea name="vision" rows="5" required class="wysiwyg w-full text-xs sm:text-sm px-4 py-2.5 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-primary-500">{{ old('vision', $profile->vision) }}</textarea>
             </div>
             <div>
                 <label class="block text-xs font-bold text-slate-700 mb-1.5">Misi TeFa V-Kes *</label>
-                <textarea name="mission" rows="4" required class="w-full text-xs sm:text-sm px-4 py-2.5 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-primary-500">{{ old('mission', $profile->mission) }}</textarea>
+                <textarea name="mission" rows="5" required class="wysiwyg w-full text-xs sm:text-sm px-4 py-2.5 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-primary-500">{{ old('mission', $profile->mission) }}</textarea>
             </div>
         </div>
 

@@ -60,6 +60,28 @@
 
             <!-- Right Hero Card / Visual Preview -->
             <div class="lg:col-span-5">
+                @if($banner && $banner->hasValidImage())
+                <!-- Hero image (dikelola di Admin > Halaman Beranda) -->
+                <div class="relative mx-auto max-w-md lg:max-w-none pb-8 sm:pb-6">
+                    <div class="absolute -top-6 -right-6 w-40 h-40 rounded-full bg-sky-200/50 blur-3xl" aria-hidden="true"></div>
+                    <div class="absolute -bottom-4 -left-6 w-40 h-40 rounded-full bg-primary-200/50 blur-3xl" aria-hidden="true"></div>
+                    <div class="relative rounded-3xl overflow-hidden shadow-2xl shadow-primary-900/20 ring-1 ring-black/5 bg-slate-100 aspect-[4/3]">
+                        <img src="{{ $banner->image_url }}" alt="{{ $banner->title ?? 'SIP-Kes TeFa V-Kes Polije' }}" fetchpriority="high" class="w-full h-full object-cover">
+                    </div>
+                    <div class="absolute bottom-0 left-4 right-4 sm:left-auto sm:-right-4 sm:w-80 bg-white/95 backdrop-blur rounded-2xl shadow-xl border border-slate-100 p-4 flex items-center justify-between gap-3">
+                        <div class="flex items-center gap-3 min-w-0">
+                            <div class="w-10 h-10 rounded-xl bg-primary-100 text-primary-700 flex items-center justify-center shrink-0">
+                                <i class="fa-solid fa-shield-halved"></i>
+                            </div>
+                            <div class="min-w-0">
+                                <p class="text-[11px] text-slate-500 whitespace-nowrap">Mulai Langganan Dari</p>
+                                <p class="text-sm font-black text-slate-900 whitespace-nowrap">Rp 150.000 <span class="text-[11px] font-normal text-slate-500">/ bulan</span></p>
+                            </div>
+                        </div>
+                        <a href="{{ route('pricing') }}" class="px-3 py-1.5 bg-primary-600 hover:bg-primary-700 text-white rounded-lg text-xs font-bold transition shrink-0">Lihat Paket</a>
+                    </div>
+                </div>
+                @else
                 <div class="relative mx-auto max-w-md lg:max-w-none">
                     <div class="relative bg-white rounded-2xl shadow-2xl border border-slate-100 p-6 sm:p-8 space-y-6">
                         <div class="flex items-center justify-between border-b border-slate-100 pb-4">
@@ -128,6 +150,7 @@
                         </div>
                     </div>
                 </div>
+                @endif
             </div>
 
         </div>
@@ -146,12 +169,12 @@
                 <h2 class="text-3xl font-extrabold text-slate-900 tracking-tight leading-snug">
                     Dilahirkan dari Riset Terapan & Inovasi Akademik Politeknik Negeri Jember
                 </h2>
-                <p class="text-sm sm:text-base text-slate-600 leading-relaxed text-justify">
-                    {{ $profile->about_tefa ?? 'Teaching Factory Inovasi Kesehatan (TeFa V-Kes) merupakan unit usaha dan inovasi akademik di bawah Jurusan Kesehatan Politeknik Negeri Jember yang berfokus pada digitalisasi rekam medis faskes.' }}
-                </p>
-                <p class="text-sm sm:text-base text-slate-600 leading-relaxed text-justify">
-                    {{ $profile->about_sipkes ?? 'SIP-Kes (Sistem Informasi Pelayanan Kesehatan) hadir menjawab kendala faskes seperti mahalnya software RME komersial dan rumitnya proses bridging SATUSEHAT Kemenkes RI.' }}
-                </p>
+                <div class="rich-content text-sm sm:text-base text-slate-600 leading-relaxed text-justify">
+                    {!! \App\Support\RichText::render($profile->about_tefa ?? 'Teaching Factory Inovasi Kesehatan (TeFa V-Kes) merupakan unit usaha dan inovasi akademik di bawah Jurusan Kesehatan Politeknik Negeri Jember yang berfokus pada digitalisasi rekam medis faskes.') !!}
+                </div>
+                <div class="rich-content text-sm sm:text-base text-slate-600 leading-relaxed text-justify">
+                    {!! \App\Support\RichText::render($profile->about_sipkes ?? 'SIP-Kes (Sistem Informasi Pelayanan Kesehatan) hadir menjawab kendala faskes seperti mahalnya software RME komersial dan rumitnya proses bridging SATUSEHAT Kemenkes RI.') !!}
+                </div>
 
                 <div class="pt-2">
                     <a href="{{ route('profile') }}" class="inline-flex items-center gap-2 text-sm font-bold text-primary-700 hover:text-primary-800 transition">
@@ -160,7 +183,13 @@
                 </div>
             </div>
 
-            <div class="lg:col-span-6">
+            <div class="lg:col-span-6 space-y-4">
+                @if($introImage)
+                <!-- Gambar pendamping (Admin > Halaman Beranda, cadangan: gambar Profil) -->
+                <div class="rounded-3xl overflow-hidden shadow-xl shadow-primary-900/10 ring-1 ring-black/5 bg-slate-100 aspect-[16/10]">
+                    <img src="{{ $introImage }}" alt="TeFa V-Kes Politeknik Negeri Jember" loading="lazy" class="w-full h-full object-cover">
+                </div>
+                @endif
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div class="p-6 rounded-2xl bg-slate-50 border border-slate-100 hover:border-primary-200 transition">
                         <div class="w-12 h-12 rounded-xl bg-primary-100 text-primary-700 flex items-center justify-center text-xl mb-4">
@@ -216,7 +245,7 @@
                     <i class="fa-solid {{ $adv->icon ?? 'fa-check' }}"></i>
                 </div>
                 <h3 class="text-lg font-bold text-slate-800 mb-2">{{ $adv->title }}</h3>
-                <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">{{ $adv->description }}</p>
+                <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">{{ \App\Support\RichText::plain($adv->description) }}</p>
             </div>
             @empty
             <div class="col-span-3 text-center py-6 text-slate-400">Data keunggulan sedang dimuat...</div>
@@ -260,7 +289,7 @@
                         @endif
                     </div>
                     <h3 class="font-bold text-slate-800 text-sm mb-2 group-hover:text-primary-700 transition">{{ $feat->name }}</h3>
-                    <p class="text-xs text-slate-500 leading-relaxed">{{ Str::limit(preg_replace('/\s+/', ' ', $feat->description), 100) }}</p>
+                    <p class="text-xs text-slate-500 leading-relaxed">{{ \App\Support\RichText::plain($feat->description, 100) }}</p>
                 </div>
 
                 <div class="mt-4 pt-3 border-t border-slate-100">
@@ -457,6 +486,32 @@
         </div>
     </div>
 </section>
+
+@if($latestArticles->isNotEmpty())
+<!-- Section: Artikel Terbaru -->
+<section id="artikel" class="py-16 bg-white border-t border-slate-100">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex flex-col md:flex-row md:items-end justify-between mb-12">
+            <div>
+                <span class="inline-block px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider bg-sky-100 text-sky-800 mb-3">Artikel & Wawasan</span>
+                <h2 class="text-3xl font-extrabold text-slate-900 tracking-tight">Artikel Terbaru</h2>
+                <p class="text-slate-600 text-sm sm:text-base mt-2">Panduan rekam medis elektronik, regulasi, serta integrasi SATUSEHAT & BPJS dari tim TeFa V-Kes Polije.</p>
+            </div>
+            <div class="mt-4 md:mt-0">
+                <a href="{{ route('articles') }}" class="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-800 text-sm font-bold transition">
+                    Lihat Semua Artikel <i class="fa-solid fa-arrow-right"></i>
+                </a>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            @foreach($latestArticles as $art)
+            @include('frontend.partials.article_card', ['article' => $art])
+            @endforeach
+        </div>
+    </div>
+</section>
+@endif
 
 <!-- Section: Informasi Kontak Faskes -->
 <section id="kontak" class="py-16 bg-slate-50 border-t border-slate-100">

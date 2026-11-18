@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use App\Models\Gallery;
 use App\Models\GalleryCategory;
+use App\Support\ImageUpload;
+use App\Support\RichText;
 
 /**
  * Kelola Berita (sebelumnya Galeri). Memakai tabel `galleries`.
@@ -35,20 +37,17 @@ class GalleryController extends Controller
             'content' => 'nullable|string',
             'author' => 'nullable|string|max:255',
             'date' => 'nullable|date',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:5120',
+            'image' => ImageUpload::RULE,
             'order' => 'nullable|integer',
-        ]);
+        ], ImageUpload::messages('image', 'Gambar berita'));
 
-        $imagePath = null;
-        if ($request->hasFile('image')) {
-            $imagePath = $request->file('image')->store('gallery', 'public');
-        }
+        $imagePath = ImageUpload::replace($request, null, 'gallery');
 
         Gallery::create([
             'title' => $validated['title'],
             'category_id' => $validated['category_id'] ?? null,
             'description' => $validated['description'] ?? null,
-            'content' => $validated['content'] ?? null,
+            'content' => RichText::clean($validated['content'] ?? null),
             'author' => $validated['author'] ?? null,
             'date' => $validated['date'] ?? now()->toDateString(),
             'image' => $imagePath ?? '', // kolom image NOT NULL; '' = tanpa gambar
@@ -73,21 +72,17 @@ class GalleryController extends Controller
             'content' => 'nullable|string',
             'author' => 'nullable|string|max:255',
             'date' => 'nullable|date',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:5120',
+            'image' => ImageUpload::RULE,
             'order' => 'nullable|integer',
-        ]);
+        ], ImageUpload::messages('image', 'Gambar berita'));
 
-        if ($request->hasFile('image')) {
-            if ($gallery->image && \Illuminate\Support\Facades\Storage::disk('public')->exists($gallery->image)) {
-                \Illuminate\Support\Facades\Storage::disk('public')->delete($gallery->image);
-            }
-            $gallery->image = $request->file('image')->store('gallery', 'public');
-        }
+        // kolom image NOT NULL; '' = tanpa gambar
+        $gallery->image = ImageUpload::replace($request, $gallery->image, 'gallery') ?? '';
 
         $gallery->title = $validated['title'];
         $gallery->category_id = $validated['category_id'] ?? null;
         $gallery->description = $validated['description'] ?? null;
-        $gallery->content = $validated['content'] ?? null;
+        $gallery->content = RichText::clean($validated['content'] ?? null);
         $gallery->author = $validated['author'] ?? null;
         $gallery->date = $validated['date'] ?? null;
         $gallery->order = $validated['order'] ?? 0;
@@ -98,9 +93,7 @@ class GalleryController extends Controller
 
     public function destroy(Gallery $gallery)
     {
-        if ($gallery->image && \Illuminate\Support\Facades\Storage::disk('public')->exists($gallery->image)) {
-            \Illuminate\Support\Facades\Storage::disk('public')->delete($gallery->image);
-        }
+        ImageUpload::delete($gallery->image);
         $gallery->delete();
         return redirect()->route('admin.galleries.index')->with('success', 'Berita berhasil dihapus!');
     }

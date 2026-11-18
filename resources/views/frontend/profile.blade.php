@@ -26,9 +26,9 @@
                     <i class="fa-solid fa-building-columns"></i> Unit Usaha Akademik
                 </div>
                 <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900">Teaching Factory Inovasi Kesehatan (TeFa V-Kes)</h2>
-                <p class="text-slate-600 text-sm sm:text-base leading-relaxed text-justify">
-                    {{ $profile->about_tefa ?? 'Teaching Factory Inovasi Kesehatan (TeFa V-Kes) merupakan wadah pembelajaran berbasis industri dan unit usaha riset terapan di bawah naungan Program Studi Manajemen Informasi Kesehatan, Jurusan Kesehatan, Politeknik Negeri Jember. TeFa V-Kes menjembatani kompetensi akademik mahasiswa dan dosen vokasi dengan kebutuhan riil transformasi digital fasilitas pelayanan kesehatan di Indonesia.' }}
-                </p>
+                <div class="rich-content text-slate-600 text-sm sm:text-base leading-relaxed text-justify">
+                    {!! \App\Support\RichText::render($profile->about_tefa ?? 'Teaching Factory Inovasi Kesehatan (TeFa V-Kes) merupakan wadah pembelajaran berbasis industri dan unit usaha riset terapan di bawah naungan Program Studi Manajemen Informasi Kesehatan, Jurusan Kesehatan, Politeknik Negeri Jember. TeFa V-Kes menjembatani kompetensi akademik mahasiswa dan dosen vokasi dengan kebutuhan riil transformasi digital fasilitas pelayanan kesehatan di Indonesia.') !!}
+                </div>
                 <div class="p-4 rounded-2xl bg-slate-50 border border-slate-100 flex items-start gap-4">
                     <div class="w-10 h-10 rounded-xl bg-primary-100 text-primary-700 flex items-center justify-center shrink-0">
                         <i class="fa-solid fa-graduation-cap text-lg"></i>
@@ -40,7 +40,13 @@
                 </div>
             </div>
 
-            <div class="lg:col-span-5 bg-gradient-to-tr from-primary-800 to-sky-600 rounded-3xl p-8 text-white shadow-xl space-y-6">
+            <div class="lg:col-span-5 space-y-6">
+            @if($profile?->hasValidImage())
+            <div class="rounded-3xl overflow-hidden border border-slate-200 shadow-lg bg-slate-100 aspect-[4/3]">
+                <img src="{{ $profile->image_url }}" alt="{{ $profile->name ?? 'TeFa V-Kes Polije' }}" loading="lazy" class="w-full h-full object-cover">
+            </div>
+            @endif
+            <div class="bg-gradient-to-tr from-primary-800 to-sky-600 rounded-3xl p-8 text-white shadow-xl space-y-6">
                 <div class="w-14 h-14 rounded-2xl bg-white/10 flex items-center justify-center text-3xl">
                     <i class="fa-solid fa-hospital-user"></i>
                 </div>
@@ -64,6 +70,7 @@
                     </li>
                 </ul>
             </div>
+            </div>
         </div>
 
         <!-- Block 2: Latar Belakang & Tujuan SIP-Kes -->
@@ -71,9 +78,9 @@
             <div class="max-w-3xl mb-8">
                 <span class="inline-block px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider bg-primary-100 text-primary-800 mb-3">Latar Belakang & Tujuan</span>
                 <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900">Mengapa SIP-Kes Dikembangkan?</h2>
-                <p class="text-slate-600 text-sm sm:text-base mt-2 text-justify">
-                    {{ $profile->background ?? 'Sejak diberlakukannya Peraturan Menteri Kesehatan (PMK) No. 24 Tahun 2022, setiap fasilitas pelayanan kesehatan wajib menyelenggarakan rekam medis secara elektronik dan terhubung dengan platform SATUSEHAT. Banyak klinik mandiri dan pratama mengalami kendala biaya lisensi yang sangat mahal serta kerumitan teknis bridging. TeFa V-Kes Polije merancang SIP-Kes sebagai solusi yang terjangkau, legal, dan didukung pendampingan penuh.' }}
-                </p>
+                <div class="rich-content text-slate-600 text-sm sm:text-base mt-2 text-justify">
+                    {!! \App\Support\RichText::render($profile->background ?? 'Sejak diberlakukannya Peraturan Menteri Kesehatan (PMK) No. 24 Tahun 2022, setiap fasilitas pelayanan kesehatan wajib menyelenggarakan rekam medis secara elektronik dan terhubung dengan platform SATUSEHAT. Banyak klinik mandiri dan pratama mengalami kendala biaya lisensi yang sangat mahal serta kerumitan teknis bridging. TeFa V-Kes Polije merancang SIP-Kes sebagai solusi yang terjangkau, legal, dan didukung pendampingan penuh.') !!}
+                </div>
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6 pt-4">
@@ -110,9 +117,9 @@
                     <i class="fa-solid fa-eye"></i>
                 </div>
                 <h3 class="text-xl font-bold text-slate-900 mb-3">Visi Kami</h3>
-                <p class="text-slate-600 text-sm leading-relaxed text-justify">
-                    {{ $profile->vision ?? 'Menjadi pusat inovasi dan rujukan nasional dalam pengembangan teknologi informasi kesehatan vokasional yang adaptif, terintegrasi, dan berdampak nyata bagi faskes di Indonesia.' }}
-                </p>
+                <div class="rich-content text-slate-600 text-sm leading-relaxed text-justify">
+                    {!! \App\Support\RichText::render($profile->vision ?? 'Menjadi pusat inovasi dan rujukan nasional dalam pengembangan teknologi informasi kesehatan vokasional yang adaptif, terintegrasi, dan berdampak nyata bagi faskes di Indonesia.') !!}
+                </div>
             </div>
 
             <div class="bg-white p-8 rounded-3xl border border-slate-200 shadow-sm">
@@ -120,8 +127,8 @@
                     <i class="fa-solid fa-bullseye"></i>
                 </div>
                 <h3 class="text-xl font-bold text-slate-900 mb-3">Misi Kami</h3>
-                <div class="text-slate-600 text-sm leading-relaxed whitespace-pre-line text-justify">
-                    {{ $profile->mission ?? "1. Mengembangkan sistem informasi pelayanan kesehatan yang patuh regulasi Kemenkes dan BPJS.\n2. Memberikan layanan pendampingan transisi digital, bridging SATUSEHAT, dan akreditasi klinik.\n3. Mewadahi kolaborasi riset terapan antara dosen, mahasiswa terampil vokasi, dan fasyankes mitra." }}
+                <div class="rich-content text-slate-600 text-sm leading-relaxed text-justify">
+                    {!! \App\Support\RichText::render($profile->mission ?? "1. Mengembangkan sistem informasi pelayanan kesehatan yang patuh regulasi Kemenkes dan BPJS.\n2. Memberikan layanan pendampingan transisi digital, bridging SATUSEHAT, dan akreditasi klinik.\n3. Mewadahi kolaborasi riset terapan antara dosen, mahasiswa terampil vokasi, dan fasyankes mitra.") !!}
                 </div>
             </div>
         </div>

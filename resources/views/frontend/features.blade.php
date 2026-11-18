@@ -47,7 +47,7 @@
                         @endif
                     </div>
                     <h3 class="text-base font-bold text-slate-900 mb-2 group-hover:text-primary-700 transition">{{ $feat->name }}</h3>
-                    <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">{{ Str::limit(preg_replace('/\s+/', ' ', $feat->description), 150) }}</p>
+                    <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">{{ \App\Support\RichText::plain($feat->description, 150) }}</p>
                 </div>
 
                 <div class="mt-5 pt-3 border-t border-slate-100 flex items-center justify-between gap-2">

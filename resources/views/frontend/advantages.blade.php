@@ -21,12 +21,21 @@
         
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             @foreach($advantages as $adv)
-            <div class="bg-white rounded-3xl p-8 border border-slate-200 shadow-sm hover:border-primary-400 hover:shadow-lg transition group">
+            <div class="bg-white rounded-3xl {{ $adv->hasValidImage() ? 'overflow-hidden' : 'p-8' }} border border-slate-200 shadow-sm hover:border-primary-400 hover:shadow-lg transition group">
+                @if($adv->hasValidImage())
+                <div class="aspect-[16/10] bg-slate-100 overflow-hidden">
+                    <img src="{{ $adv->image_url }}" alt="{{ $adv->title }}" loading="lazy" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
+                </div>
+                <div class="p-8">
+                @endif
                 <div class="w-14 h-14 rounded-2xl bg-primary-50 text-primary-600 group-hover:bg-primary-600 group-hover:text-white flex items-center justify-center text-2xl mb-6 transition duration-300">
                     <i class="fa-solid {{ $adv->icon ?? 'fa-check' }}"></i>
                 </div>
                 <h3 class="text-lg font-bold text-slate-800 mb-3 group-hover:text-primary-700 transition">{{ $adv->title }}</h3>
-                <p class="text-xs sm:text-sm text-slate-600 leading-relaxed text-justify">{{ $adv->description }}</p>
+                <div class="rich-content text-xs sm:text-sm text-slate-600 leading-relaxed text-justify">{!! \App\Support\RichText::render($adv->description) !!}</div>
+                @if($adv->hasValidImage())
+                </div>
+                @endif
             </div>
             @endforeach
         </div>

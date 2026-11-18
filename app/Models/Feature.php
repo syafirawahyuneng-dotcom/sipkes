@@ -3,12 +3,13 @@
 namespace App\Models;
 
 use App\Models\Concerns\HasUniqueSlug;
+use App\Models\Concerns\HasImage;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Feature extends Model
 {
-    use HasFactory, HasUniqueSlug;
+    use HasFactory, HasImage, HasUniqueSlug;
 
     protected string $slugSource = 'name';
 
@@ -17,6 +18,7 @@ class Feature extends Model
         'slug',
         'category',
         'icon',
+        'image',
         'description',
         'users',
         'functions',

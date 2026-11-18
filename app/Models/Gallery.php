@@ -2,7 +2,9 @@
 
 namespace App\Models;
 
+use App\Models\Concerns\HasImage;
 use App\Models\Concerns\HasUniqueSlug;
+use App\Support\RichText;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -11,12 +13,12 @@ use Illuminate\Database\Eloquent\Model;
  * data dan file unggahan yang sudah ada tetap terpakai.
  *
  * - description : ringkasan berita (tampil di kartu)
- * - content     : isi berita lengkap (paragraf dipisah baris kosong)
+ * - content     : isi berita lengkap (HTML dari editor, atau teks polos lama)
  * - date        : tanggal publikasi
  */
 class Gallery extends Model
 {
-    use HasFactory, HasUniqueSlug;
+    use HasFactory, HasImage, HasUniqueSlug;
 
     protected string $slugSource = 'title';
 
@@ -47,7 +49,13 @@ class Gallery extends Model
     /** Paragraf isi berita; bila isi kosong, ringkasan dipakai sebagai isi. */
     public function paragraphs(): array
     {
-        $text = trim((string) ($this->content ?: $this->description));
+        $source = (string) ($this->content ?: $this->description);
+        // Konten HTML dari editor: paragraf diambil sebagai teks polos per blok.
+        if (RichText::isHtml($source)) {
+            $source = preg_replace('/<\/(p|h[1-6]|li|blockquote)>|<br\s*\/?>/i', "\n\n", $source);
+            $source = html_entity_decode(strip_tags($source), ENT_QUOTES | ENT_HTML5, 'UTF-8');
+        }
+        $text = trim($source);
         if ($text === '') {
             return [];
         }
@@ -58,52 +66,14 @@ class Gallery extends Model
         ));
     }
 
+    /** Isi berita siap tampil (HTML tersanitasi); teks polos lama menjadi paragraf. */
+    public function getContentHtmlAttribute(): string
+    {
+        return RichText::render($this->content ?: $this->description);
+    }
+
     public function getDetailUrlAttribute(): string
     {
         return route('news.show', $this);
     }
-
-    public function getImageUrlAttribute(): string
-    {
-        if (empty($this->image)) {
-            return '';
-        }
-
-        if (str_starts_with($this->image, 'http://') || str_starts_with($this->image, 'https://') || str_starts_with($this->image, 'data:')) {
-            return $this->image;
-        }
-
-        // Direct public file (e.g. public/gallery/...)
-        if (file_exists(public_path($this->image))) {
-            return asset($this->image);
-        }
-
-        // File di disk public lewat link public/storage (php artisan storage:link)
-        if (file_exists(public_path('storage/' . $this->image))) {
-            return asset('storage/' . $this->image);
-        }
-
-        // Cadangan bila link public/storage belum dibuat: sajikan lewat route media
-        if (file_exists(storage_path('app/public/' . $this->image))) {
-            return route('media', ['path' => $this->image]);
-        }
-
-        return asset('storage/' . $this->image);
-    }
-
-    public function hasValidImage(): bool
-    {
-        if (empty($this->image)) {
-            return false;
-        }
-
-        if (str_starts_with($this->image, 'http://') || str_starts_with($this->image, 'https://') || str_starts_with($this->image, 'data:')) {
-            return true;
-        }
-
-        return file_exists(public_path($this->image)) || 
-               file_exists(public_path('storage/' . $this->image)) || 
-               file_exists(storage_path('app/public/' . $this->image));
-    }
 }
-

@@ -21,7 +21,7 @@
     </div>
     @endif
 
-    <form action="{{ route('admin.features.update', $feature) }}" method="POST" class="space-y-4">
+    <form action="{{ route('admin.features.update', $feature) }}" method="POST" enctype="multipart/form-data" class="space-y-4">
         @csrf
         @method('PUT')
 
@@ -43,8 +43,10 @@
 
         <div>
             <label class="block text-xs font-bold text-slate-700 mb-1">Deskripsi Fitur *</label>
-            <textarea name="description" rows="4" required class="w-full text-xs sm:text-sm px-4 py-2.5 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-primary-500">{{ old('description', $feature->description) }}</textarea>
+            <textarea name="description" rows="6" required class="wysiwyg w-full text-xs sm:text-sm px-4 py-2.5 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-primary-500">{{ old('description', $feature->description) }}</textarea>
         </div>
+
+        <x-admin.image-input name="image" label="Gambar / Tangkapan Layar Modul" :url="$feature->image_url" hint="Tampil di halaman detail fitur. Disarankan rasio 16:10, minimal 1200 px" ratio="aspect-[16/10]" />
 
         <!-- Konten Halaman Detail Fitur -->
         <div class="pt-4 border-t border-slate-100">

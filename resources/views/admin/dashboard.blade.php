@@ -6,7 +6,7 @@
 @section('content')
 
 <!-- Stat Cards -->
-<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6 mb-8">
     <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm flex items-center justify-between">
         <div>
             <p class="text-xs font-semibold text-slate-500 uppercase tracking-wider">Total Fitur & Modul</p>
@@ -37,6 +37,22 @@
         </div>
         <div class="w-12 h-12 rounded-xl bg-teal-50 text-teal-600 flex items-center justify-center text-xl">
             <i class="fa-solid fa-tags"></i>
+        </div>
+    </div>
+
+    <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm flex items-center justify-between">
+        <div>
+            <p class="text-xs font-semibold text-slate-500 uppercase tracking-wider">Artikel Terbit</p>
+            <h3 class="text-2xl font-black text-slate-800 mt-1">
+                {{ $stats['articles_published'] }}
+                @if($stats['articles_draft'] > 0)
+                <span class="text-xs font-bold text-slate-600 bg-slate-100 px-2 py-0.5 rounded-full ml-1">{{ $stats['articles_draft'] }} Draf</span>
+                @endif
+            </h3>
+            <a href="{{ route('admin.articles.index') }}" class="text-xs text-primary-600 font-bold hover:underline mt-2 inline-block">Kelola Artikel &rarr;</a>
+        </div>
+        <div class="w-12 h-12 rounded-xl bg-sky-50 text-sky-600 flex items-center justify-center text-xl">
+            <i class="fa-solid fa-file-pen"></i>
         </div>
     </div>
 

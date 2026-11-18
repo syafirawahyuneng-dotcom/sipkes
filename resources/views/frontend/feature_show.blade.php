@@ -54,13 +54,23 @@
             <!-- Main Column -->
             <div class="lg:col-span-8 space-y-6">
 
+                @if($feature->hasValidImage())
+                <!-- Gambar / tangkapan layar modul -->
+                <figure class="rounded-2xl overflow-hidden border border-slate-200 shadow-sm bg-white">
+                    <div class="aspect-[16/10] bg-slate-100">
+                        <img src="{{ $feature->image_url }}" alt="Tampilan modul {{ $feature->name }}" loading="lazy" class="w-full h-full object-cover">
+                    </div>
+                    <figcaption class="px-5 py-3 text-[11px] text-slate-500 border-t border-slate-100"><i class="fa-solid fa-image mr-1 text-primary-500"></i> Tampilan modul {{ $feature->name }}</figcaption>
+                </figure>
+                @endif
+
                 <!-- Deskripsi -->
                 <div class="bg-white rounded-2xl p-6 sm:p-8 border border-slate-200 shadow-sm">
                     <h2 class="flex items-center gap-2.5 text-lg font-bold text-slate-900 mb-4">
                         <span class="w-8 h-8 rounded-lg bg-primary-50 text-primary-600 flex items-center justify-center text-sm"><i class="fa-solid fa-circle-info"></i></span>
                         Deskripsi Fitur
                     </h2>
-                    <p class="text-sm sm:text-base text-slate-600 leading-relaxed">{!! nl2br(e($feature->description)) !!}</p>
+                    <div class="rich-content text-sm sm:text-base text-slate-600 leading-relaxed">{!! \App\Support\RichText::render($feature->description) !!}</div>
                 </div>
 
                 <!-- Fungsi Utama -->
@@ -194,7 +204,7 @@
                         <i class="fa-solid {{ $r->icon ?? 'fa-circle-dot' }}"></i>
                     </div>
                     <h3 class="text-sm font-bold text-slate-800 group-hover:text-primary-700 transition mb-1">{{ $r->name }}</h3>
-                    <p class="text-xs text-slate-500 leading-relaxed">{{ Str::limit(preg_replace('/\s+/', ' ', $r->description), 80) }}</p>
+                    <p class="text-xs text-slate-500 leading-relaxed">{{ \App\Support\RichText::plain($r->description, 80) }}</p>
                 </a>
                 @endforeach
             </div>

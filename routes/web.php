@@ -9,6 +9,8 @@ use App\Http\Controllers\Admin\AdvantageController;
 use App\Http\Controllers\Admin\PricingPlanController;
 use App\Http\Controllers\Admin\SupportServiceController;
 use App\Http\Controllers\Admin\GalleryController;
+use App\Http\Controllers\Admin\ArticleController;
+use App\Http\Controllers\Admin\EditorUploadController;
 
 /*
 |--------------------------------------------------------------------------
@@ -29,6 +31,8 @@ Route::get('/layanan-pendukung', [PortalController::class, 'supportServices'])->
 Route::get('/berita', [PortalController::class, 'news'])->name('news');
 Route::get('/berita/{news:slug}', [PortalController::class, 'newsShow'])->name('news.show');
 Route::permanentRedirect('/galeri', '/berita'); // tautan lama Galeri
+Route::get('/artikel', [PortalController::class, 'articles'])->name('articles');
+Route::get('/artikel/{article:slug}', [PortalController::class, 'articleShow'])->name('articles.show');
 // Cadangan penyaji gambar unggahan (disk public) bila link public/storage belum dibuat
 Route::get('/media/{path}', [PortalController::class, 'media'])->where('path', '[A-Za-z0-9_\-\/]+\.(jpe?g|png|gif|webp)')->name('media');
 Route::get('/kontak', [PortalController::class, 'contact'])->name('contact');
@@ -79,5 +83,15 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::resource('galleries', GalleryController::class)->except(['show']);
         Route::post('/galleries/categories', [GalleryController::class, 'storeCategory'])->name('galleries.category.store');
         Route::delete('/galleries/categories/{category}', [GalleryController::class, 'destroyCategory'])->name('galleries.category.destroy');
+
+        // CRUD Artikel, Kategori Artikel, Publikasi & Pratinjau
+        Route::post('/articles/categories', [ArticleController::class, 'storeCategory'])->name('articles.categories.store');
+        Route::delete('/articles/categories/{category}', [ArticleController::class, 'destroyCategory'])->name('articles.categories.destroy');
+        Route::patch('/articles/{article}/publish', [ArticleController::class, 'togglePublish'])->name('articles.publish');
+        Route::get('/articles/{article}/preview', [ArticleController::class, 'preview'])->name('articles.preview');
+        Route::resource('articles', ArticleController::class)->except(['show']);
+
+        // Upload gambar dari dalam WYSIWYG editor
+        Route::post('/editor/upload', [EditorUploadController::class, 'store'])->name('editor.upload');
     });
 });

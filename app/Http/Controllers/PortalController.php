@@ -14,6 +14,10 @@ use App\Models\GalleryCategory;
 use App\Models\ContactInfo;
 use App\Models\ContactMessage;
 use App\Models\TargetFacility;
+use App\Models\Article;
+use App\Models\ArticleCategory;
+use App\Models\SiteSetting;
+use App\Support\ImageUpload;
 
 class PortalController extends Controller
 {
@@ -34,9 +38,20 @@ class PortalController extends Controller
         $galleries = Gallery::with('category')->orderByDesc('date')->orderBy('order')->take(4)->get();
         $contact = ContactInfo::first();
 
+        // Artikel terbaru (artikel unggulan diprioritaskan)
+        $latestArticles = Article::published()->with('category')
+            ->orderByDesc('is_featured')->orderByDesc('published_at')->take(3)->get();
+
+        // Gambar pendamping bagian Pengenalan: pengaturan beranda, cadangan gambar profil
+        $introPath = SiteSetting::get('home_intro_image');
+        $introImage = ImageUpload::exists($introPath)
+            ? ImageUpload::url($introPath)
+            : ($profile?->image_url ?: '');
+
         return view('frontend.home', compact(
             'banner', 'profile', 'advantages', 'featuredFeatures', 'allFeatures',
-            'facilities', 'pricingPlans', 'supportServices', 'galleries', 'contact'
+            'facilities', 'pricingPlans', 'supportServices', 'galleries', 'contact',
+            'latestArticles', 'introImage'
         ));
     }
 
@@ -135,6 +150,41 @@ class PortalController extends Controller
         $contact = ContactInfo::first();
 
         return view('frontend.news_show', compact('news', 'related', 'contact'));
+    }
+
+    // Halaman Daftar Artikel
+    public function articles(Request $request)
+    {
+        $categories = ArticleCategory::whereHas('articles', fn ($q) => $q->published())->orderBy('name')->get();
+
+        $query = Article::published()->with('category')->orderByDesc('published_at')->orderByDesc('id');
+        if ($request->filled('category')) {
+            $query->whereHas('category', fn ($q) => $q->where('slug', $request->category));
+        }
+        if ($request->filled('q')) {
+            $query->where('title', 'like', '%' . $request->q . '%');
+        }
+        $articles = $query->paginate(9)->withQueryString();
+        $contact = ContactInfo::first();
+
+        return view('frontend.articles', compact('articles', 'categories', 'contact'));
+    }
+
+    // Halaman Detail Artikel (draf / terjadwal → 404)
+    public function articleShow(Article $article)
+    {
+        abort_unless($article->isPublished(), 404);
+        $article->load('category');
+
+        $related = Article::published()->with('category')
+            ->whereKeyNot($article->id)
+            ->when($article->category_id, fn ($q) => $q->orderByRaw('category_id = ? DESC', [$article->category_id]))
+            ->orderByDesc('published_at')
+            ->take(3)
+            ->get();
+        $contact = ContactInfo::first();
+
+        return view('frontend.article_show', compact('article', 'related', 'contact'));
     }
 
     // Sajikan gambar unggahan dari disk public (cadangan bila storage:link belum dibuat)

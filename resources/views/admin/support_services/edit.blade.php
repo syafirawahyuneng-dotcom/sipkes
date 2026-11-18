@@ -11,7 +11,7 @@
         <p class="text-xs text-slate-500">Perbarui rincian program pendampingan untuk faskes.</p>
     </div>
 
-    <form action="{{ route('admin.support-services.update', $service) }}" method="POST" class="space-y-4">
+    <form action="{{ route('admin.support-services.update', $service) }}" method="POST" enctype="multipart/form-data" class="space-y-4">
         @csrf
         @method('PUT')
 
@@ -38,8 +38,10 @@
 
         <div>
             <label class="block text-xs font-bold text-slate-700 mb-1">Deskripsi Lengkap *</label>
-            <textarea name="description" rows="4" required class="w-full text-xs sm:text-sm px-4 py-2.5 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-primary-500">{{ old('description', $service->description) }}</textarea>
+            <textarea name="description" rows="6" required class="wysiwyg w-full text-xs sm:text-sm px-4 py-2.5 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-primary-500">{{ old('description', $service->description) }}</textarea>
         </div>
+
+        <x-admin.image-input name="image" label="Gambar Layanan" :url="$service->image_url" hint="Tampil di samping penjelasan layanan. Disarankan rasio 4:3" ratio="aspect-[4/3]" />
 
         <div>
             <label class="block text-xs font-bold text-slate-700 mb-1">Poin Manfaat (1 Baris = 1 Manfaat)</label>
