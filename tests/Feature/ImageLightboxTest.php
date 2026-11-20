@@ -31,7 +31,7 @@ class ImageLightboxTest extends TestCase
 
     public function test_lightbox_is_present_on_every_public_page(): void
     {
-        $pages = ['/', '/profil', '/fitur', '/keunggulan', '/harga', '/layanan-pendukung', '/berita', '/artikel', '/informasi', '/kontak',
+        $pages = ['/', '/profil', '/fitur', '/keunggulan', '/harga', '/layanan-pendukung', '/berita', '/artikel', '/kontak',
             '/fitur/' . Feature::first()->slug, '/berita/' . Gallery::first()->slug];
 
         foreach ($pages as $page) {
@@ -45,7 +45,7 @@ class ImageLightboxTest extends TestCase
     public function test_lightbox_is_present_on_admin_pages(): void
     {
         $admin = Admin::first();
-        foreach (['admin.dashboard', 'admin.galleries.index', 'admin.information.index', 'admin.features.index'] as $route) {
+        foreach (['admin.dashboard', 'admin.galleries.index', 'admin.features.index'] as $route) {
             $html = $this->actingAs($admin, 'admin')->get(route($route))->assertOk()->getContent();
             $this->assertLightboxOnce($html, $route);
         }

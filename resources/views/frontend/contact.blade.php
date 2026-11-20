@@ -24,7 +24,7 @@
             <!-- Left Info Details (Sesuai Proposal) -->
             <div class="lg:col-span-5 space-y-6">
                 <div>
-                    <h2 class="text-2xl font-black text-slate-900 mb-2">Sekretariat TeFa V-Kes</h2>
+                    <h2 class="text-2xl font-black text-slate-900 mb-2">Hubungi Kami </h2>
                     <p class="text-xs sm:text-sm text-slate-500 leading-relaxed">
                         Silakan hubungi kami untuk koordinasi presentasi, uji coba sistem demo, verifikasi akun faskes, atau pendampingan bridging SATUSEHAT.
                     </p>

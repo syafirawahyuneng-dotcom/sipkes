@@ -12,7 +12,6 @@ use App\Models\SupportService;
 use App\Models\Gallery;
 use App\Models\GalleryCategory;
 use App\Models\ContactInfo;
-use App\Models\Information;
 use App\Models\ContactMessage;
 use App\Models\TargetFacility;
 use App\Models\Article;
@@ -196,15 +195,6 @@ class PortalController extends Controller
         abort_unless($disk->exists($path), 404);
 
         return response()->file($disk->path($path), ['Cache-Control' => 'public, max-age=604800']);
-    }
-
-    // Halaman Informasi (Fitur & Layanan → Informasi): daftar informasi bergambar
-    public function information()
-    {
-        $items = Information::active()->ordered()->paginate(12);
-        $contact = ContactInfo::first();
-
-        return view('frontend.information', compact('items', 'contact'));
     }
 
     // Halaman Kontak

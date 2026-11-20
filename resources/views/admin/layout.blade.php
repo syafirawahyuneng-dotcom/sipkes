@@ -103,10 +103,6 @@
                     <i class="fa-solid fa-file-pen w-4 text-center"></i> Artikel
                 </a>
 
-                <a href="{{ route('admin.information.index') }}" class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl transition {{ request()->routeIs('admin.information.*') ? 'bg-primary-600 text-white' : 'hover:bg-slate-800 hover:text-white' }}">
-                    <i class="fa-solid fa-circle-info w-4 text-center"></i> Informasi
-                </a>
-
                 <a href="{{ route('admin.contact.index') }}" class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl transition {{ request()->routeIs('admin.contact.*') ? 'bg-primary-600 text-white' : 'hover:bg-slate-800 hover:text-white' }}">
                     <i class="fa-solid fa-envelope-open-text w-4 text-center"></i> Kontak & Pesan Masuk
                 </a>

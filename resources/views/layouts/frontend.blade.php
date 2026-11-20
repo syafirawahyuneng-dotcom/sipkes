@@ -111,7 +111,7 @@
 
                     <!-- Dropdown Fitur & Layanan -->
                     <div class="relative group">
-                        <button type="button" class="flex items-center gap-1.5 px-3.5 py-2 text-sm font-semibold rounded-lg transition {{ request()->routeIs('features', 'features.show', 'advantages', 'support.services', 'information') ? 'text-primary-700 bg-primary-50' : 'text-slate-600 hover:text-primary-600 hover:bg-slate-50' }}">
+                        <button type="button" class="flex items-center gap-1.5 px-3.5 py-2 text-sm font-semibold rounded-lg transition {{ request()->routeIs('features', 'features.show', 'advantages', 'support.services') ? 'text-primary-700 bg-primary-50' : 'text-slate-600 hover:text-primary-600 hover:bg-slate-50' }}">
                             <span>Fitur & Layanan</span>
                             <i class="fa-solid fa-chevron-down text-[10px] transition-transform duration-200 group-hover:rotate-180"></i>
                         </button>
@@ -141,15 +141,6 @@
                                 <div>
                                     <p class="font-bold">Layanan Pendukung</p>
                                     <p class="text-[10px] text-slate-400 font-normal">Klaim BPJS & Akreditasi</p>
-                                </div>
-                            </a>
-                            <a href="{{ route('information') }}" class="flex items-center gap-3 px-4 py-2.5 text-xs font-semibold {{ request()->routeIs('information') ? 'text-primary-700 bg-primary-50' : 'text-slate-700 hover:text-primary-600 hover:bg-slate-50' }} transition">
-                                <div class="w-7 h-7 rounded-lg bg-sky-50 text-sky-600 flex items-center justify-center shrink-0">
-                                    <i class="fa-solid fa-circle-info text-xs"></i>
-                                </div>
-                                <div>
-                                    <p class="font-bold">Informasi</p>
-                                    <p class="text-[10px] text-slate-400 font-normal">Pengumuman & materi visual</p>
                                 </div>
                             </a>
                         </div>
@@ -193,7 +184,6 @@
             <a href="{{ route('advantages') }}" class="block px-3 py-2 text-base font-medium rounded-md {{ request()->routeIs('advantages') ? 'text-primary-700 bg-primary-50' : 'text-slate-700 hover:bg-slate-50' }}">Keunggulan</a>
             <a href="{{ route('pricing') }}" class="block px-3 py-2 text-base font-medium rounded-md {{ request()->routeIs('pricing') ? 'text-primary-700 bg-primary-50' : 'text-slate-700 hover:bg-slate-50' }}">Paket Harga</a>
             <a href="{{ route('support.services') }}" class="block px-3 py-2 text-base font-medium rounded-md {{ request()->routeIs('support.services') ? 'text-primary-700 bg-primary-50' : 'text-slate-700 hover:bg-slate-50' }}">Layanan Pendukung</a>
-            <a href="{{ route('information') }}" class="block px-3 py-2 text-base font-medium rounded-md {{ request()->routeIs('information') ? 'text-primary-700 bg-primary-50' : 'text-slate-700 hover:bg-slate-50' }}">Informasi</a>
             <a href="{{ route('news') }}" class="block px-3 py-2 text-base font-medium rounded-md {{ request()->routeIs('news', 'news.show') ? 'text-primary-700 bg-primary-50' : 'text-slate-700 hover:bg-slate-50' }}">Berita</a>
             <a href="{{ route('articles') }}" class="block px-3 py-2 text-base font-medium rounded-md {{ request()->routeIs('articles', 'articles.show') ? 'text-primary-700 bg-primary-50' : 'text-slate-700 hover:bg-slate-50' }}">Artikel</a>
             <a href="{{ route('contact') }}" class="block px-3 py-2 text-base font-medium rounded-md {{ request()->routeIs('contact') ? 'text-primary-700 bg-primary-50' : 'text-slate-700 hover:bg-slate-50' }}">Kontak</a>
