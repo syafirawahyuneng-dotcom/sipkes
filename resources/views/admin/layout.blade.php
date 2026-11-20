@@ -48,7 +48,7 @@
             <div class="h-20 flex items-center px-6 border-b border-slate-800 gap-3">
                 @if($siteLogo)
                     <div class="bg-white p-2 rounded-xl flex items-center justify-center">
-                        <img src="{{ $siteLogo }}" alt="SIP-Kes Logo" class="h-7 w-auto object-contain">
+                        <img src="{{ $siteLogo }}" alt="SIP-Kes Logo" data-no-preview class="h-7 w-auto object-contain">
                     </div>
                 @else
                     <div class="w-10 h-10 rounded-xl bg-primary-600 flex items-center justify-center text-white shadow-md">
@@ -101,6 +101,10 @@
 
                 <a href="{{ route('admin.articles.index') }}" class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl transition {{ request()->routeIs('admin.articles.*') ? 'bg-primary-600 text-white' : 'hover:bg-slate-800 hover:text-white' }}">
                     <i class="fa-solid fa-file-pen w-4 text-center"></i> Artikel
+                </a>
+
+                <a href="{{ route('admin.information.index') }}" class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl transition {{ request()->routeIs('admin.information.*') ? 'bg-primary-600 text-white' : 'hover:bg-slate-800 hover:text-white' }}">
+                    <i class="fa-solid fa-circle-info w-4 text-center"></i> Informasi
                 </a>
 
                 <a href="{{ route('admin.contact.index') }}" class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl transition {{ request()->routeIs('admin.contact.*') ? 'bg-primary-600 text-white' : 'hover:bg-slate-800 hover:text-white' }}">
@@ -172,6 +176,8 @@
     @auth('admin')
     @include('admin.partials.editor')
     @endauth
+    @include('partials.lightbox')
+
     @stack('scripts')
 </body>
 </html>

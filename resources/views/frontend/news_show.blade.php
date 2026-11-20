@@ -102,7 +102,8 @@
         @if($news->category || $pubDate)
         <figcaption class="mt-3 text-center text-[11px] text-slate-400">
             <i class="fa-solid fa-camera mr-1"></i>
-            Dokumentasi{{ $news->category ? ' ' . $news->category->name : '' }}{{ $pubDate ? ' · ' . $pubDate->isoFormat('D MMMM Y') : '' }}
+            @php $catName = $news->category?->name; @endphp
+            {{ $catName ? (Str::startsWith(Str::lower($catName), 'dokumentasi') ? $catName : 'Dokumentasi ' . $catName) : 'Dokumentasi' }}{{ $pubDate ? ' · ' . $pubDate->isoFormat('D MMMM Y') : '' }}
         </figcaption>
         @endif
     </figure>

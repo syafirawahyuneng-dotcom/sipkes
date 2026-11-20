@@ -10,6 +10,7 @@ use App\Http\Controllers\Admin\PricingPlanController;
 use App\Http\Controllers\Admin\SupportServiceController;
 use App\Http\Controllers\Admin\GalleryController;
 use App\Http\Controllers\Admin\ArticleController;
+use App\Http\Controllers\Admin\InformationController;
 use App\Http\Controllers\Admin\EditorUploadController;
 
 /*
@@ -28,6 +29,7 @@ Route::get('/fitur/{feature:slug}', [PortalController::class, 'featureShow'])->n
 Route::get('/keunggulan', [PortalController::class, 'advantages'])->name('advantages');
 Route::get('/harga', [PortalController::class, 'pricing'])->name('pricing');
 Route::get('/layanan-pendukung', [PortalController::class, 'supportServices'])->name('support.services');
+Route::get('/informasi', [PortalController::class, 'information'])->name('information');
 Route::get('/berita', [PortalController::class, 'news'])->name('news');
 Route::get('/berita/{news:slug}', [PortalController::class, 'newsShow'])->name('news.show');
 Route::permanentRedirect('/galeri', '/berita'); // tautan lama Galeri
@@ -90,6 +92,9 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::patch('/articles/{article}/publish', [ArticleController::class, 'togglePublish'])->name('articles.publish');
         Route::get('/articles/{article}/preview', [ArticleController::class, 'preview'])->name('articles.preview');
         Route::resource('articles', ArticleController::class)->except(['show']);
+
+        // CRUD Informasi bergambar (menu Fitur & Layanan → Informasi)
+        Route::resource('information', InformationController::class)->except(['show']);
 
         // Upload gambar dari dalam WYSIWYG editor
         Route::post('/editor/upload', [EditorUploadController::class, 'store'])->name('editor.upload');

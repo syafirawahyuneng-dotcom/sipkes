@@ -95,7 +95,7 @@
                 <!-- Brand / Logo (Memakai Foto / Gambar) -->
                 <a href="{{ route('home') }}" class="flex items-center group py-2">
                     <img src="{{ $siteLogo ?: asset('images/logo.png') }}" 
-                         alt="Logo Resmi SIP-Kes" 
+                         alt="Logo Resmi SIP-Kes" data-no-preview 
                          class="h-12 max-h-12 w-auto object-contain group-hover:scale-105 transition duration-300"
                          onerror="this.src='{{ asset('images/logo.png') }}'">
                 </a>
@@ -111,7 +111,7 @@
 
                     <!-- Dropdown Fitur & Layanan -->
                     <div class="relative group">
-                        <button type="button" class="flex items-center gap-1.5 px-3.5 py-2 text-sm font-semibold rounded-lg transition {{ request()->routeIs('features', 'features.show', 'advantages', 'support.services') ? 'text-primary-700 bg-primary-50' : 'text-slate-600 hover:text-primary-600 hover:bg-slate-50' }}">
+                        <button type="button" class="flex items-center gap-1.5 px-3.5 py-2 text-sm font-semibold rounded-lg transition {{ request()->routeIs('features', 'features.show', 'advantages', 'support.services', 'information') ? 'text-primary-700 bg-primary-50' : 'text-slate-600 hover:text-primary-600 hover:bg-slate-50' }}">
                             <span>Fitur & Layanan</span>
                             <i class="fa-solid fa-chevron-down text-[10px] transition-transform duration-200 group-hover:rotate-180"></i>
                         </button>
@@ -143,6 +143,15 @@
                                     <p class="text-[10px] text-slate-400 font-normal">Klaim BPJS & Akreditasi</p>
                                 </div>
                             </a>
+                            <a href="{{ route('information') }}" class="flex items-center gap-3 px-4 py-2.5 text-xs font-semibold {{ request()->routeIs('information') ? 'text-primary-700 bg-primary-50' : 'text-slate-700 hover:text-primary-600 hover:bg-slate-50' }} transition">
+                                <div class="w-7 h-7 rounded-lg bg-sky-50 text-sky-600 flex items-center justify-center shrink-0">
+                                    <i class="fa-solid fa-circle-info text-xs"></i>
+                                </div>
+                                <div>
+                                    <p class="font-bold">Informasi</p>
+                                    <p class="text-[10px] text-slate-400 font-normal">Pengumuman & materi visual</p>
+                                </div>
+                            </a>
                         </div>
                     </div>
 
@@ -162,7 +171,7 @@
 
                 <!-- Action Button -->
                 <div class="hidden sm:flex items-center gap-2.5">
-                    <a href="{{ route('contact') }}" class="inline-flex items-center justify-center px-3.5 py-2 text-xs font-semibold text-slate-700 bg-slate-100 hover:bg-slate-200 rounded-xl transition border border-slate-200">
+                    <a href="https://wa.me/6281335512803" target="_blank" rel="noopener noreferrer" aria-label="Chat WhatsApp untuk demo SIP-Kes" class="inline-flex items-center justify-center px-3.5 py-2 text-xs font-semibold text-slate-700 bg-slate-100 hover:bg-slate-200 rounded-xl transition border border-slate-200">
                         <i class="fa-brands fa-whatsapp mr-1.5 text-sm text-emerald-600"></i> Demo
                     </a>
                 </div>
@@ -184,6 +193,7 @@
             <a href="{{ route('advantages') }}" class="block px-3 py-2 text-base font-medium rounded-md {{ request()->routeIs('advantages') ? 'text-primary-700 bg-primary-50' : 'text-slate-700 hover:bg-slate-50' }}">Keunggulan</a>
             <a href="{{ route('pricing') }}" class="block px-3 py-2 text-base font-medium rounded-md {{ request()->routeIs('pricing') ? 'text-primary-700 bg-primary-50' : 'text-slate-700 hover:bg-slate-50' }}">Paket Harga</a>
             <a href="{{ route('support.services') }}" class="block px-3 py-2 text-base font-medium rounded-md {{ request()->routeIs('support.services') ? 'text-primary-700 bg-primary-50' : 'text-slate-700 hover:bg-slate-50' }}">Layanan Pendukung</a>
+            <a href="{{ route('information') }}" class="block px-3 py-2 text-base font-medium rounded-md {{ request()->routeIs('information') ? 'text-primary-700 bg-primary-50' : 'text-slate-700 hover:bg-slate-50' }}">Informasi</a>
             <a href="{{ route('news') }}" class="block px-3 py-2 text-base font-medium rounded-md {{ request()->routeIs('news', 'news.show') ? 'text-primary-700 bg-primary-50' : 'text-slate-700 hover:bg-slate-50' }}">Berita</a>
             <a href="{{ route('articles') }}" class="block px-3 py-2 text-base font-medium rounded-md {{ request()->routeIs('articles', 'articles.show') ? 'text-primary-700 bg-primary-50' : 'text-slate-700 hover:bg-slate-50' }}">Artikel</a>
             <a href="{{ route('contact') }}" class="block px-3 py-2 text-base font-medium rounded-md {{ request()->routeIs('contact') ? 'text-primary-700 bg-primary-50' : 'text-slate-700 hover:bg-slate-50' }}">Kontak</a>
@@ -208,7 +218,7 @@
                 Konsultasikan kebutuhan faskes Anda sekarang bersama tim pakar TeFa V-Kes Polije. Nikmati kemudahan bridging SATUSEHAT Kemenkes & BPJS Kesehatan.
             </p>
             <div class="flex flex-wrap justify-center gap-4">
-                <a href="https://wa.me/6281335512803?text=Halo%20TeFa%20V-Kes%20Polije,%20saya%20ingin%20konsultasi%20layanan%20SIP-Kes" target="_blank" class="px-6 py-3.5 bg-white text-primary-800 font-bold rounded-xl shadow-lg hover:bg-primary-50 transition flex items-center gap-2">
+                <a href="https://wa.me/6281335512803?text=Halo%20V-Kes%20Polije,%20saya%20ingin%20konsultasi%20layanan%20SIP-Kes" target="_blank" class="px-6 py-3.5 bg-white text-primary-800 font-bold rounded-xl shadow-lg hover:bg-primary-50 transition flex items-center gap-2">
                     <i class="fa-brands fa-whatsapp text-green-600 text-lg"></i> Hubungi via WhatsApp
                 </a>
                 <a href="{{ route('contact') }}" class="px-6 py-3.5 bg-primary-900/60 hover:bg-primary-900 text-white font-bold rounded-xl border border-white/20 transition flex items-center gap-2">
@@ -226,7 +236,7 @@
                 <div class="space-y-4">
                     <div class="flex items-center">
                         <img src="{{ $siteLogo ?: asset('images/logo.png') }}" 
-                             alt="Logo Resmi SIP-Kes" 
+                             alt="Logo Resmi SIP-Kes" data-no-preview 
                              class="h-12 max-h-12 w-auto object-contain brightness-100"
                              onerror="this.src='{{ asset('images/logo.png') }}'">
                     </div>
@@ -240,7 +250,7 @@
                         <a href="mailto:vkes@polije.ac.id" class="w-8 h-8 rounded-full bg-slate-800 flex items-center justify-center text-slate-300 hover:text-white hover:bg-primary-600 transition">
                             <i class="fa-solid fa-envelope"></i>
                         </a>
-                        <a href="tel:081335512803" class="w-8 h-8 rounded-full bg-slate-800 flex items-center justify-center text-slate-300 hover:text-white hover:bg-green-600 transition">
+                        <a href="https://wa.me/6281335512803" target="_blank" rel="noopener noreferrer" aria-label="Chat WhatsApp SIP-Kes" title="Chat WhatsApp" class="w-8 h-8 rounded-full bg-slate-800 flex items-center justify-center text-slate-300 hover:text-white hover:bg-green-600 transition">
                             <i class="fa-brands fa-whatsapp"></i>
                         </a>
                     </div>
@@ -318,6 +328,8 @@
             });
         }
     </script>
+
+    @include('partials.lightbox')
 
     @stack('scripts')
 </body>

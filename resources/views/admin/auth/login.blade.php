@@ -33,7 +33,7 @@
         <div class="text-center mb-8">
             @if(isset($siteLogo) && $siteLogo)
                 <div class="mb-4 flex justify-center">
-                    <img src="{{ $siteLogo }}" alt="SIP-Kes Logo" class="h-16 w-auto object-contain">
+                    <img src="{{ $siteLogo }}" alt="SIP-Kes Logo" data-no-preview class="h-16 w-auto object-contain">
                 </div>
             @else
                 <div class="w-16 h-16 rounded-2xl bg-primary-600 text-white flex items-center justify-center text-3xl mx-auto mb-4 shadow-lg shadow-primary-600/30">
