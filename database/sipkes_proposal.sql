@@ -256,7 +256,7 @@ CREATE TABLE `banners` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
-INSERT INTO `banners` (`id`, `badge`, `title`, `subtitle`, `primary_btn_text`, `primary_btn_url`, `secondary_btn_text`, `secondary_btn_url`, `is_active`, `order`, `created_at`, `updated_at`) VALUES (1, '🏥 Proposal SIP-Kes • TeFa V-Kes Politeknik Negeri Jember', 'Sistem Informasi Pelayanan Kesehatan (SIP-Kes)', 'Sebuah sistem rekam medis elektronik untuk manajemen data kesehatan di fasilitas pelayanan kesehatan tingkat pertama yang telah terintegrasi dengan SATUSEHAT dan bridging BPJS Kesehatan.', 'Lihat 20 Fitur Lengkap', '#fitur', 'Hubungi Call Center', '#kontak', 1, 1, NOW(), NOW());
+INSERT INTO `banners` (`id`, `badge`, `title`, `subtitle`, `primary_btn_text`, `primary_btn_url`, `secondary_btn_text`, `secondary_btn_url`, `is_active`, `order`, `created_at`, `updated_at`) VALUES (1, '🏥 Proposal SIP-Kes • TeFa V-Kes Politeknik Negeri Jember', 'Sistem Informasi Pelayanan Kesehatan (SIP-Kes)', 'Sebuah sistem rekam medis elektronik untuk manajemen data kesehatan di fasilitas pelayanan kesehatan tingkat pertama yang telah terintegrasi dengan SATUSEHAT dan bridging BPJS Kesehatan.', 'Lihat Semua Fitur Lengkap', '#fitur', 'Hubungi Call Center', '#kontak', 1, 1, NOW(), NOW());
 
 -- ----------------------------
 -- Table structure for target_facilities

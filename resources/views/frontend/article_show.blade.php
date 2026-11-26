@@ -10,18 +10,7 @@
     $shareText   = $article->title . ' - ' . $shareUrl;
 @endphp
 
-@push('meta')
-    <meta property="og:type" content="article">
-    <meta property="og:title" content="{{ $article->title }}">
-    <meta property="og:description" content="{{ $article->meta_description_text }}">
-    <meta property="og:url" content="{{ $shareUrl }}">
-    @if($article->hasValidCover())
-    <meta property="og:image" content="{{ $article->cover_url }}">
-    @endif
-    @if($preview)
-    <meta name="robots" content="noindex, nofollow">
-    @endif
-@endpush
+{{-- Meta SEO / Open Graph diisi otomatis oleh App\Support\Seo (lihat partials/seo). --}}
 
 @section('content')
 
@@ -124,7 +113,7 @@
 <section class="bg-white pt-10 sm:pt-14 pb-16 px-4 sm:px-6">
     <div class="max-w-5xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12">
 
-        <article id="article-body" class="lg:col-span-8 min-w-0">
+    <article id="article-body" class="lg:col-span-8 min-w-0">
             @if(filled($article->excerpt))
             <div class="relative rounded-2xl bg-gradient-to-br from-primary-50 to-sky-50 border border-primary-100 p-6 sm:p-7 mb-10">
                 <i class="fa-solid fa-quote-left absolute -top-3 left-6 w-8 h-8 rounded-full bg-primary-600 text-white text-xs flex items-center justify-center shadow-md"></i>

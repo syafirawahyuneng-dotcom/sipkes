@@ -10,7 +10,6 @@ use App\Models\Banner;
 use App\Models\Feature;
 use App\Models\Gallery;
 use App\Models\Profile;
-use App\Models\SiteSetting;
 use App\Models\SupportService;
 use Database\Seeders\SipKesDatabaseSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -386,38 +385,35 @@ class Phase2FeaturesTest extends TestCase
     {
         $this->get('/')->assertOk()->assertSee('SIP-Kes Cloud Ecosystem'); // kartu ilustrasi bawaan
 
-        $this->admin()->get(route('admin.home.index'))->assertOk()->assertSee('Gambar Hero');
+        $this->admin()->get(route('admin.home.index'))->assertOk()
+            ->assertSee('Gambar Hero')
+            ->assertDontSee('Gambar Bagian Pengenalan');
 
         $banner = Banner::firstOrFail();
         $this->admin()->post(route('admin.home.update'), [
             'badge' => $banner->badge, 'title' => $banner->title, 'subtitle' => $banner->subtitle,
             'primary_btn_text' => $banner->primary_btn_text, 'primary_btn_url' => $banner->primary_btn_url,
             'secondary_btn_text' => $banner->secondary_btn_text, 'secondary_btn_url' => $banner->secondary_btn_url,
-            'image' => $this->png('hero.png'), 'intro_image' => $this->png('intro.png'),
+            'image' => $this->png('hero.png'),
         ])->assertSessionHasNoErrors();
 
         $banner->refresh();
         $hero = $this->track($banner->image);
-        $intro = $this->track(SiteSetting::get('home_intro_image'));
         $this->assertStringStartsWith('banners/', $hero);
-        $this->assertStringStartsWith('home/', $intro);
 
         $this->get('/')->assertOk()
             ->assertSee($banner->image_url, false)
-            ->assertSee(\App\Support\ImageUpload::url($intro), false)
             ->assertDontSee('SIP-Kes Cloud Ecosystem');
 
-        // Hapus kedua gambar → kembali ke tampilan bawaan
+        // Hapus gambar hero → kembali ke tampilan bawaan
         $this->admin()->post(route('admin.home.update'), [
             'badge' => $banner->badge, 'title' => $banner->title, 'subtitle' => $banner->subtitle,
             'primary_btn_text' => $banner->primary_btn_text, 'primary_btn_url' => $banner->primary_btn_url,
             'secondary_btn_text' => $banner->secondary_btn_text, 'secondary_btn_url' => $banner->secondary_btn_url,
-            'remove_image' => '1', 'remove_intro_image' => '1',
+            'remove_image' => '1',
         ])->assertSessionHasNoErrors();
         $this->assertNull($banner->fresh()->image);
-        $this->assertNull(SiteSetting::get('home_intro_image'));
         Storage::disk('public')->assertMissing($hero);
-        Storage::disk('public')->assertMissing($intro);
         $this->get('/')->assertOk()->assertSee('SIP-Kes Cloud Ecosystem');
     }
 

@@ -14,7 +14,6 @@ use App\Models\Gallery;
 use App\Models\GalleryCategory;
 use App\Models\ContactInfo;
 use App\Models\ContactMessage;
-use App\Models\SiteSetting;
 use App\Models\TargetFacility;
 use App\Models\Article;
 use App\Support\ImageUpload;
@@ -47,17 +46,14 @@ class DashboardController extends Controller
     {
         $banner = Banner::first() ?? new Banner();
         $facilities = TargetFacility::orderBy('order')->get();
-        $introImage = SiteSetting::get('home_intro_image');
-        $introImageUrl = ImageUpload::exists($introImage) ? ImageUpload::url($introImage) : '';
-        return view('admin.home.index', compact('banner', 'facilities', 'introImageUrl'));
+        return view('admin.home.index', compact('banner', 'facilities'));
     }
 
     public function homeUpdate(Request $request)
     {
         $request->validate([
             'image' => ImageUpload::RULE,
-            'intro_image' => ImageUpload::RULE,
-        ], ImageUpload::messages('image', 'Gambar hero') + ImageUpload::messages('intro_image', 'Gambar pengenalan'));
+        ], ImageUpload::messages('image', 'Gambar hero'));
 
         $banner = Banner::first() ?? new Banner();
         $banner->image = ImageUpload::replace($request, $banner->image, 'banners');
@@ -69,12 +65,6 @@ class DashboardController extends Controller
         $banner->secondary_btn_text = $request->secondary_btn_text;
         $banner->secondary_btn_url = $request->secondary_btn_url;
         $banner->save();
-
-        $introImage = SiteSetting::get('home_intro_image');
-        $newIntro = ImageUpload::replace($request, $introImage, 'home', 'intro_image');
-        if ($newIntro !== $introImage) {
-            SiteSetting::set('home_intro_image', $newIntro, 'home');
-        }
 
         return back()->with('success', 'Konten Hero Beranda berhasil diperbarui!');
     }

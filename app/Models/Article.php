@@ -105,7 +105,8 @@ class Article extends Model
 
     public function getMetaDescriptionTextAttribute(): string
     {
-        return RichText::plain($this->meta_description ?: $this->excerpt_text, 160);
+        // Deskripsi SEO selalu otomatis dari ringkasan / isi artikel (tanpa input manual admin).
+        return RichText::plain($this->excerpt_text, 160);
     }
 
     public function getReadingTimeAttribute(): int

@@ -114,6 +114,9 @@ class ArticleController extends Controller
         $contact = ContactInfo::first();
         $preview = true;
 
+        // Pratinjau admin: metadata tetap lengkap, tetapi tidak boleh diindeks.
+        \App\Support\Seo::page()->forArticle($article)->noindex(false);
+
         return view('frontend.article_show', compact('article', 'related', 'contact', 'preview'));
     }
 
@@ -147,13 +150,11 @@ class ArticleController extends Controller
             'author' => 'nullable|string|max:255',
             'status' => 'required|in:draft,published',
             'published_at' => 'nullable|date',
-            'meta_description' => 'nullable|string|max:160',
             'cover_image' => ImageUpload::RULE,
         ], ImageUpload::messages('cover_image', 'Gambar utama') + [
             'title.required' => 'Judul artikel wajib diisi.',
             'content.required' => 'Isi artikel wajib diisi.',
             'excerpt.max' => 'Ringkasan maksimal 300 karakter.',
-            'meta_description.max' => 'Meta description maksimal 160 karakter.',
             'status.in' => 'Status artikel tidak valid.',
         ]);
 
@@ -173,7 +174,6 @@ class ArticleController extends Controller
             'status' => $validated['status'],
             'published_at' => $publishedAt,
             'is_featured' => $request->boolean('is_featured'),
-            'meta_description' => filled($validated['meta_description'] ?? null) ? Str::limit(trim(strip_tags($validated['meta_description'])), 160, '') : null,
         ];
     }
 }

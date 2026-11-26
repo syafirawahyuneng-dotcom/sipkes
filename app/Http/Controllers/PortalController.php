@@ -16,8 +16,7 @@ use App\Models\ContactMessage;
 use App\Models\TargetFacility;
 use App\Models\Article;
 use App\Models\ArticleCategory;
-use App\Models\SiteSetting;
-use App\Support\ImageUpload;
+use App\Support\Seo;
 
 class PortalController extends Controller
 {
@@ -42,11 +41,17 @@ class PortalController extends Controller
         $latestArticles = Article::published()->with('category')
             ->orderByDesc('is_featured')->orderByDesc('published_at')->take(3)->get();
 
-        // Gambar pendamping bagian Pengenalan: pengaturan beranda, cadangan gambar profil
-        $introPath = SiteSetting::get('home_intro_image');
-        $introImage = ImageUpload::exists($introPath)
-            ? ImageUpload::url($introPath)
-            : ($profile?->image_url ?: '');
+        // Gambar pendamping bagian Pengenalan: memakai gambar Profil TeFa
+        $introImage = $profile?->image_url ?: '';
+
+        Seo::page()
+            ->title('SIP-Kes - Sistem Informasi Pelayanan Kesehatan TeFa V-Kes Polije')
+            ->description($banner?->subtitle, $profile?->about_sipkes, $profile?->tagline)
+            ->keywords(
+                $featuredFeatures->pluck('name')->take(5)->all(),
+                implode(' ', [$banner?->title, $banner?->subtitle, $profile?->about_sipkes])
+            )
+            ->image($banner?->image_url ?: $introImage);
 
         return view('frontend.home', compact(
             'banner', 'profile', 'advantages', 'featuredFeatures', 'allFeatures',
@@ -60,6 +65,16 @@ class PortalController extends Controller
     {
         $profile = Profile::first();
         $contact = ContactInfo::first();
+
+        Seo::page()
+            ->title('Profil TeFa Inovasi Kesehatan & SIP-Kes - Politeknik Negeri Jember')
+            ->description($profile?->about_sipkes, $profile?->about_tefa, $profile?->background, $profile?->tagline)
+            ->keywords(
+                array_filter(['profil SIP-Kes', 'Teaching Factory', $profile?->name, $profile?->institution]),
+                implode(' ', [$profile?->about_tefa, $profile?->about_sipkes, $profile?->vision])
+            )
+            ->image($profile?->image_url);
+
         return view('frontend.profile', compact('profile', 'contact'));
     }
 
@@ -73,6 +88,17 @@ class PortalController extends Controller
         $features = $query->get();
         $categories = Feature::select('category')->distinct()->whereNotNull('category')->pluck('category');
         $contact = ContactInfo::first();
+
+        $category = $request->filled('category') && is_string($request->category) ? $request->category : null;
+        Seo::page()
+            ->title($category ? "Fitur & Modul {$category} SIP-Kes" : 'Fitur & Modul Lengkap SIP-Kes')
+            ->description(($category ? "Modul {$category} SIP-Kes: " : 'Fitur & modul rekam medis elektronik SIP-Kes: ')
+                . Seo::listText($features->pluck('name')) . '. Terintegrasi SATUSEHAT dan BPJS Kesehatan.')
+            ->keywords(
+                array_merge(['fitur SIP-Kes', 'modul rekam medis elektronik'], $features->pluck('name')->take(5)->all(), $categories->take(3)->all()),
+                $features->pluck('description')->implode(' ')
+            )
+            ->image($features->first(fn ($f) => $f->image_url)?->image_url);
 
         return view('frontend.features', compact('features', 'categories', 'contact'));
     }
@@ -93,6 +119,8 @@ class PortalController extends Controller
         }
         $contact = ContactInfo::first();
 
+        Seo::page()->forFeature($feature);
+
         return view('frontend.feature_show', compact('feature', 'prev', 'next', 'related', 'contact'));
     }
 
@@ -101,6 +129,16 @@ class PortalController extends Controller
     {
         $advantages = Advantage::orderBy('order')->get();
         $contact = ContactInfo::first();
+
+        Seo::page()
+            ->title('Keunggulan Sistem Rekam Medis Elektronik SIP-Kes')
+            ->description('Keunggulan SIP-Kes: ' . Seo::listText($advantages->pluck('title')) . '.', $advantages->first()?->description)
+            ->keywords(
+                array_merge(['keunggulan SIP-Kes'], $advantages->pluck('title')->take(5)->all()),
+                $advantages->pluck('description')->implode(' ')
+            )
+            ->image($advantages->first(fn ($a) => $a->image_url)?->image_url);
+
         return view('frontend.advantages', compact('advantages', 'contact'));
     }
 
@@ -109,6 +147,16 @@ class PortalController extends Controller
     {
         $plans = PricingPlan::where('is_active', true)->orderBy('order')->get();
         $contact = ContactInfo::first();
+
+        Seo::page()
+            ->title('Pilihan Paket & Biaya Berlangganan SIP-Kes')
+            ->description('Pilihan paket berlangganan rekam medis elektronik SIP-Kes untuk fasilitas kesehatan: '
+                . Seo::listText($plans->pluck('name')) . '.', $plans->first()?->description)
+            ->keywords(
+                array_merge(['harga SIP-Kes', 'paket rekam medis elektronik', 'biaya RME'], $plans->pluck('name')->take(4)->all()),
+                $plans->pluck('description')->implode(' ')
+            );
+
         return view('frontend.pricing', compact('plans', 'contact'));
     }
 
@@ -117,6 +165,17 @@ class PortalController extends Controller
     {
         $services = SupportService::where('is_active', true)->orderBy('order')->get();
         $contact = ContactInfo::first();
+
+        Seo::page()
+            ->title('Layanan Pendukung Faskes - Pendampingan BPJS & Akreditasi')
+            ->description('Layanan pendukung fasilitas kesehatan dari TeFa V-Kes Polije: '
+                . Seo::listText($services->pluck('title')) . '.', $services->first()?->summary)
+            ->keywords(
+                array_merge(['layanan pendukung faskes', 'pendampingan akreditasi'], $services->pluck('title')->take(5)->all()),
+                $services->map(fn ($s) => $s->summary . ' ' . $s->description)->implode(' ')
+            )
+            ->image($services->first(fn ($s) => $s->image_url)?->image_url);
+
         return view('frontend.support_services', compact('services', 'contact'));
     }
 
@@ -133,6 +192,19 @@ class PortalController extends Controller
         $news = $query->paginate(9)->withQueryString();
         $contact = ContactInfo::first();
 
+        $activeCategory = $categories->firstWhere('slug', $request->category);
+        Seo::page()
+            ->title($activeCategory ? "Berita {$activeCategory->name} - TeFa V-Kes Polije" : 'Berita & Kegiatan TeFa V-Kes Polije')
+            ->description(
+                ($activeCategory ? "Berita kategori {$activeCategory->name}" : 'Berita dan kegiatan terbaru TeFa V-Kes Politeknik Negeri Jember')
+                . ($news->isNotEmpty() ? ': ' . Seo::listText($news->pluck('title'), 3) : ' seputar SIP-Kes dan rekam medis elektronik') . '.'
+            )
+            ->keywords(
+                array_merge(['berita SIP-Kes', 'kegiatan TeFa V-Kes'], $categories->pluck('name')->take(4)->all()),
+                $news->map(fn ($n) => $n->title . ' ' . $n->description)->implode(' ')
+            )
+            ->image($news->first(fn ($n) => $n->image_url)?->image_url);
+
         return view('frontend.news', compact('news', 'categories', 'contact'));
     }
 
@@ -148,6 +220,8 @@ class PortalController extends Controller
             ->take(3)
             ->get();
         $contact = ContactInfo::first();
+
+        Seo::page()->forNews($news);
 
         return view('frontend.news_show', compact('news', 'related', 'contact'));
     }
@@ -167,6 +241,18 @@ class PortalController extends Controller
         $articles = $query->paginate(9)->withQueryString();
         $contact = ContactInfo::first();
 
+        $activeCategory = $categories->firstWhere('slug', $request->category);
+        Seo::page()
+            ->title($activeCategory ? "Artikel {$activeCategory->name} - SIP-Kes" : 'Artikel & Wawasan Rekam Medis Elektronik')
+            ->description($activeCategory
+                ? "Kumpulan artikel {$activeCategory->name} dari SIP-Kes" . ($articles->isNotEmpty() ? ': ' . Seo::listText($articles->pluck('title'), 3) : '') . '.'
+                : 'Artikel SIP-Kes: panduan rekam medis elektronik, regulasi PMK 24/2022, akreditasi, serta integrasi SATUSEHAT dan BPJS Kesehatan dari TeFa V-Kes Politeknik Negeri Jember.')
+            ->keywords(
+                array_merge(['artikel rekam medis elektronik', 'wawasan RME'], $categories->pluck('name')->take(5)->all()),
+                $articles->map(fn ($a) => $a->title . ' ' . $a->excerpt)->implode(' ')
+            )
+            ->image($articles->first(fn ($a) => $a->cover_url)?->cover_url);
+
         return view('frontend.articles', compact('articles', 'categories', 'contact'));
     }
 
@@ -183,6 +269,8 @@ class PortalController extends Controller
             ->take(3)
             ->get();
         $contact = ContactInfo::first();
+
+        Seo::page()->forArticle($article);
 
         return view('frontend.article_show', compact('article', 'related', 'contact'));
     }
@@ -201,6 +289,18 @@ class PortalController extends Controller
     public function contact()
     {
         $contact = ContactInfo::first();
+
+        $contactDetails = collect([
+            $contact?->address ? 'Alamat: ' . $contact->address : null,
+            $contact?->phone ? 'Telp: ' . $contact->phone : null,
+            $contact?->email ? 'Email: ' . $contact->email : null,
+        ])->filter()->implode('. ');
+        Seo::page()
+            ->title('Kontak & Informasi Sekretariat SIP-Kes')
+            ->description('Hubungi tim SIP-Kes TeFa V-Kes Polije untuk konsultasi dan demo rekam medis elektronik'
+                . ($contactDetails ? '. ' . $contactDetails : '') . '.')
+            ->keywords(['kontak SIP-Kes', 'konsultasi rekam medis elektronik', 'demo SIP-Kes', 'alamat TeFa V-Kes']);
+
         return view('frontend.contact', compact('contact'));
     }
 

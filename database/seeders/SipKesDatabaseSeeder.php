@@ -56,7 +56,7 @@ class SipKesDatabaseSeeder extends Seeder
                 'badge' => '🏥 Proposal SIP-Kes • TeFa V-Kes Politeknik Negeri Jember',
                 'title' => 'Sistem Informasi Pelayanan Kesehatan (SIP-Kes)',
                 'subtitle' => 'Sebuah sistem rekam medis elektronik untuk manajemen data kesehatan di fasilitas pelayanan kesehatan tingkat pertama yang telah terintegrasi dengan SATUSEHAT dan bridging BPJS Kesehatan.',
-                'primary_btn_text' => 'Lihat 20 Fitur Lengkap',
+                'primary_btn_text' => 'Lihat Semua Fitur Lengkap',
                 'primary_btn_url' => '#fitur',
                 'secondary_btn_text' => 'Hubungi Call Center',
                 'secondary_btn_url' => '#kontak',

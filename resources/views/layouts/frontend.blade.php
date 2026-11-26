@@ -3,10 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@yield('title', 'SIP-Kes - Sistem Informasi Pelayanan Kesehatan') | TeFa V-Kes Polije</title>
-    
-    <!-- Meta & SEO -->
-    <meta name="description" content="@yield('meta_description', 'Portal Resmi SIP-Kes (Sistem Informasi Pelayanan Kesehatan) - Rekam Medis Elektronik Terintegrasi SATUSEHAT Kemenkes RI & BPJS Kesehatan. Dikembangkan oleh Teaching Factory Inovasi Kesehatan Polije.')">
+
+    <!-- Meta & SEO (otomatis, lihat App\Support\Seo) -->
+    @include('partials.seo')
     @stack('meta')
     
     <!-- Tailwind CSS CDN -->
@@ -69,6 +68,11 @@
         .rich-content hr { border: 0; border-top: 1px solid #e2e8f0; margin: 1.5em 0; }
         .rich-content.drop-cap > p:first-child::first-letter { float: left; font-size: 3.75rem; line-height: 0.85; font-weight: 900; color: #1d4ed8; margin-right: 0.75rem; margin-top: 0.375rem; }
         .rich-content.spacious > * + * { margin-top: 1.5rem; }
+        /* Dropdown "Konsultasi Sekarang" di navbar */
+        .consult-menu { opacity: 0; visibility: hidden; pointer-events: none; transform: translateY(-6px) scale(.98); transform-origin: top right; transition: opacity .18s ease, transform .18s ease, visibility 0s linear .18s; }
+        .consult-menu.is-open { opacity: 1; visibility: visible; pointer-events: auto; transform: translateY(0) scale(1); transition: opacity .18s ease, transform .18s ease, visibility 0s; }
+        @media (prefers-reduced-motion: reduce) { .consult-menu, .consult-menu.is-open { transition: none; } }
+
         .rich-content-light strong, .rich-content-light b, .rich-content-light h2, .rich-content-light h3, .rich-content-light h4 { color: inherit; }
     </style>
 </head>
@@ -161,14 +165,59 @@
                 </nav>
 
                 <!-- Action Button -->
-                <div class="hidden sm:flex items-center gap-2.5">
-                    <a href="https://wa.me/6281335512803" target="_blank" rel="noopener noreferrer" aria-label="Chat WhatsApp untuk demo SIP-Kes" class="inline-flex items-center justify-center px-3.5 py-2 text-xs font-semibold text-slate-700 bg-slate-100 hover:bg-slate-200 rounded-xl transition border border-slate-200">
-                        <i class="fa-brands fa-whatsapp mr-1.5 text-sm text-emerald-600"></i> Demo
-                    </a>
+                <div class="flex items-center gap-2.5 ml-auto lg:ml-0">
+                    <!-- Konsultasi Sekarang (dropdown kontak) -->
+                    <div id="consult-dropdown" class="sm:relative">
+                        <button type="button" id="consult-btn" aria-haspopup="true" aria-expanded="false" aria-controls="consult-menu"
+                                class="inline-flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-2 sm:py-2.5 text-xs sm:text-sm font-semibold text-white bg-primary-600 hover:bg-primary-700 rounded-xl shadow-sm shadow-primary-600/30 transition focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-2">
+                            <i class="fa-brands fa-whatsapp text-base"></i>
+                            <span>Konsultasi<span class="hidden sm:inline"> Sekarang</span></span>
+                            <i id="consult-caret" class="fa-solid fa-chevron-down text-[10px] transition-transform duration-200"></i>
+                        </button>
+
+                        <div id="consult-menu" role="menu" aria-labelledby="consult-btn"
+                             class="consult-menu absolute left-4 right-4 top-full mt-2 sm:left-auto sm:right-0 sm:w-80 rounded-2xl bg-white shadow-xl shadow-slate-900/10 ring-1 ring-slate-900/5 p-2 z-50">
+                            <p class="px-3 pt-2 pb-2 text-[11px] font-bold uppercase tracking-wider text-slate-400">Hubungi Kami</p>
+
+                            <a href="{{ $navContact['wa_url'] }}" target="_blank" rel="noopener noreferrer" role="menuitem"
+                               class="flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-emerald-50 focus:bg-emerald-50 focus:outline-none transition group/item">
+                                <span class="w-10 h-10 rounded-xl bg-emerald-50 text-emerald-600 group-hover/item:bg-emerald-600 group-hover/item:text-white flex items-center justify-center shrink-0 transition">
+                                    <i class="fa-brands fa-whatsapp text-lg"></i>
+                                </span>
+                                <span class="min-w-0 flex-1">
+                                    <span class="block text-sm font-bold text-slate-800">Chat via WhatsApp</span>
+                                    <span class="block text-xs text-slate-500">Respons cepat dari tim TeFa V-Kes</span>
+                                </span>
+                                <i class="fa-solid fa-arrow-up-right-from-square text-[10px] text-slate-300 group-hover/item:text-emerald-600 transition"></i>
+                            </a>
+
+                            <a href="mailto:{{ $navContact['email'] }}?subject={{ rawurlencode('Konsultasi Layanan SIP-Kes') }}" role="menuitem"
+                               class="flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-primary-50 focus:bg-primary-50 focus:outline-none transition group/item">
+                                <span class="w-10 h-10 rounded-xl bg-primary-50 text-primary-600 group-hover/item:bg-primary-600 group-hover/item:text-white flex items-center justify-center shrink-0 transition">
+                                    <i class="fa-solid fa-envelope text-base"></i>
+                                </span>
+                                <span class="min-w-0 flex-1">
+                                    <span class="block text-sm font-bold text-slate-800">Email Kami</span>
+                                    <span class="block text-xs text-slate-500 truncate">{{ $navContact['email'] }}</span>
+                                </span>
+                            </a>
+
+                            <a href="tel:{{ $navContact['tel'] }}" role="menuitem"
+                               class="flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-sky-50 focus:bg-sky-50 focus:outline-none transition group/item">
+                                <span class="w-10 h-10 rounded-xl bg-sky-50 text-sky-600 group-hover/item:bg-sky-600 group-hover/item:text-white flex items-center justify-center shrink-0 transition">
+                                    <i class="fa-solid fa-phone text-base"></i>
+                                </span>
+                                <span class="min-w-0 flex-1">
+                                    <span class="block text-sm font-bold text-slate-800">Telepon Kami</span>
+                                    <span class="block text-xs text-slate-500">{{ $navContact['phone'] }}</span>
+                                </span>
+                            </a>
+                        </div>
+                    </div>
                 </div>
 
                 <!-- Mobile Menu Button -->
-                <div class="flex lg:hidden">
+                <div class="flex lg:hidden ml-1">
                     <button type="button" id="mobile-menu-btn" class="p-2 rounded-lg text-slate-600 hover:text-primary-600 hover:bg-slate-100">
                         <i class="fa-solid fa-bars text-xl"></i>
                     </button>
@@ -315,8 +364,42 @@
         if(btn && menu) {
             btn.addEventListener('click', () => {
                 menu.classList.toggle('hidden');
+                if (!menu.classList.contains('hidden') && window.closeConsultMenu) window.closeConsultMenu();
             });
         }
+
+        // Dropdown "Konsultasi Sekarang"
+        (function () {
+            const wrap = document.getElementById('consult-dropdown');
+            const trigger = document.getElementById('consult-btn');
+            const panel = document.getElementById('consult-menu');
+            const caret = document.getElementById('consult-caret');
+            if (!wrap || !trigger || !panel) return;
+
+            const setOpen = (open) => {
+                panel.classList.toggle('is-open', open);
+                trigger.setAttribute('aria-expanded', open ? 'true' : 'false');
+                if (caret) caret.classList.toggle('rotate-180', open);
+            };
+            window.closeConsultMenu = () => setOpen(false);
+
+            trigger.addEventListener('click', (e) => {
+                e.stopPropagation();
+                const open = !panel.classList.contains('is-open');
+                setOpen(open);
+                if (open && menu) menu.classList.add('hidden');
+            });
+            document.addEventListener('click', (e) => {
+                if (!wrap.contains(e.target)) setOpen(false);
+            });
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape' && panel.classList.contains('is-open')) {
+                    setOpen(false);
+                    trigger.focus();
+                }
+            });
+            panel.querySelectorAll('a').forEach((a) => a.addEventListener('click', () => setOpen(false)));
+        })();
     </script>
 
     @include('partials.lightbox')

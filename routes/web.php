@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PortalController;
+use App\Http\Controllers\SeoController;
 use App\Http\Controllers\Admin\AuthController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\FeatureController;
@@ -36,6 +37,10 @@ Route::get('/artikel/{article:slug}', [PortalController::class, 'articleShow'])-
 // Cadangan penyaji gambar unggahan (disk public) bila link public/storage belum dibuat
 Route::get('/media/{path}', [PortalController::class, 'media'])->where('path', '[A-Za-z0-9_\-\/]+\.(jpe?g|png|gif|webp)')->name('media');
 Route::get('/kontak', [PortalController::class, 'contact'])->name('contact');
+
+// SEO teknis otomatis (dibangun dari database)
+Route::get('/sitemap.xml', [SeoController::class, 'sitemap'])->name('sitemap');
+Route::get('/robots.txt', [SeoController::class, 'robots'])->name('robots');
 Route::post('/kontak/kirim-pesan', [PortalController::class, 'sendMessage'])->name('contact.send');
 
 // ==========================================

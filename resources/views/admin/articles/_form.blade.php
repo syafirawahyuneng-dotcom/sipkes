@@ -77,11 +77,5 @@
         </div>
 
         <x-admin.image-input name="cover_image" label="Gambar Utama (Cover)" :url="$a?->cover_url" hint="Disarankan rasio 16:9, minimal 1200×675 px" stacked />
-
-        <div>
-            <label class="block text-xs font-bold text-slate-700 mb-1">Meta Description (SEO)</label>
-            <textarea name="meta_description" rows="3" maxlength="160" class="{{ $input }}" placeholder="Deskripsi singkat untuk mesin pencari & media sosial.">{{ old('meta_description', $a?->meta_description) }}</textarea>
-            <p class="text-[11px] text-slate-400 mt-1">Maksimal 160 karakter. Bila kosong, memakai ringkasan.</p>
-        </div>
     </div>
 </div>

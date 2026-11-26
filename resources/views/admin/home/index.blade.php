@@ -56,9 +56,7 @@
                 <p class="text-sm font-bold text-slate-800">Gambar Beranda</p>
                 <p class="text-[11px] text-slate-500">Bila dikosongkan, beranda memakai tampilan bawaan (kartu ilustrasi pada hero dan kartu keunggulan pada bagian pengenalan).</p>
             </div>
-            <x-admin.image-input name="image" label="Gambar Hero (kolom kanan)" :url="$banner->image_url" hint="Foto tim/layar aplikasi SIP-Kes. Disarankan rasio 4:3, minimal 1200 px" ratio="aspect-[4/3]" />
-            <x-admin.image-input name="intro_image" label="Gambar Bagian Pengenalan (Tentang SIP-Kes)" :url="$introImageUrl" hint="Bila kosong, memakai gambar Profil TeFa. Disarankan rasio 16:10" ratio="aspect-[16/10]" />
-        </div>
+            <x-admin.image-input name="image" label="Gambar Hero (kolom kanan)" :url="$banner->image_url" hint="Foto tim/layar aplikasi SIP-Kes. Disarankan rasio 4:3, minimal 1200 px" ratio="aspect-[4/3]" />        </div>
 
         <div class="pt-4 border-t border-slate-100 flex items-center justify-end">
             <button type="submit" class="px-6 py-2.5 rounded-xl bg-primary-600 hover:bg-primary-700 text-white font-bold text-xs shadow-md transition">
